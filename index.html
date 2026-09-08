@@ -161,8 +161,34 @@ a{color:inherit}
 .hero{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:54px;padding:34px 0 76px;align-items:start}
 .hero .eyebrow{color:var(--deep-accent)}
 .hero-copy{display:flex;flex-direction:column;gap:22px}
-.hero h1{font-size:clamp(38px,5.6vw,64px);color:var(--deep-text)}
-.hero h1 span{color:var(--deep-accent)}
+.hero h1{font-size:clamp(40px,6vw,70px);color:var(--deep-text);letter-spacing:-.028em}
+/* La parte che deve colpire: il testo fa da finestra a un gradiente che
+   scorre piano, con un alone dietro per staccarlo dal fondo scuro. Il colore
+   pieno resta scritto prima, come rete per chi non regge il ritaglio. */
+.hero h1 .shine{
+  color:var(--deep-accent);
+  background-image:linear-gradient(96deg,#B9A2FF 0%,#7C4DF0 26%,#4FD6E0 58%,#B9A2FF 100%);
+  background-size:230% 100%;
+  -webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:sheen 8s ease-in-out infinite;
+  filter:drop-shadow(0 0 26px rgba(124,77,240,.45));
+  padding-right:.06em;
+}
+.hero h1 .huge{
+  font-size:1.1em;
+  letter-spacing:-.012em;
+  display:inline-block;
+  transform:translateY(.012em);
+}
+@keyframes sheen{
+  0%,100%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+}
+@media (prefers-reduced-motion:reduce){.hero h1 .shine{animation:none}}
+@supports not ((-webkit-background-clip:text) or (background-clip:text)){
+  .hero h1 .shine{-webkit-text-fill-color:currentColor;background-image:none}
+}
 .hero-lede{font-size:19px;color:var(--deep-dim);max-width:54ch}
 .hero-lede b{color:var(--deep-text);font-weight:600}
 .claims{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
@@ -625,7 +651,7 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
     <section class="hero">
       <div class="hero-copy">
         <p class="eyebrow">Fotocamera per eventi · reels automatico</p>
-        <h1>Registra i tuoi video senza perderli nel rullino e crea reels o video <span>PAZZESCHI in modo automatico grazie all'AI</span></h1>
+        <h1>Registra i tuoi video senza perderli nel rullino e crea reels o video <span class="shine huge">PAZZESCHI</span> <span class="shine">in modo automatico grazie all'AI</span></h1>
         <p class="hero-lede">Ogni evento ha la sua cartella. Gli scatti non entrano nel rullino. E il reels lo monta l'app, da sola.</p>
         <p class="hero-lede">Apri l'evento e scatta con EventCam: ogni foto e ogni video finiscono <b>solo</b> nella cartella di quell'evento, mai nell'app Foto. A fine giornata hai già le clip: scegli la tua musica, lasciale in ordine cronologico e <b>il reels si monta da solo</b> — semplice, veloce, automatico.</p>
         <ul class="claims">
