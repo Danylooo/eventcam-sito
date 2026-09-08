@@ -35,16 +35,6 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;padding:0}
 img{max-width:100%}
 [hidden]{display:none!important}
-
-@media (max-width:620px){
-  /* Con lo zoom il riquadro resta grande com'era e il telefono finisce
-     spostato a sinistra: si scala davvero, dal centro, e si recupera lo
-     spazio rimasto sotto. */
-  .hero-shot .device{zoom:1;transform:scale(.8);transform-origin:top center;margin-bottom:-115px}
-}
-@media (max-width:400px){
-  .hero-shot .device{transform:scale(.68);margin-bottom:-184px}
-}
 </style>
 </head>
 <body>
@@ -666,15 +656,31 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
   /* Sul telefono il prodotto va visto subito: dopo il titolo arriva la
      schermata vera, e solo dopo le tessere e i pulsanti. Prima si scorreva
      mezzo schermo di testo prima di vedere l'app. */
-  .hero{display:flex;flex-direction:column;gap:26px;padding-bottom:56px}
+  /* La testata nasce a griglia con gli elementi appoggiati in alto; diventando
+     una colonna, quello stesso "appoggia" impediva ai blocchi di allargarsi, e
+     il telefono restava incollato a sinistra invece di stare al centro. */
+  .hero{display:flex;flex-direction:column;align-items:stretch;gap:26px;padding-bottom:56px}
   .hero-copy{display:contents}
   .hero .eyebrow{order:1}
   .hero h1{order:2}
-  .hero-lede{order:3}
-  .hero-shot{order:4}
+  .hero-shot{order:3}
+  .hero-lede{order:4}
   .cards{order:5}
   .hero .cta-row{order:6}
   .hero-foot{order:7}
+  .hero{gap:22px}
+  .hero h1 .lead{margin-bottom:12px}
+  /* Ritratto del prodotto: il telefono grande e centrato, con un alone dietro
+     che lo stacca dal fondo. La scheda dei numeri qui non serve: sul telefono
+     conta l'oggetto, e i numeri tornano poco più giù. */
+  .hero-shot{position:relative}
+  .hero-shot::before{
+    content:"";position:absolute;left:50%;top:44%;transform:translate(-50%,-50%);
+    width:min(112vw,440px);height:440px;border-radius:50%;
+    background:radial-gradient(circle,rgba(124,77,240,.42) 0%,rgba(124,77,240,0) 68%);
+    pointer-events:none;
+  }
+  .hero-shot .flow-mini{display:none}
   .cards{grid-template-columns:1fr 1fr}
   .card:first-child{grid-column:1 / -1;flex-direction:row;align-items:baseline;gap:10px;flex-wrap:wrap}
   .card:first-child span:last-child{width:100%;margin-top:0}
@@ -702,6 +708,16 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
   .device{zoom:.68}
   .device-pair .device{zoom:.5}
   .studio-showcase .device{zoom:.68}
+}
+
+@media (max-width:620px){
+  /* Con lo zoom il riquadro resta grande com'era e il telefono finisce
+     spostato a sinistra: si scala davvero, dal centro, e si recupera lo
+     spazio rimasto sotto. */
+  .hero-shot .device{zoom:1;transform:scale(.8);transform-origin:top center;margin-bottom:-115px}
+}
+@media (max-width:400px){
+  .hero-shot .device{transform:scale(.68);margin-bottom:-184px}
 }
 </style>
 
