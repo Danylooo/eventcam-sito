@@ -161,17 +161,22 @@ a{color:inherit}
 .hero{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:54px;padding:34px 0 76px;align-items:start}
 .hero .eyebrow{color:var(--deep-accent)}
 .hero-copy{display:flex;flex-direction:column;gap:22px}
-.hero h1{font-size:clamp(46px,7.2vw,86px);color:var(--deep-text);letter-spacing:-.03em}
-/* La prima riga fa da attacco: piccola, quieta, e lascia tutto il peso alla
-   promessa che viene dopo. */
+/* Il titolo si prende tutta la larghezza, sopra le due colonne: è l'unico
+   modo per farlo davvero grande senza spezzarlo in sette righe strette. */
+.hero-title{grid-column:1 / -1;display:flex;flex-direction:column;gap:14px;margin-bottom:4px}
+.hero h1{font-size:clamp(42px,8vw,104px);color:var(--deep-text);letter-spacing:-.035em;line-height:1.0}
+/* La prima riga fa da attacco: piccola e quieta, misurata per conto suo e non
+   in proporzione al titolo, così resta leggibile anche sul telefono. Tutto il
+   peso va alla promessa che viene dopo. */
 .hero h1 .lead{
   display:block;
-  font-size:.36em;
-  font-weight:700;
-  line-height:1.25;
-  letter-spacing:-.012em;
+  font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
+  font-size:clamp(15px,1.5vw,21px);
+  font-weight:600;
+  line-height:1.4;
+  letter-spacing:0;
   color:var(--deep-dim);
-  margin-bottom:.34em;
+  margin-bottom:16px;
 }
 .hero h1 .shine{display:block}
 /* La parte che deve colpire: il testo fa da finestra a un gradiente che
@@ -661,9 +666,12 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
     </header>
 
     <section class="hero">
-      <div class="hero-copy">
+      <div class="hero-title">
         <p class="eyebrow">Fotocamera per eventi · reels automatico</p>
         <h1><span class="lead">Registra i tuoi video senza perderli nel rullino</span><span class="shine">e crea reels o video <b class="huge">PAZZESCHI</b> in modo automatico grazie all'AI</span></h1>
+      </div>
+
+      <div class="hero-copy">
         <p class="hero-lede">Ogni evento ha la sua cartella. Gli scatti non entrano nel rullino. E il reels lo monta l'app, da sola.</p>
         <p class="hero-lede">Apri l'evento e scatta con EventCam: ogni foto e ogni video finiscono <b>solo</b> nella cartella di quell'evento, mai nell'app Foto. A fine giornata hai già le clip: scegli la tua musica, lasciale in ordine cronologico e <b>il reels si monta da solo</b> — semplice, veloce, automatico.</p>
         <ul class="claims">
