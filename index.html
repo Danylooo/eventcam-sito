@@ -1,0 +1,1591 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EventCam — la fotocamera degli eventi, con il reels che si monta da solo</title>
+<meta name="description" content="EventCam tiene foto e video di ogni evento in una cartella tutta sua, fuori dal rullino, e monta il reels da solo a tempo di musica: voce fuori campo, sottotitoli scritti dall'app, esportazione ordinata per giornate. Solo iPhone.">
+<link rel="canonical" href="https://eventcam.media/">
+<meta name="theme-color" content="#5238F2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#090814" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://eventcam.media/">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="EventCam">
+<meta property="og:title" content="Registra i tuoi video senza perderli nel rullino">
+<meta property="og:description" content="Ogni evento ha la sua cartella, gli scatti non entrano nel rullino, e il reels si monta da solo a tempo di musica.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="EventCam — la fotocamera degli eventi">
+<meta name="twitter:description" content="Ogni evento ha la sua cartella, gli scatti non entrano nel rullino, e il reels si monta da solo a tempo di musica.">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/favicon.svg">
+
+<!--
+  Qui va lo snippet del pixel di Meta, quando ci sarà l'identificativo del
+  dataset. Il posto è questo: dentro la testa, prima di qualunque altro script,
+  così l'evento di apertura pagina parte anche se il resto non si carica.
+-->
+
+<style>
+:root{color-scheme:light dark}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;padding:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+/* ============================================================
+   Palette presa dall'icona dell'app:
+   viola #8B5CF6 → indaco #3A2BE8, accento #5238F2, glifo #F7F8FA.
+   Neutri con deriva viola, mai grigi puri.
+   ============================================================ */
+:root{
+  --bg:#F1F0F8;
+  --surface:#FFFFFF;
+  --surface-2:#F7F6FD;
+  --text:#131427;
+  --text-dim:#54557A;
+  --text-faint:#8687A8;
+  --line:#DFDCF0;
+  --line-soft:#EAE8F7;
+  --accent:#5238F2;
+  --accent-deep:#3A2BE8;
+  --accent-light:#8B5CF6;
+  --accent-wash:rgba(82,56,242,.08);
+  --accent-edge:rgba(82,56,242,.28);
+  --on-accent:#FFFFFF;
+  --neutral-chip:#EDEDF2;
+  --lift:0 1px 0 rgba(19,20,39,.03), 0 16px 40px -24px rgba(38,28,120,.55);
+  --tile-a:#D9D6EC;
+  --tile-b:#BFBBD9;
+  --band-alt:#FFFFFF;
+  --band-tint:#E7E3F8;
+
+  /* pannelli sempre scuri, coerenti con l'icona */
+  --deep-bg:#140F35;
+  --deep-bg-2:#1C1548;
+  --deep-line:#2E2568;
+  --deep-text:#F2F1FB;
+  --deep-dim:#A9A3D8;
+  --deep-accent:#A78BFF;
+  --deep-accent-2:#4FD6E0;
+
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#090814;
+    --surface:#121125;
+    --surface-2:#1A1832;
+    --text:#EDECF8;
+    --text-dim:#A6A4C6;
+    --text-faint:#78769C;
+    --line:#282647;
+    --line-soft:#1E1C39;
+    --accent:#9683FF;
+    --accent-deep:#7C63FF;
+    --accent-light:#B7A9FF;
+    --accent-wash:rgba(150,131,255,.13);
+    --accent-edge:rgba(150,131,255,.34);
+    --on-accent:#0B0918;
+    --neutral-chip:#20203A;
+    --lift:0 1px 0 rgba(255,255,255,.03), 0 20px 46px -26px rgba(0,0,0,.9);
+    --tile-a:#2C2A4E;
+    --tile-b:#1D1C36;
+    --band-alt:#0F0E20;
+    --band-tint:#14122B;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#090814;
+  --surface:#121125;
+  --surface-2:#1A1832;
+  --text:#EDECF8;
+  --text-dim:#A6A4C6;
+  --text-faint:#78769C;
+  --line:#282647;
+  --line-soft:#1E1C39;
+  --accent:#9683FF;
+  --accent-deep:#7C63FF;
+  --accent-light:#B7A9FF;
+  --accent-wash:rgba(150,131,255,.13);
+  --accent-edge:rgba(150,131,255,.34);
+  --on-accent:#0B0918;
+  --neutral-chip:#20203A;
+  --lift:0 1px 0 rgba(255,255,255,.03), 0 20px 46px -26px rgba(0,0,0,.9);
+  --tile-a:#2C2A4E;
+  --tile-b:#1D1C36;
+  --band-alt:#0F0E20;
+  --band-tint:#14122B;
+}
+
+*{box-sizing:border-box}
+body{
+  background:var(--bg);
+  color:var(--text);
+  font-family:"IBM Plex Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size:17px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3{
+  font-family:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+  font-weight:800;letter-spacing:-.02em;line-height:1.03;
+  text-wrap:balance;margin:0;
+}
+p{margin:0}
+a{color:inherit}
+.wrap{max-width:1140px;margin:0 auto;padding:0 26px}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace;font-variant-numeric:tabular-nums}
+.eyebrow{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);
+}
+
+/* ---------------- intestazione + hero scuro ---------------- */
+.top{background:linear-gradient(168deg,#241A63 0%,#150F38 52%,#100C2B 100%);color:var(--deep-text)}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0}
+.brand{display:flex;align-items:center;gap:11px;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:18px;letter-spacing:-.015em}
+.mark{width:26px;height:26px;flex:none;border-radius:7px;display:block}
+.topbar-meta{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--deep-dim)}
+
+.hero{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:54px;padding:34px 0 76px;align-items:start}
+.hero .eyebrow{color:var(--deep-accent)}
+.hero-copy{display:flex;flex-direction:column;gap:22px}
+.hero h1{font-size:clamp(38px,5.6vw,64px);color:var(--deep-text)}
+.hero h1 span{color:var(--deep-accent)}
+.hero-lede{font-size:19px;color:var(--deep-dim);max-width:54ch}
+.hero-lede b{color:var(--deep-text);font-weight:600}
+.claims{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px}
+.claims li{display:flex;gap:11px;align-items:flex-start;color:var(--deep-text);font-size:16px}
+.claims li::before{
+  content:"";width:7px;height:7px;margin-top:8px;flex:none;border-radius:2px;
+  background:var(--deep-accent);transform:rotate(45deg);
+}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:2px}
+.btn{
+  display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:10px;
+  font-weight:600;font-size:15.5px;text-decoration:none;border:1px solid transparent;
+  transition:transform .12s ease,background .12s ease,border-color .12s ease;
+}
+.btn:focus-visible{outline:2px solid var(--deep-accent);outline-offset:3px}
+.btn--primary{background:linear-gradient(140deg,#7C4DF0,#4832EE);color:#FFFFFF;box-shadow:0 10px 26px -14px rgba(90,60,240,.95)}
+.btn--primary:hover{transform:translateY(-1px)}
+.btn--onDeep{border-color:rgba(167,139,255,.42);color:var(--deep-text)}
+.btn--onDeep:hover{background:rgba(167,139,255,.12)}
+.hero-foot{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--deep-dim);letter-spacing:.02em}
+
+/* ---------------- schema: dove finisce lo scatto ---------------- */
+.flow{
+  background:rgba(255,255,255,.045);
+  border:1px solid var(--deep-line);
+  border-radius:16px;padding:22px;
+  display:flex;flex-direction:column;gap:14px;
+  backdrop-filter:blur(2px);
+}
+.flow-title{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--deep-dim)}
+.node{
+  border:1px solid var(--deep-line);border-radius:12px;background:rgba(12,9,32,.55);
+  padding:15px 16px;display:flex;gap:13px;align-items:center;
+}
+.node-ico{width:34px;height:34px;border-radius:9px;flex:none;display:grid;place-items:center;background:linear-gradient(140deg,#7C4DF0,#4832EE)}
+.node-ico svg{display:block}
+.node-body{display:flex;flex-direction:column;gap:2px;min-width:0}
+.node-body strong{font-size:15.5px;color:var(--deep-text);font-weight:600}
+.node-body span{font-size:13.5px;color:var(--deep-dim)}
+.split-arrows{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch}
+.branch{display:flex;flex-direction:column;gap:8px}
+.branch-line{display:flex;align-items:center;gap:8px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+.branch-line i{flex:1;height:1px;background:var(--deep-line);font-style:normal}
+.branch--yes .branch-line{color:var(--deep-accent-2)}
+.branch--no .branch-line{color:#F2748E}
+.dest{border-radius:12px;padding:14px 15px;border:1px solid var(--deep-line);flex:1;display:flex;flex-direction:column;gap:5px}
+.dest--yes{background:rgba(79,214,224,.09);border-color:rgba(79,214,224,.34)}
+.dest--no{background:rgba(242,116,142,.07);border-color:rgba(242,116,142,.26)}
+.dest strong{font-size:14.5px;color:var(--deep-text);font-weight:600}
+.dest span{font-size:13px;color:var(--deep-dim)}
+.dest .big{font-family:"IBM Plex Mono",monospace;font-size:22px;color:var(--deep-text);letter-spacing:-.01em}
+.dest--no .big{color:#F2748E}
+
+/* ---------------- bande ---------------- */
+.band{border-top:1px solid var(--line-soft);padding:84px 0;background:var(--bg)}
+.band--alt{background:var(--band-alt);border-top-color:var(--line)}
+.band--tint{background:var(--band-tint);border-top-color:var(--line)}
+.band--alt .panel,.band--tint .panel,.band--alt .tree,.band--tint .tree{background:var(--surface-2)}
+.band-head{display:flex;flex-direction:column;gap:14px;max-width:730px}
+.band-head h2{font-size:clamp(29px,4vw,44px)}
+.band-head p{color:var(--text-dim);font-size:18px;max-width:62ch}
+
+/* ---------------- prima/dopo rullino ---------------- */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:38px}
+.panel{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:26px 24px;display:flex;flex-direction:column;gap:16px}
+.panel--accent{border-color:var(--accent-edge);box-shadow:var(--lift)}
+.panel h3{font-size:20px}
+.panel-tag{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--text-faint)}
+.panel--accent .panel-tag{color:var(--accent)}
+.ticks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;color:var(--text-dim);font-size:15.5px}
+.ticks li{display:flex;gap:10px;align-items:flex-start;line-height:1.45}
+.ticks li::before{content:"—";color:var(--text-faint);flex:none;font-family:"IBM Plex Mono",monospace}
+.ticks--good li::before{content:"+";color:var(--accent);font-weight:600}
+.roll-strip{display:flex;gap:4px;flex-wrap:wrap}
+.rs{width:38px;height:38px;border-radius:5px;background:linear-gradient(150deg,var(--tile-a),var(--tile-b))}
+.rs[data-ev]{background:linear-gradient(150deg,var(--accent-light),var(--accent-deep));box-shadow:0 0 0 1px var(--accent-edge)}
+.strip-note{font-size:13px;color:var(--text-faint)}
+
+/* ---------------- passi ---------------- */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);margin-top:44px;border-top:1px solid var(--line)}
+@media (max-width:1080px){.steps{grid-template-columns:1fr 1fr}.step:nth-child(2n){border-right:none}}
+.step{padding:24px 26px 6px;border-right:1px solid var(--line-soft);display:flex;flex-direction:column;gap:9px}
+.step:last-child{border-right:none}
+.step-n{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;color:var(--accent)}
+.step h3{font-size:21px}
+.step p{color:var(--text-dim);font-size:15.5px}
+
+/* ---------------- organizzazione: elenco eventi ---------------- */
+.org{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:48px;align-items:center;margin-top:40px}
+.org-list{display:flex;flex-direction:column;gap:22px}
+.org-item h3{font-size:19px;margin-bottom:6px}
+.org-item p{color:var(--text-dim);font-size:15.5px}
+
+/* ---------------- funzioni ---------------- */
+.features{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;margin-top:38px}
+.feature{padding:22px 0;border-top:1px solid var(--line-soft);display:flex;flex-direction:column;gap:7px}
+.feature h3{font-size:18px;letter-spacing:-.012em}
+.feature p{color:var(--text-dim);font-size:15px}
+.feature .spec{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--text-faint)}
+
+/* ---------------- montaggio (pannello scuro) ---------------- */
+.studio{
+  background:linear-gradient(168deg,#1E1552 0%,#140F35 60%,#100C2B 100%);
+  color:var(--deep-text);border:1px solid var(--deep-line);border-radius:18px;
+  padding:44px clamp(22px,4vw,46px);
+}
+.studio h2{font-size:clamp(29px,4vw,44px);color:var(--deep-text)}
+.studio .eyebrow{color:var(--deep-accent)}
+.studio-lede{color:var(--deep-dim);font-size:18px;max-width:60ch}
+.timeline{margin:0 0 4px;background:rgba(9,7,26,.55);border:1px solid var(--deep-line);border-radius:12px;padding:18px 18px 14px;overflow:hidden}
+.tl-head{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--deep-dim);letter-spacing:.05em;margin-bottom:14px}
+.tl-head b{color:var(--deep-accent);font-weight:500}
+.track{display:flex;gap:3px;height:56px}
+.clip{flex:1;border-radius:4px;position:relative;overflow:hidden;border:1px solid rgba(167,139,255,.22)}
+.clip:nth-child(odd){flex:1.6}
+.clip:nth-child(1){background:linear-gradient(160deg,#5B3FB8,#251A55)}
+.clip:nth-child(2){background:linear-gradient(160deg,#3A2E86,#1A1443)}
+.clip:nth-child(3){background:linear-gradient(160deg,#6B4AC4,#2A1D60)}
+.clip:nth-child(4){background:linear-gradient(160deg,#2F3C8E,#161B44)}
+.clip:nth-child(5){background:linear-gradient(160deg,#7B54CE,#2E2166)}
+.clip:nth-child(6){background:linear-gradient(160deg,#39308F,#191647)}
+.clip span{position:absolute;left:6px;bottom:5px;font-family:"IBM Plex Mono",monospace;font-size:9px;color:rgba(255,255,255,.78)}
+.beatline{position:relative;height:26px;margin-top:9px;border-top:1px solid var(--deep-line)}
+.beat{position:absolute;top:0;width:1px;height:7px;background:var(--deep-line)}
+.beat[data-bar]{height:13px;background:var(--deep-accent);opacity:.9}
+.beat[data-bar] i{position:absolute;top:15px;left:-8px;width:18px;text-align:center;font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:9px;color:var(--deep-dim)}
+.playhead{position:absolute;top:-66px;bottom:0;width:1.5px;left:0;background:var(--deep-accent-2);box-shadow:0 0 9px rgba(79,214,224,.75);animation:sweep 9s linear infinite}
+@keyframes sweep{from{left:0}to{left:100%}}
+@media (prefers-reduced-motion:reduce){.playhead{animation:none;left:38%}}
+.studio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--deep-line);border:1px solid var(--deep-line);border-radius:12px;overflow:hidden}
+.studio-cell{background:#100C2B;padding:22px 20px;display:flex;flex-direction:column;gap:9px}
+.studio-cell h3{font-size:17px;color:var(--deep-text)}
+.studio-cell p{color:var(--deep-dim);font-size:14.5px}
+.pillrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
+.pill{font-family:"IBM Plex Mono",monospace;font-size:10.5px;padding:3px 9px;border-radius:99px;border:1px solid var(--deep-line);color:var(--deep-dim)}
+.pill[data-hot]{color:var(--deep-accent);border-color:rgba(167,139,255,.45)}
+.beat[data-drop]{height:20px;width:2px;background:var(--deep-accent-2);opacity:1}
+.beat[data-drop] i{position:absolute;top:22px;left:-14px;width:30px;text-align:center;font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:9px;color:var(--deep-accent-2)}
+.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--deep-line);border:1px solid var(--deep-line);border-radius:12px;overflow:hidden;margin:0 0 28px}
+.proof div{background:#100C2B;padding:20px;display:flex;flex-direction:column;gap:5px}
+.proof b{font-family:"IBM Plex Mono",monospace;font-size:30px;font-weight:500;color:var(--deep-accent-2);line-height:1;letter-spacing:-.02em}
+.proof span{font-size:13.5px;color:var(--deep-dim)}
+.proof em{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--deep-dim)}
+@media (max-width:920px){.proof{grid-template-columns:1fr}}
+
+/* ---------------- consegna ---------------- */
+.delivery{display:grid;grid-template-columns:1fr 1fr;gap:42px;margin-top:34px;align-items:start}
+.tree{
+  background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px 22px;
+  font-family:"IBM Plex Mono",monospace;font-size:12.5px;line-height:1.85;color:var(--text-dim);
+  overflow-x:auto;box-shadow:var(--lift);
+}
+.tree b{color:var(--text);font-weight:600}
+.tree u{color:var(--accent);text-decoration:none}
+.specs{margin-top:34px;border-top:1px solid var(--line)}
+.spec-row{display:grid;grid-template-columns:220px 1fr;gap:18px;padding:13px 0;border-bottom:1px solid var(--line-soft);align-items:baseline}
+.spec-row dt{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint)}
+.spec-row dd{margin:0;font-size:15.5px}
+
+/* ---------------- domande + chiusura ---------------- */
+.qa{display:grid;grid-template-columns:1fr 1fr;gap:32px 44px;margin-top:36px}
+.qa h3{font-size:17px;margin-bottom:7px}
+.qa p{color:var(--text-dim);font-size:15px}
+.close{
+  border-radius:18px;padding:clamp(32px,5vw,56px);
+  background:linear-gradient(150deg,#2A1D74 0%,#160F3C 62%,#110C2D 100%);
+  color:var(--deep-text);display:flex;flex-direction:column;gap:20px;align-items:flex-start;
+  border:1px solid var(--deep-line);
+}
+.close h2{font-size:clamp(28px,4.2vw,42px);color:var(--deep-text);max-width:20ch}
+.close p{color:var(--deep-dim);font-size:18px;max-width:56ch}
+footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--text-faint)}
+
+
+/* ---------------- mockup iPhone ---------------- */
+/* iPhone 17 Pro Max, alluminio arancione: scocca, bordo nero, tasti laterali. */
+.device{
+  position:relative;
+  width:266px;height:576px;flex:none;
+  border-radius:46px;padding:3px;
+  background:
+    linear-gradient(103deg,#8E3A0C 0%,#F09A54 7%,#D2601C 26%,#B44E14 50%,#DE7734 74%,#F5A768 92%,#8E3A0C 100%);
+  box-shadow:
+    0 34px 70px -34px rgba(120,50,10,.75),
+    0 4px 14px -6px rgba(20,10,40,.45),
+    inset 0 0 0 1px rgba(255,214,180,.5);
+}
+/* tasti: azione e volumi a sinistra, accensione e comando fotocamera a destra */
+.device::before,.device::after{
+  content:"";position:absolute;width:3px;border-radius:2px;
+  background:linear-gradient(180deg,#B4541A,#8A3A0B);
+}
+.device::before{
+  left:-2px;top:19%;height:30%;
+  background:linear-gradient(180deg,#B4541A 0 13%,transparent 13% 25%,#B4541A 25% 55%,transparent 55% 66%,#B4541A 66% 100%);
+}
+.device::after{right:-2px;top:24%;height:28%;
+  background:linear-gradient(180deg,#B4541A 0 34%,transparent 34% 48%,#B4541A 48% 100%);
+}
+.device-screen{
+  width:100%;height:100%;border-radius:43px;overflow:hidden;position:relative;
+  display:flex;flex-direction:column;background:var(--surface);color:var(--text);
+  font-size:11px;line-height:1.35;
+  border:6px solid #0A0A0C;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);
+}
+.island{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:74px;height:19px;border-radius:99px;background:#07060E;z-index:8;box-shadow:0 0 0 1px rgba(0,0,0,.6)}
+.scr-pad{padding:36px 11px 12px}
+
+/* fotocamera */
+.scr-cam{background:#0B0916;color:#F4F3FB}
+.cam-view{
+  position:relative;flex:1;overflow:hidden;
+  background:
+    radial-gradient(circle 6px at 26% 63%, rgba(255,214,160,.75), transparent 100%),
+    radial-gradient(circle 4px at 37% 69%, rgba(255,224,180,.6), transparent 100%),
+    radial-gradient(circle 5px at 68% 66%, rgba(255,205,150,.55), transparent 100%),
+    radial-gradient(circle 3px at 78% 72%, rgba(255,232,200,.5), transparent 100%),
+    radial-gradient(110% 46% at 50% 104%, rgba(255,176,96,.55), transparent 62%),
+    radial-gradient(58% 34% at 24% 22%, rgba(139,92,246,.55), transparent 72%),
+    radial-gradient(46% 26% at 84% 34%, rgba(79,214,224,.3), transparent 74%),
+    linear-gradient(172deg,#57489C 0%,#2E2560 46%,#171233 100%);
+}
+.cam-view::before,.cam-view::after{content:"";position:absolute;background:rgba(255,255,255,.16)}
+.cam-view::before{left:33.3%;top:0;bottom:0;width:1px}
+.cam-view::after{right:33.3%;top:0;bottom:0;width:1px}
+.cam-hline{position:absolute;left:0;right:0;height:1px;background:rgba(255,255,255,.16)}
+.cam-top{position:absolute;top:34px;left:0;right:0;display:flex;align-items:center;justify-content:space-between;gap:6px;padding:0 11px;z-index:5}
+.cam-btn{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;color:#fff;
+  background:rgba(10,8,22,.55);border:1px solid rgba(255,255,255,.14);
+  border-radius:8px;padding:4px 7px;backdrop-filter:blur(3px);
+}
+.cam-event{
+  position:absolute;top:74px;left:50%;transform:translateX(-50%);z-index:5;white-space:nowrap;display:flex;align-items:center;gap:6px;
+  background:rgba(10,8,22,.6);border:1px solid rgba(167,139,255,.4);border-radius:99px;
+  padding:3px 10px;font-size:9.5px;font-weight:600;color:#F4F3FB;
+}
+.cam-event svg{display:block;flex:none}
+.cam-focus{position:absolute;left:38%;top:44%;width:52px;height:52px;border:1.5px solid rgba(255,214,102,.9);border-radius:6px;z-index:4}
+.cam-bottom{background:#0B0916;padding:9px 11px 14px;display:flex;flex-direction:column;gap:9px;z-index:6}
+.cam-zooms{display:flex;justify-content:center;gap:6px}
+.zoom{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:#C9C6E4;border:1px solid rgba(255,255,255,.14);border-radius:99px;padding:3px 8px}
+.zoom[data-on]{background:#A78BFF;color:#14102E;border-color:#A78BFF;font-weight:500}
+.cam-modes{display:flex;justify-content:center;gap:14px;font-family:"IBM Plex Mono",monospace;font-size:9.5px;letter-spacing:.12em;color:#8E8AB8}
+.cam-modes b{color:#F4F3FB;font-weight:500;position:relative}
+.cam-modes b::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:-5px;width:4px;height:4px;border-radius:50%;background:#A78BFF}
+.cam-actions{display:flex;align-items:center;justify-content:space-between;padding-top:2px}
+.shutter{width:48px;height:48px;border-radius:50%;background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.28)}
+.cam-thumb{width:34px;height:34px;border-radius:8px;background:linear-gradient(150deg,#8B5CF6,#3A2BE8);display:grid;place-items:center;font-family:"IBM Plex Mono",monospace;font-size:11px;color:#fff}
+.cam-flip{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.12);display:grid;place-items:center;font-size:14px;color:#F4F3FB}
+
+/* elenco eventi + griglia */
+.scr-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:0 2px 10px}
+.scr-head h4{margin:0;font-family:"Bricolage Grotesque",sans-serif;font-size:19px;font-weight:800;letter-spacing:-.02em}
+.scr-head span{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--text-faint)}
+.scr-back{font-family:"IBM Plex Mono",monospace;font-size:9.5px;color:var(--accent);padding:0 2px 4px}
+.scr-toolbar{display:flex;align-items:center;justify-content:space-between;padding:0 3px 7px;font-size:12px;color:var(--accent)}
+.card-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:start;flex:1;min-height:0;overflow:hidden}
+.ecard{border-radius:10px;overflow:hidden;background:var(--surface-2);border:1px solid var(--line-soft)}
+.ecard-cover{height:50px;display:grid;place-items:center;background:linear-gradient(150deg,var(--accent-light),var(--accent-deep))}
+.ecard-cover[data-a]{background:linear-gradient(150deg,#9E86E8,#3F2F86)}
+.ecard-cover[data-b]{background:linear-gradient(150deg,#7E93D4,#2C3670)}
+.ecard-cover[data-c]{background:linear-gradient(150deg,#B49AE0,#523B8C)}
+.ecard-meta{padding:6px 7px 7px;display:flex;flex-direction:column;gap:2px}
+.ecard-meta strong{font-size:10px;font-weight:600;line-height:1.2}
+.ecard-meta span{font-family:"IBM Plex Mono",monospace;font-size:8px;color:var(--text-faint)}
+.scr-cta{margin-top:9px;flex:none;border-radius:11px;padding:10px;text-align:center;font-size:11.5px;font-weight:600;background:linear-gradient(140deg,#7C4DF0,#4832EE);color:#fff}
+.day-chips{display:flex;gap:5px;padding:0 0 9px;flex-wrap:wrap}
+.dchip{font-family:"IBM Plex Mono",monospace;font-size:8.5px;padding:3px 7px;border-radius:99px;border:1px solid var(--line);color:var(--text-dim)}
+.dchip[data-on]{background:var(--accent-wash);border-color:var(--accent-edge);color:var(--accent)}
+.dchip b{display:block;font-weight:700;font-size:9.5px;color:inherit}
+.mday{display:flex;align-items:center;gap:7px;padding:5px 0 7px}
+.mday-badge{width:26px;height:26px;flex:none;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:var(--accent-wash);color:var(--accent);line-height:1}
+.mday-badge b{font-size:11px;font-weight:700}
+.mday-badge i{font-style:normal;font-size:6px;font-weight:600;letter-spacing:.06em}
+.mday-text{display:flex;flex-direction:column;gap:1px;min-width:0}
+.mday-text strong{font-size:10px;font-weight:700}
+.mday-text span{font-family:"IBM Plex Mono",monospace;font-size:7.5px;color:var(--text-faint)}
+.mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;flex:1;min-height:0;align-content:start;overflow:hidden}
+.mg{position:relative;aspect-ratio:1;border-radius:5px;overflow:hidden;background:linear-gradient(150deg,var(--tile-a),var(--tile-b))}
+.mg:nth-child(3n+1){background:linear-gradient(150deg,#9E86E8,#4B3A9E)}
+.mg:nth-child(3n+2){background:linear-gradient(150deg,#7E93D4,#33407C)}
+.mg:nth-child(3n+3){background:linear-gradient(150deg,#B49AE0,#5B4494)}
+.mg[data-v]::after{content:"";position:absolute;top:4px;right:4px;width:0;height:0;border-left:6px solid rgba(255,255,255,.9);border-top:4px solid transparent;border-bottom:4px solid transparent}
+
+/* sala di montaggio */
+.scr-edit{background:#0E0A22;color:#F4F3FB}
+.edit-head{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:34px 11px 8px;font-size:10.5px}
+.edit-head b{font-weight:600}
+.edit-head span{font-family:"IBM Plex Mono",monospace;font-size:12px;color:#A9A3D8;letter-spacing:.12em}
+.edit-view{
+  position:relative;flex:1;margin:0 12px;border-radius:10px;overflow:hidden;
+  background:
+    radial-gradient(circle 5px at 30% 58%, rgba(255,214,160,.7), transparent 100%),
+    radial-gradient(circle 4px at 62% 64%, rgba(255,224,180,.55), transparent 100%),
+    radial-gradient(100% 42% at 50% 102%, rgba(255,176,96,.45), transparent 62%),
+    radial-gradient(60% 32% at 28% 20%, rgba(167,139,255,.5), transparent 72%),
+    linear-gradient(168deg,#6247B4 0%,#332676 48%,#191340 100%);
+}
+.edit-title{position:absolute;left:9px;right:9px;bottom:62px;text-align:center;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:14px;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6)}
+.edit-cap{position:absolute;left:10px;right:10px;bottom:36px;text-align:center;font-size:8.5px;font-weight:600;line-height:1.3;color:#fff;text-shadow:0 1px 5px rgba(0,0,0,.9)}
+.edit-time{position:absolute;left:9px;bottom:10px;font-family:"IBM Plex Mono",monospace;font-size:9px;color:rgba(255,255,255,.85)}
+.edit-bar{position:absolute;left:9px;right:9px;bottom:24px;height:2px;border-radius:2px;background:rgba(255,255,255,.25)}
+.edit-bar i{position:absolute;left:0;top:0;bottom:0;width:46%;background:#4FD6E0;border-radius:2px}
+.edit-sync{display:flex;align-items:center;gap:6px;margin:9px 12px 0;padding:5px 8px;border-radius:8px;background:rgba(79,214,224,.1);border:1px solid rgba(79,214,224,.3);font-family:"IBM Plex Mono",monospace;font-size:8.5px;color:#8FE6EC}
+.edit-shots{display:flex;gap:3px;margin:8px 12px 0;height:30px}
+.es{flex:1;border-radius:4px;background:linear-gradient(160deg,#4A3A94,#221A55)}
+.es[data-on]{box-shadow:0 0 0 1.5px #A78BFF}
+.edit-tabs{display:flex;gap:4px;margin:9px 12px 0}
+.etab{flex:1;text-align:center;font-size:9px;padding:5px 0;border-radius:7px;background:rgba(255,255,255,.07);color:#C9C6E4}
+.etab[data-on]{background:#A78BFF;color:#14102E;font-weight:600}
+.edit-acts{display:flex;gap:4px;margin:6px 12px 14px}
+.eact{flex:1;text-align:center;font-size:8.5px;padding:6px 0;border-radius:7px;border:1px solid rgba(167,139,255,.35);color:#D6D2F2}
+.eact[data-warn]{border-color:rgba(242,116,142,.45);color:#F2A0B2}
+
+/* ---------------- percorso passo per passo ---------------- */
+.walk{display:grid;grid-template-columns:1fr 1fr;gap:4px 40px;margin-top:34px}
+.wstep{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:start;padding:26px 0 4px;border-top:1px solid var(--line-soft)}
+.wstep .device{zoom:.56;margin-top:2px}
+.wstep-copy{display:flex;flex-direction:column;gap:7px}
+.wstep-n{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--accent)}
+.wstep h3{font-size:18.5px}
+.wstep p{color:var(--text-dim);font-size:14.5px}
+.wstep .pillrow{margin-top:5px}
+.wstep .pill{border-color:var(--line);color:var(--text-faint)}
+.wstep .pill[data-hot]{color:var(--accent);border-color:var(--accent-edge)}
+.walk-note{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);color:var(--text-faint);font-size:14px}
+@media (max-width:1080px){.walk{grid-template-columns:1fr}}
+@media (max-width:540px){
+  .wstep{grid-template-columns:1fr;justify-items:start;gap:14px}
+  .wstep .device{zoom:.62}
+}
+
+/* foglio del nome evento */
+.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);border-radius:16px 16px 0 0;padding:10px 12px 16px;display:flex;flex-direction:column;gap:9px;box-shadow:0 -12px 30px rgba(20,10,50,.3);z-index:7}
+.sheet-grab{width:34px;height:4px;border-radius:2px;background:var(--line);align-self:center}
+.sheet h5{margin:0;font-family:"Bricolage Grotesque",sans-serif;font-size:13px;font-weight:800;letter-spacing:-.02em}
+.field{border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:10px;background:var(--surface-2);display:flex;justify-content:space-between;align-items:center}
+.field i{font-style:normal;width:1.5px;height:11px;background:var(--accent);display:block}
+.sheet-btn{border-radius:9px;padding:9px;text-align:center;font-size:11px;font-weight:600;background:linear-gradient(140deg,#7C4DF0,#4832EE);color:#fff}
+
+/* schermata "crea reels": brano e durata */
+.scr-list{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0;overflow:hidden}
+.lrow{border:1px solid var(--line-soft);border-radius:10px;background:var(--surface-2);padding:9px 10px;display:flex;flex-direction:column;gap:3px}
+.lrow strong{font-size:10px;font-weight:700}
+.lrow span{font-family:"IBM Plex Mono",monospace;font-size:8px;color:var(--text-faint)}
+.lrow--pick{border-color:var(--accent-edge);background:var(--accent-wash)}
+.mslider{position:relative;height:4px;border-radius:3px;background:var(--line);margin:9px 6px 4px}
+.mslider i{position:absolute;left:0;top:0;bottom:0;width:34%;background:var(--accent);border-radius:3px}
+.mslider b{position:absolute;left:34%;top:50%;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:50%;background:#fff;border:1px solid var(--line);box-shadow:0 1px 3px rgba(20,10,50,.3)}
+.warnrow{display:flex;gap:6px;align-items:flex-start;border:1px solid rgba(214,138,32,.45);background:rgba(214,138,32,.12);border-radius:9px;padding:7px 9px;font-size:8.5px;line-height:1.4;color:var(--text-dim)}
+
+/* preparazione del montaggio */
+.prep{flex:1;display:flex;flex-direction:column;gap:11px;justify-content:center;padding:0 16px}
+.prep-item{display:flex;gap:9px;align-items:center;font-size:9.5px;color:#9F9AC8;line-height:1.3}
+.prep-item b{width:15px;height:15px;border-radius:50%;display:grid;place-items:center;font-size:8px;font-weight:600;background:rgba(167,139,255,.18);color:#A78BFF;flex:none}
+.prep-item[data-done] b{background:#A78BFF;color:#14102E}
+.prep-item[data-now]{color:#F4F3FB;font-weight:600}
+.prep-item[data-now] b{border:1px solid #A78BFF}
+
+/* pannelli della sala di montaggio, nei passaggi */
+.esubs{display:flex;gap:4px;margin:7px 12px 0}
+.esub{flex:1;text-align:center;font-size:8px;padding:4px 0;border-radius:6px;background:rgba(255,255,255,.06);color:#C9C6E4}
+.esub[data-on]{background:rgba(167,139,255,.3);color:#F4F3FB;font-weight:600}
+.epanel{margin:7px 12px 12px;display:flex;flex-direction:column;gap:6px}
+.echips{display:flex;flex-wrap:wrap;gap:4px}
+.echip{font-size:8px;padding:3px 7px;border-radius:99px;border:1px solid rgba(167,139,255,.3);color:#C9C6E4}
+.echip[data-on]{background:#A78BFF;color:#14102E;border-color:#A78BFF;font-weight:600}
+.erow{display:flex;align-items:center;gap:7px;font-size:8.5px;color:#C9C6E4}
+.emeter{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.14);position:relative;overflow:hidden}
+.emeter i{position:absolute;left:0;top:0;bottom:0;width:62%;background:#A78BFF;border-radius:3px}
+.emeter[data-mon] i{width:25%;background:#4FD6E0}
+.erec{width:32px;height:32px;border-radius:50%;background:#E5484D;align-self:center;box-shadow:0 0 0 3px rgba(229,72,77,.3)}
+.ecue{display:flex;gap:7px;align-items:center;font-size:8px;color:#C9C6E4;border-radius:6px;padding:4px 6px;background:rgba(255,255,255,.05)}
+.ecue[data-on]{background:rgba(167,139,255,.18);color:#F4F3FB}
+.ecue em{font-style:normal;font-family:"IBM Plex Mono",monospace;color:#A78BFF;flex:none}
+
+/* esportazione */
+.expo{position:absolute;inset:0;background:rgba(8,6,20,.74);display:grid;place-items:center;z-index:7}
+.expo-box{background:rgba(22,16,54,.96);border:1px solid var(--deep-line);border-radius:12px;padding:15px 16px;display:flex;flex-direction:column;gap:8px;align-items:center;width:76%}
+.expo-bar{width:100%;height:4px;border-radius:3px;background:rgba(255,255,255,.16);position:relative}
+.expo-bar i{position:absolute;left:0;top:0;bottom:0;width:68%;background:#A78BFF;border-radius:3px}
+.expo-box b{font-size:10px;font-weight:600;color:#F4F3FB}
+.expo-box span{font-size:8px;color:#A9A3D8;text-align:center;line-height:1.4}
+
+/* anteprima verticale del reels finito */
+.reelcard{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:9/16;background:linear-gradient(168deg,#6247B4,#191340);display:flex;align-items:flex-end;padding:5px}
+.reelcard span{font-size:7px;color:rgba(255,255,255,.9);font-family:"IBM Plex Mono",monospace}
+.reelcard::before{content:"";position:absolute;top:5px;right:5px;width:0;height:0;border-left:6px solid rgba(255,255,255,.9);border-top:4px solid transparent;border-bottom:4px solid transparent}
+
+/* disposizioni con i mockup */
+.device-pair{display:flex;gap:16px;align-items:flex-start}
+.device-pair .device{zoom:.87}
+.device-pair .device:nth-child(2){margin-top:38px}
+.hero-shot{display:flex;flex-direction:column;gap:16px;align-items:center}
+.flow-mini{
+  width:100%;display:grid;grid-template-columns:1fr 1fr;gap:10px;
+  border:1px solid var(--deep-line);border-radius:14px;background:rgba(255,255,255,.05);padding:14px;
+}
+.flow-mini-head{grid-column:1/-1;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:var(--deep-dim)}
+.fm{border-radius:11px;padding:11px 12px;display:flex;flex-direction:column;gap:2px;border:1px solid var(--deep-line)}
+.fm--yes{background:rgba(79,214,224,.09);border-color:rgba(79,214,224,.32)}
+.fm--no{background:rgba(242,116,142,.07);border-color:rgba(242,116,142,.26)}
+.fm b{font-family:"IBM Plex Mono",monospace;font-size:20px;font-weight:500;color:var(--deep-text);line-height:1.1}
+.fm--no b{color:#F2748E}
+.fm strong{font-size:12.5px;font-weight:600;color:var(--deep-text)}
+.fm span{font-size:11px;color:var(--deep-dim)}
+.studio-showcase{display:grid;grid-template-columns:auto minmax(0,1fr);gap:30px;align-items:center;margin:32px 0 28px}
+.studio-showcase .device{zoom:.94}
+
+@media (max-width:920px){
+  .hero{grid-template-columns:1fr;gap:38px;padding-bottom:56px}
+  .compare,.features,.qa,.delivery,.org{grid-template-columns:1fr}
+  .org{gap:34px}
+  .steps{grid-template-columns:1fr}
+  .step{border-right:none;border-bottom:1px solid var(--line-soft);padding-bottom:20px}
+  .studio-grid{grid-template-columns:1fr}
+  .spec-row{grid-template-columns:1fr;gap:2px}
+  .band{padding:62px 0}
+}
+@media (max-width:920px){
+  .studio-showcase{grid-template-columns:1fr;justify-items:center;gap:26px}
+  .device-pair{justify-content:center;flex-wrap:wrap}
+  .device-pair .device:nth-child(2){margin-top:0}
+}
+@media (max-width:620px){
+  .split-arrows{grid-template-columns:1fr}
+  .flow-mini{grid-template-columns:1fr}
+  .device{zoom:.8}
+  .device-pair .device{zoom:.62}
+  .studio-showcase .device{zoom:.8}
+}
+@media (max-width:400px){
+  .device{zoom:.68}
+  .device-pair .device{zoom:.5}
+  .studio-showcase .device{zoom:.68}
+}
+</style>
+
+<div class="top">
+  <div class="wrap">
+    <header class="topbar">
+      <div class="brand">
+        <svg class="mark" viewBox="0 0 100 100" aria-hidden="true">
+          <defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#3A2BE8"/>
+          </linearGradient></defs>
+          <rect width="100" height="100" rx="23" fill="url(#mg)"/>
+          <rect x="20" y="24" width="32" height="14" rx="6" fill="#F7F8FA"/>
+          <rect x="16" y="31" width="68" height="48" rx="11" fill="#F7F8FA"/>
+          <rect x="64" y="36" width="10" height="9" rx="3" fill="#5238F2"/>
+          <circle cx="50" cy="56" r="14" fill="none" stroke="#5238F2" stroke-width="9"/>
+        </svg>
+        EventCam
+      </div>
+      <div class="topbar-meta">iPhone · iOS 17+</div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Fotocamera per eventi · reels automatico</p>
+        <h1>Registra i tuoi video senza perderli nel rullino e crea reels o video <span>PAZZESCHI in modo automatico grazie all'AI</span></h1>
+        <p class="hero-lede">Ogni evento ha la sua cartella. Gli scatti non entrano nel rullino. E il reels lo monta l'app, da sola.</p>
+        <p class="hero-lede">Apri l'evento e scatta con EventCam: ogni foto e ogni video finiscono <b>solo</b> nella cartella di quell'evento, mai nell'app Foto. A fine giornata hai già le clip: scegli la tua musica, lasciale in ordine cronologico e <b>il reels si monta da solo</b> — semplice, veloce, automatico.</p>
+        <ul class="claims">
+          <li>Un evento, una cartella: concerto, compleanno, gita, cantiere, matrimonio.</li>
+          <li>Anche se dura tre giorni, ritrovi tutto diviso per giornata.</li>
+          <li>Reels automatico dalle clip già girate: tu metti la musica, al montaggio pensa l'app.</li>
+          <li>Da un minuto a dieci: il pezzo per i social o il filmato completo della giornata.</li>
+          <li>La tua voce sopra il montaggio, con i sottotitoli scritti dall'app.</li>
+          <li>A fine lavoro consegni l'evento intero, non una selezione fatta a mano.</li>
+        </ul>
+        <div class="cta-row">
+          <a class="btn btn--primary" href="#beta">Provala al prossimo evento</a>
+          <a class="btn btn--onDeep" href="#passaggi">Tutti i passaggi</a>
+        </div>
+        <p class="hero-foot">Nessun account · nessun cloud obbligatorio · i file restano sul telefono</p>
+      </div>
+
+      <div class="hero-shot">
+        <div class="device" role="img" aria-label="Schermata della fotocamera di EventCam: la targhetta indica l'evento Concerto Palazzetto, in basso obiettivi e modalità, con 24 contenuti già salvati nell'evento.">
+          <div class="device-screen scr-cam">
+            <span class="island" aria-hidden="true"></span>
+            <div class="cam-view">
+              <span class="cam-hline" style="top:33.3%"></span>
+              <span class="cam-hline" style="top:66.6%"></span>
+              <div class="cam-event"><svg width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h3.2l1.6 2H18.5A2.5 2.5 0 0 1 21 8.5v9A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5z" fill="#A78BFF"/></svg>Concerto Palazzetto</div>
+              <div class="cam-top">
+                <span class="cam-btn">✕</span>
+                <span class="cam-btn">⚡︎A</span>
+                <span class="cam-btn">4:3</span>
+                <span class="cam-btn">▦</span>
+                <span class="cam-btn">≡</span>
+              </div>
+              <span class="cam-focus" aria-hidden="true"></span>
+            </div>
+            <div class="cam-bottom">
+              <div class="cam-zooms">
+                <span class="zoom">0,5×</span>
+                <span class="zoom" data-on>1×</span>
+                <span class="zoom">2×</span>
+              </div>
+              <div class="cam-modes"><b>FOTO</b><span>VIDEO</span></div>
+              <div class="cam-actions">
+                <span class="cam-thumb">24</span>
+                <span class="shutter" aria-hidden="true"></span>
+                <span class="cam-flip" aria-hidden="true">⟳</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flow-mini" role="img" aria-label="Ogni scatto va nella cartella dell'evento e non nel rullino personale.">
+          <p class="flow-mini-head">Dove finisce quello che scatti</p>
+          <div class="fm fm--yes">
+            <strong>Cartella dell'evento</strong>
+            <b>312</b>
+            <span>foto e video, divisi per giornata</span>
+          </div>
+          <div class="fm fm--no">
+            <strong>Rullino personale</strong>
+            <b>0</b>
+            <span>resta come l'hai lasciato</span>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+</div>
+
+<section class="band" style="border-top:none">
+  <div class="wrap">
+    <div class="band-head">
+      <p class="eyebrow">Il problema</p>
+      <h2>Nel rullino le foto di un evento diventano introvabili.</h2>
+      <p>Un evento produce centinaia di scatti che nel rullino si infilano fra screenshot, foto di famiglia e video privati fatti negli stessi giorni. Recuperarli dopo significa scorrere all'indietro per settimane, spuntarli uno a uno e sperare di non saltarne nessuno — o di non cancellarne uno per sbaglio mentre fai spazio.</p>
+    </div>
+
+    <div class="compare">
+      <div class="panel">
+        <p class="panel-tag">Fotocamera di sistema</p>
+        <h3>Tutto in un mucchio solo</h3>
+        <div class="roll-strip" aria-hidden="true">
+          <span class="rs"></span><span class="rs" data-ev></span><span class="rs"></span><span class="rs"></span>
+          <span class="rs" data-ev></span><span class="rs"></span><span class="rs" data-ev></span><span class="rs"></span>
+          <span class="rs"></span><span class="rs" data-ev></span><span class="rs"></span><span class="rs"></span>
+        </div>
+        <p class="strip-note">In viola gli scatti dell'evento. Il resto è vita privata, nello stesso posto.</p>
+        <ul class="ticks">
+          <li>Gli album di sistema sono etichette su un unico mucchio: non impediscono niente.</li>
+          <li>La selezione va rifatta a fine serata, con centinaia di elementi da spuntare.</li>
+          <li>Le sincronizzazioni portano il lavoro su dispositivi che non c'entrano.</li>
+          <li>Basta una pulizia del rullino per perdere materiale che non hai ancora consegnato.</li>
+        </ul>
+      </div>
+      <div class="panel panel--accent">
+        <p class="panel-tag">EventCam</p>
+        <h3>Separato dal primo scatto</h3>
+        <div class="roll-strip" aria-hidden="true">
+          <span class="rs" data-ev></span><span class="rs" data-ev></span><span class="rs" data-ev></span><span class="rs" data-ev></span>
+          <span class="rs" data-ev></span><span class="rs" data-ev></span><span class="rs" data-ev></span><span class="rs" data-ev></span>
+          <span class="rs" data-ev></span><span class="rs" data-ev></span><span class="rs" data-ev></span><span class="rs" data-ev></span>
+        </div>
+        <p class="strip-note">Dentro l'evento c'è solo l'evento. Il rullino non viene toccato.</p>
+        <ul class="ticks ticks--good">
+          <li>Ogni contenuto nasce già nella cartella giusta, anche a distanza di giorni.</li>
+          <li>File nominati da soli con nome evento, data e ora: leggibili anche fuori dall'app.</li>
+          <li>Nessuna copia automatica nell'app Foto: il telefono personale resta personale.</li>
+          <li>Quando serve, esporti tu — una selezione, l'evento intero o uno ZIP per giornate.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <p class="step-n">PASSO 01</p>
+        <h3>Crea l'evento</h3>
+        <p>Basta un nome. Puoi rinominarlo in qualsiasi momento: i contenuti restano legati all'evento, non al testo.</p>
+      </div>
+      <div class="step">
+        <p class="step-n">PASSO 02</p>
+        <h3>Scatta dentro l'evento</h3>
+        <p>Il pulsante principale apre sempre la fotocamera nell'evento aperto. Ogni file viene scritto per intero prima di comparire nella griglia.</p>
+      </div>
+      <div class="step">
+        <p class="step-n">PASSO 03</p>
+        <h3>Il reels si monta da solo</h3>
+        <p>Scegli la musica e la durata, da un minuto a dieci: l'app prende le clip dell'evento, le tiene in ordine cronologico e taglia a tempo. Tu non monti niente.</p>
+      </div>
+      <div class="step">
+        <p class="step-n">PASSO 04</p>
+        <h3>Consegna e archivia</h3>
+        <p>Condividi quello che serve, esporta tutto, o manda al Mac un unico ZIP già ordinato per giornate.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band band--alt">
+  <div class="wrap">
+    <div class="band-head">
+      <p class="eyebrow">Organizzazione</p>
+      <h2>L'archivio si costruisce mentre lavori, non dopo.</h2>
+      <p>Nella schermata «I miei eventi» ogni progetto è una scheda con la sua copertina e il numero di contenuti. Dentro, la griglia si legge per giornate: ogni giornata ha la sua intestazione con data, quante foto, quanti video e da che ora a che ora avete lavorato. Il terzo giorno non si confonde con il primo.</p>
+    </div>
+
+    <div class="org">
+      <div class="device-pair">
+        <div class="device" role="img" aria-label="Schermata I miei eventi: sei schede con copertina, nome e numero di contenuti.">
+          <div class="device-screen">
+            <span class="island" aria-hidden="true"></span>
+            <div class="scr-pad" style="display:flex;flex-direction:column;height:100%">
+              <div class="scr-toolbar"><span>⌘ Invia tutto al Mac</span><span>＋</span></div>
+              <div class="scr-head"><h4>I miei eventi</h4><span>6</span></div>
+              <div class="card-grid">
+                <div class="ecard">
+                  <div class="ecard-cover" data-a></div>
+                  <div class="ecard-meta"><strong>Concerto Palazzetto</strong><span>184 contenuti</span></div>
+                </div>
+                <div class="ecard">
+                  <div class="ecard-cover" data-b></div>
+                  <div class="ecard-meta"><strong>Gita a Firenze</strong><span>312 contenuti</span></div>
+                </div>
+                <div class="ecard">
+                  <div class="ecard-cover" data-c></div>
+                  <div class="ecard-meta"><strong>Compleanno di Sara</strong><span>96 contenuti</span></div>
+                </div>
+                <div class="ecard">
+                  <div class="ecard-cover" data-b></div>
+                  <div class="ecard-meta"><strong>Cantiere via Roma</strong><span>431 contenuti</span></div>
+                </div>
+                <div class="ecard">
+                  <div class="ecard-cover" data-a></div>
+                  <div class="ecard-meta"><strong>Sagra di settembre</strong><span>207 contenuti</span></div>
+                </div>
+                <div class="ecard">
+                  <div class="ecard-cover"><svg width="18" height="18" viewBox="0 0 100 100" aria-hidden="true"><rect x="20" y="24" width="32" height="14" rx="6" fill="rgba(255,255,255,.9)"/><rect x="16" y="31" width="68" height="48" rx="11" fill="rgba(255,255,255,.9)"/><circle cx="50" cy="56" r="14" fill="none" stroke="#4832EE" stroke-width="9"/></svg></div>
+                  <div class="ecard-meta"><strong>Battesimo di Luca</strong><span>nessun contenuto</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="device" role="img" aria-label="Griglia dell'evento Gita a Firenze: intestazione della giornata di sabato 5 maggio con 84 foto e 12 video.">
+          <div class="device-screen">
+            <span class="island" aria-hidden="true"></span>
+            <div class="scr-pad" style="display:flex;flex-direction:column;height:100%">
+              <p class="scr-back">‹ I miei eventi</p>
+              <div class="scr-head"><h4>Gita a Firenze</h4><span>312</span></div>
+              <div class="day-chips">
+                <span class="dchip">3 giornate<b>Tutti</b></span>
+                <span class="dchip" data-on>sab<b>5 mag</b></span>
+                <span class="dchip">dom<b>6 mag</b></span>
+              </div>
+              <div class="mday">
+                <span class="mday-badge"><b>5</b><i>MAG</i></span>
+                <span class="mday-text"><strong>Sabato 5 maggio</strong><span>84 foto · 12 video · 09:30 → 19:04</span></span>
+              </div>
+              <div class="mini-grid">
+                <span class="mg"></span><span class="mg" data-v></span><span class="mg"></span>
+                <span class="mg"></span><span class="mg"></span><span class="mg" data-v></span>
+                <span class="mg" data-v></span><span class="mg"></span><span class="mg"></span>
+                <span class="mg"></span><span class="mg"></span><span class="mg" data-v></span>
+              </div>
+              <div class="scr-cta">Scatta foto o video</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="org-list">
+        <div class="org-item">
+          <h3>Un evento resta aperto quanto serve</h3>
+          <p>Un cantiere seguito per mesi e una festa di una sera funzionano allo stesso modo: riapri l'evento e continui ad aggiungere, senza che nulla si mischi con il resto.</p>
+        </div>
+        <div class="org-item">
+          <h3>Le giornate si leggono a colpo d'occhio</h3>
+          <p>Scorrendo la griglia l'intestazione della giornata resta in alto: sai sempre di che data sono le foto che stai guardando. Toccala e resta solo quel giorno — utile quando il cliente chiede "le foto del sabato" e non tutte.</p>
+        </div>
+        <div class="org-item">
+          <h3>Ti avvisa se un evento non è mai uscito di qui</h3>
+          <p>L'archivio dell'app è l'unica casa di quelle foto. Gli eventi che non hai ancora consegnato da nessuna parte portano un contrassegno nell'elenco e una riga sopra la griglia, che sparisce da sola quando li salvi. Nessun promemoria assillante: solo il ricordo che finché stanno solo lì, stanno in un posto solo.</p>
+        </div>
+        <div class="org-item">
+          <h3>Anteprime e schermo intero</h3>
+          <p>Foto e video hanno anteprima immediata e riproduzione a tutto schermo, per il controllo veloce mentre sei ancora sul posto.</p>
+        </div>
+        <div class="org-item">
+          <h3>Hai scattato per sbaglio col telefono?</h3>
+          <p>L'importazione dal rullino porta quei contenuti dentro l'evento, con la <b>data vera dello scatto</b>: una foto di sabato finisce fra quelle di sabato, non fra quelle di oggi, e nel reels resta al suo posto nel racconto. La foto arriva com'era, senza essere ricompressa. È l'unico momento in cui l'app tocca l'app Foto, e lo decidi tu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band band--tint" id="funzioni">
+  <div class="wrap">
+    <div class="band-head">
+      <p class="eyebrow">La fotocamera</p>
+      <h2>Una fotocamera vera, che ricorda come l'hai lasciata.</h2>
+      <p>Trovi la combinazione giusta una volta sola: alla riapertura ritrovi modalità, qualità, proporzioni, zoom, flash e griglia esattamente come li avevi impostati.</p>
+    </div>
+
+    <div class="features">
+      <div class="feature">
+        <h3>Foto e video dalla stessa schermata</h3>
+        <p>Si passa da una all'altra senza uscire dall'evento. L'azione principale resta sempre la stessa: scattare qui, ora, dentro questo lavoro.</p>
+        <p class="spec">modalità · flash auto/on/off · griglia</p>
+      </div>
+      <div class="feature">
+        <h3>Sempre visibile in quale evento stai scattando</h3>
+        <p>Sul mirino, sotto i comandi, c'è la targhetta con il nome dell'evento aperto. Alla decima ora di lavoro non devi ricordartelo: è scritto lì, e lì finiscono le foto.</p>
+        <p class="spec">targhetta sempre in vista · contatore degli scatti</p>
+      </div>
+      <div class="feature">
+        <h3>Qualità che decidi tu</h3>
+        <p>Qualità massima o standard, formato JPEG o HEIF, proporzioni 4:3 o 16:9. Per i video scegli fra i preset che l'iPhone collegato offre davvero, indicati come 4K · 60 o 1080p · 30.</p>
+        <p class="spec">JPEG · HEIF · 4:3 e 16:9 · fino a 4K</p>
+      </div>
+      <div class="feature">
+        <h3>Zoom con gli obiettivi del telefono</h3>
+        <p>Ultragrandangolo, grandangolo e teleobiettivo con i valori che già conosci, più lo zoom a due dita. L'ultimo valore usato resta pronto alla riapertura.</p>
+        <p class="spec">0,5× · 1× · teleobiettivo · pinch</p>
+      </div>
+      <div class="feature">
+        <h3>Selezione multipla</h3>
+        <p>Tocchi quello che serve e lo condividi con il foglio di sistema, o lo elimini in blocco. "Seleziona tutto" prende quello che stai guardando — se hai aperto una sola giornata, prende quella — e con un tocco si torna indietro. Eliminando sparisce anche l'anteprima: nessun residuo sul telefono.</p>
+        <p class="spec">seleziona tutto · deseleziona · condividi · esporta · elimina</p>
+      </div>
+      <div class="feature">
+        <h3>File raggiungibili dal computer</h3>
+        <p>La cartella dell'app compare nella condivisione documenti dell'iPhone: colleghi il telefono e prendi gli originali, senza convertire niente.</p>
+        <p class="spec">File Sharing · originali intatti</p>
+      </div>
+      <div class="feature">
+        <h3>Eventi che si gestiscono</h3>
+        <p>Crea, rinomina, elimina. Eliminando un evento spariscono la sua cartella e tutti i suoi contenuti, senza lasciare pezzi in giro.</p>
+        <p class="spec">crea · rinomina · elimina</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="montaggio">
+  <div class="wrap">
+    <div class="studio">
+      <p class="eyebrow">Reels</p>
+      <h2>Il reels dell'evento si monta da solo. Sul serio a tempo di musica.</h2>
+      <p class="studio-lede">Tu scegli il brano e la durata — da un minuto a dieci — e al resto pensa l'app. Un brano MP3, M4A o WAV da File o iCloud Drive, ed EventCam lo studia prima di montare: dove batte il tempo, qual è l'"uno" della battuta, dove entra il ritornello, dove cade il drop. Poi guarda dentro le riprese e sceglie i tratti buoni. Il risultato è un verticale 1080 × 1920 dove <b style="color:var(--deep-text);font-weight:600">gli stacchi cadono sui momenti della canzone</b>, non ogni tot secondi. Senza musica resta l'audio originale dei video.</p>
+
+      <div class="proof" role="img" aria-label="Misure del montaggio: 100% degli stacchi entro un fotogramma, scarto medio 8 millesimi, provato su dieci brani.">
+        <div>
+          <em>Precisione</em>
+          <b>100%</b>
+          <span>degli stacchi cade entro un fotogramma dal momento musicale scelto, anche in un montaggio da dieci minuti</span>
+        </div>
+        <div>
+          <em>Scarto medio</em>
+          <b>8 ms</b>
+          <span>fra il taglio e il colpo di batteria. Un fotogramma ne dura 33</span>
+        </div>
+        <div>
+          <em>Provato su</em>
+          <b>10 brani</b>
+          <span>dal pianoforte solo alla trance, passando per pop e colonna sonora</span>
+        </div>
+      </div>
+
+      <div class="studio-showcase">
+        <div class="device" role="img" aria-label="Sala di montaggio: anteprima verticale con una scritta, il sottotitolo della voce fuori campo, la striscia delle inquadrature e i comandi per accorciare o togliere.">
+          <div class="device-screen scr-edit">
+            <span class="island" aria-hidden="true"></span>
+            <div class="edit-head">
+              <em style="font-style:normal;color:#A9A3D8">Chiudi</em>
+              <span>↺ ↻</span>
+              <em style="font-style:normal;color:#A78BFF;font-weight:600">Crea reels</em>
+            </div>
+            <div class="edit-view">
+              <p class="edit-title">Giorno 1 · partenza</p>
+              <p class="edit-cap">e qui la piazza era già piena</p>
+              <span class="edit-bar" aria-hidden="true"><i></i></span>
+              <p class="edit-time">00:42 / 01:30</p>
+            </div>
+            <p class="edit-sync">◆ 44/44 stacchi a tempo · scarto 8 ms · 96 BPM</p>
+            <div class="edit-shots" aria-hidden="true">
+              <span class="es"></span><span class="es"></span><span class="es" data-on></span>
+              <span class="es"></span><span class="es"></span><span class="es"></span>
+            </div>
+            <div class="edit-tabs">
+              <span class="etab" data-on>Inquadrature</span>
+              <span class="etab">Scritte</span>
+              <span class="etab">Voce</span>
+            </div>
+            <div class="edit-acts">
+              <span class="eact">Più corta</span>
+              <span class="eact">Più lunga</span>
+              <span class="eact" data-warn>Togli</span>
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="timeline" role="img" aria-label="Timeline del montaggio: sei inquadrature allineate alle battute del brano, con la testina di riproduzione che scorre.">
+        <div class="tl-head">
+          <span>SEQUENZA · <b>6 inquadrature</b> · ordine di ripresa</span>
+          <span>1080 × 1920 · <b>96 BPM</b> · lunghe dove respira, corte sul drop</span>
+        </div>
+        <div class="track">
+          <div class="clip" style="flex:2.5"><span>01 · 2,5 s</span></div>
+          <div class="clip" style="flex:2.5"><span>02 · 2,5 s</span></div>
+          <div class="clip" style="flex:1.25"><span>03 · 1,3 s</span></div>
+          <div class="clip" style="flex:.62"><span>04 · 0,6</span></div>
+          <div class="clip" style="flex:.63"><span>05 · 0,6</span></div>
+          <div class="clip" style="flex:2.5"><span>06 · 2,5 s</span></div>
+        </div>
+        <div class="beatline">
+          <span class="beat" data-bar style="left:0%"><i>1</i></span>
+          <span class="beat" style="left:6.25%"></span>
+          <span class="beat" style="left:12.5%"></span>
+          <span class="beat" style="left:18.75%"></span>
+          <span class="beat" data-bar style="left:25%"><i>2</i></span>
+          <span class="beat" style="left:31.25%"></span>
+          <span class="beat" style="left:37.5%"></span>
+          <span class="beat" style="left:43.75%"></span>
+          <span class="beat" data-drop style="left:50%"><i>drop</i></span>
+          <span class="beat" style="left:56.25%"></span>
+          <span class="beat" style="left:62.5%"></span>
+          <span class="beat" style="left:68.75%"></span>
+          <span class="beat" data-bar style="left:75%"><i>4</i></span>
+          <span class="beat" style="left:81.25%"></span>
+          <span class="beat" style="left:87.5%"></span>
+          <span class="beat" style="left:93.75%"></span>
+          <span class="playhead" aria-hidden="true"></span>
+        </div>
+      </div>
+
+        </div>
+      </div>
+
+      <div class="studio-grid" style="margin-bottom:1px">
+        <div class="studio-cell">
+          <h3>Sente com'è fatta la canzone</h3>
+          <p>Non solo i battiti al minuto. Riconosce l'"uno" della battuta guardando la cassa e non il rullante, gli accenti forti, i cambi di sezione e i drop — e sa se il brano è calmo, ritmato o travolgente.</p>
+          <div class="pillrow"><span class="pill" data-hot>drop</span><span class="pill">cambio di sezione</span><span class="pill">uno di battuta</span><span class="pill">accento</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Il passo segue l'energia</h3>
+          <p>Nell'introduzione le inquadrature restano lunghe, nel ritornello si accorciano fino a mezzo secondo, e sui cambi di sezione lo stacco è obbligatorio. Un montaggio che cambia a ogni battito non è a tempo: è nervoso.</p>
+          <div class="pillrow"><span class="pill">2–4 s in quiete</span><span class="pill">1–2,5 s normale</span><span class="pill" data-hot>0,4–1,2 s nel pieno</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Sceglie il pezzo buono di ogni ripresa</h3>
+          <p>Guarda dentro i video: nitidezza, esposizione, quanto la camera è ferma, se c'è qualcuno in campo. Salta i secondi in cui stavi ancora inquadrando e prende il tratto migliore — e a ogni passaggio un momento diverso.</p>
+          <div class="pillrow"><span class="pill">a fuoco</span><span class="pill">camera ferma</span><span class="pill">volti</span><span class="pill">niente mosso</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Racconta la giornata in ordine</h3>
+          <p>Si parte dalla prima ripresa girata e si finisce sull'ultima, senza saltare avanti e indietro. Il reels non è una vetrina dei momenti più belli: è la giornata come si è svolta.</p>
+          <div class="pillrow"><span class="pill" data-hot>ordine di ripresa</span><span class="pill">mai indietro</span><span class="pill">chiude sull'ultima</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Gli effetti arrivano sul colpo</h3>
+          <p>Il taglio netto è la regola. Una dissolvenza sul cambio di sezione, una sbiancata sul drop: e sono centrate sullo stacco, così il momento di massimo effetto cade insieme alla musica invece che un istante dopo.</p>
+          <div class="pillrow"><span class="pill">stacco</span><span class="pill">dissolvenza</span><span class="pill" data-hot>lampo sul drop</span><span class="pill">spinta</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>E ti fa vedere i conti</h3>
+          <p>Nel pannello Analisi trovi la forma d'onda del brano con sopra i drop, i tagli scelti e lo scarto in millesimi di ogni stacco. Se qualcosa non torna, si vede da lì invece di doverlo indovinare.</p>
+          <div class="pillrow"><span class="pill">forma d'onda</span><span class="pill">scarto in ms</span><span class="pill">file di analisi</span></div>
+        </div>
+      </div>
+
+      <div class="studio-grid">
+        <div class="studio-cell">
+          <h3>Sala di montaggio</h3>
+          <p>Prima di salvare togli un'inquadratura o la accorci. Il montaggio viene ricostruito, non tagliato: la musica si ridistende e gli stacchi restano dove il ritmo li vuole.</p>
+          <div class="pillrow"><span class="pill">parti dal ritornello</span><span class="pill">tutto reversibile</span><span class="pill">ricalcolato sulla musica</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Scritte dove le trascini</h3>
+          <p>Titoli e didascalie liberi sullo schermo: posizione, larghezza, carattere, colore, allineamento e come entrano in scena.</p>
+          <div class="pillrow"><span class="pill">Ombra</span><span class="pill">Riquadro</span><span class="pill">Contorno</span><span class="pill">Evidenziato</span><span class="pill">Dissolvenza</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>La tua voce sopra</h3>
+          <p>Registri il commento guardando il montaggio, e puoi metterlo in pausa: si fermano insieme voce e video, e insieme ripartono dal punto giusto. La musica si abbassa quando parli, e la registrazione originale non viene mai toccata.</p>
+          <div class="pillrow"><span class="pill" data-hot>pausa e riprendi</span><span class="pill">Chiara</span><span class="pill">Calda</span><span class="pill">Radio</span><span class="pill">Naturale</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Toglie il rumore, non le parole</h3>
+          <p>La stanza che ronza, il fruscio del microfono, il traffico fuori: l'app misura di che colore è quel rumore e lo toglie da ogni istante, anche mentre parli. Non è un cancello sul volume — quello, per far sparire il fruscio, portava via anche le parole dette piano.</p>
+          <div class="pillrow"><span class="pill" data-hot>−20 dB di rumore</span><span class="pill">98% della voce intatta</span><span class="pill">misurato, non a occhio</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>I cursori si sentono subito</h3>
+          <p>Alzi la voce, abbassi la musica, sposti una dissolvenza: cambia mentre il video sta suonando, senza fermarsi e senza rimettere play. E quando i livelli sono automatici ti dice i numeri che ha scelto, così capisci perché suona così.</p>
+          <div class="pillrow"><span class="pill">niente pause</span><span class="pill" data-hot>livelli in chiaro</span><span class="pill">da automatico a mano</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Il video, mentre registri</h3>
+          <p>Un cursore decide quanto si sente il montaggio nell'orecchio mentre incidi la voce: alto con gli auricolari, quasi a zero a mani libere, così il microfono non riprende la musica dall'altoparlante. Si muove a registrazione avviata e il volume cambia subito.</p>
+          <div class="pillrow"><span class="pill" data-hot>da 0 a 100%</span><span class="pill">cambia mentre registri</span><span class="pill">ricordato</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>I sottotitoli li scrive l'app</h3>
+          <p>La registrazione viene ascoltata sul telefono e diventa battute brevi, spezzate dove respiri e dove finisce la frase. Ogni battuta tiene l'istante in cui quelle parole sono state dette: non è una divisione a occhio della durata.</p>
+          <div class="pillrow"><span class="pill" data-hot>sul dispositivo</span><span class="pill">tempi delle parole</span><span class="pill">testo correggibile</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Vestiti come vuoi</h3>
+          <p>Carattere, formato, colore del testo e dello sfondo, allineamento, maiuscolo, dimensione e posizione: li trascini sul video e si spostano tutte le battute insieme. Sposti la voce, la tagli o ne cambi la velocità, e i sottotitoli la seguono. Le battute si aggiungono anche a mano, e a fine frase se ne vanno in dissolvenza.</p>
+          <div class="pillrow"><span class="pill">Ombra</span><span class="pill">Riquadro</span><span class="pill">Contorno</span><span class="pill" data-hot>dissolvenza a fine frase</span><span class="pill">battute a mano</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Da un minuto a dieci</h3>
+          <p>Il cursore della durata arriva a dieci minuti: un matrimonio, una gita di tre giorni o un cantiere non stanno in novanta secondi. Le regole non cambiano — ordine di ripresa, stacchi sulla musica — cambia solo quanto racconto ci sta dentro.</p>
+          <div class="pillrow"><span class="pill">1:00</span><span class="pill">3:00</span><span class="pill" data-hot>10:00</span><span class="pill">a passi di 15 s</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Ti dice se il girato basta</h3>
+          <p>Un montaggio non può durare più di quello che hai ripreso. Scegliendo la durata l'app somma le riprese scelte e avvisa quando non arrivano: meglio un reels più corto che le stesse inquadrature rimesse due volte. Il brano invece può essere corto — riparte da solo dal punto che hai scelto.</p>
+          <div class="pillrow"><span class="pill">riprese scelte 6:12</span><span class="pill" data-hot>avviso se non basta</span><span class="pill">musica ripetuta</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Quanto ci mette</h3>
+          <p>Più riprese e più minuti vogliono dire più lavoro: la preparazione studia il brano e guarda dentro ogni clip, il salvataggio scrive il file. Un reels lungo può prendere qualche minuto, con la barra che avanza — lo schermo resta acceso e basta lasciare l'app davanti.</p>
+          <div class="pillrow"><span class="pill">barra di avanzamento</span><span class="pill">schermo sempre acceso</span><span class="pill">montaggio ripreso dove l'hai lasciato</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band band--alt" id="passaggi">
+  <div class="wrap">
+    <div class="band-head">
+      <p class="eyebrow">Il percorso completo</p>
+      <h2>Dall'evento vuoto al reels finito: ogni passaggio, uno alla volta.</h2>
+      <p>Dieci schermate, nell'ordine in cui le incontri davvero: si crea l'evento, si riprende, si sceglie il brano, l'app monta, e nella sala di montaggio si sistemano inquadrature, scritte, voce e sottotitoli. Solo l'ultimo passaggio scrive il file.</p>
+    </div>
+
+    <div class="walk">
+
+      <div class="wstep">
+        <div class="device" role="img" aria-label="Schermata I miei eventi con il foglio Nuovo evento aperto e il nome Gita a Firenze scritto nel campo.">
+          <div class="device-screen">
+            <span class="island" aria-hidden="true"></span>
+            <div class="scr-pad" style="display:flex;flex-direction:column;height:100%">
+              <div class="scr-toolbar"><span>⌘ Invia tutto al Mac</span><span>＋</span></div>
+              <div class="scr-head"><h4>I miei eventi</h4><span>5</span></div>
+              <div class="card-grid">
+                <div class="ecard"><div class="ecard-cover" data-a></div><div class="ecard-meta"><strong>Concerto Palazzetto</strong><span>184 contenuti</span></div></div>
+                <div class="ecard"><div class="ecard-cover" data-b></div><div class="ecard-meta"><strong>Cantiere via Roma</strong><span>431 contenuti</span></div></div>
+                <div class="ecard"><div class="ecard-cover" data-c></div><div class="ecard-meta"><strong>Compleanno di Sara</strong><span>96 contenuti</span></div></div>
+                <div class="ecard"><div class="ecard-cover" data-a></div><div class="ecard-meta"><strong>Sagra di settembre</strong><span>207 contenuti</span></div></div>
+              </div>
+            </div>
+            <div class="sheet">
+              <span class="sheet-grab" aria-hidden="true"></span>
+              <h5>Nuovo evento</h5>
+              <div class="field">Gita a Firenze<i></i></div>
+              <div class="sheet-btn">Crea evento</div>
+            </div>
+          </div>
+        </div>
+        <div class="wstep-copy">
+          <p class="wstep-n">PASSAGGIO 01</p>
+          <h3>Crea l'evento</h3>
+          <p>Basta il nome. Da questo momento esiste una cartella tutta sua, e ogni cosa che scatterai da dentro finirà lì. Il nome si può cambiare quando vuoi: i contenuti restano legati all'evento, non al testo.</p>
+          <div class="pillrow"><span class="pill">crea</span><span class="pill">rinomina</span><span class="pill">elimina</span></div>
+        </div>
+      </div>
+
+      <div class="wstep">
+        <div class="device" role="img" aria-label="Fotocamera di EventCam in modalità video, con la targhetta dell'evento Gita a Firenze e 24 contenuti già salvati.">
+          <div class="device-screen scr-cam">
+            <span class="island" aria-hidden="true"></span>
+            <div class="cam-view">
+              <span class="cam-hline" style="top:33.3%"></span>
+              <span class="cam-hline" style="top:66.6%"></span>
+              <div class="cam-event"><svg width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h3.2l1.6 2H18.5A2.5 2.5 0 0 1 21 8.5v9A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5z" fill="#A78BFF"/></svg>Gita a Firenze</div>
+              <div class="cam-top">
+                <span class="cam-btn">✕</span>
+                <span class="cam-btn">⚡︎A</span>
+                <span class="cam-btn">4K·30</span>
+                <span class="cam-btn">▦</span>
+                <span class="cam-btn">≡</span>
+              </div>
+              <span class="cam-focus" aria-hidden="true"></span>
+            </div>
+            <div class="cam-bottom">
+              <div class="cam-zooms"><span class="zoom">0,5×</span><span class="zoom" data-on>1×</span><span class="zoom">2×</span></div>
+              <div class="cam-modes"><span>FOTO</span><b>VIDEO</b></div>
+              <div class="cam-actions">
+                <span class="cam-thumb">24</span>
+                <span class="shutter" aria-hidden="true"></span>
+                <span class="cam-flip" aria-hidden="true">⟳</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wstep-copy">
+          <p class="wstep-n">PASSAGGIO 02</p>
+          <h3>Riprendi dentro l'evento</h3>
+          <p>Foto e video dalla stessa schermata, con la targhetta dell'evento sempre in vista. Niente entra nel rullino. Le clip che girerai adesso sono esattamente il materiale che il reels userà: riprese di qualche secondo, con il telefono fermo, valgono più di un unico piano lunghissimo.</p>
+          <div class="pillrow"><span class="pill" data-hot>zero copie nel rullino</span><span class="pill">foto e video</span><span class="pill">impostazioni ricordate</span></div>
+        </div>
+      </div>
+
+      <div class="wstep">
+        <div class="device" role="img" aria-label="Griglia dell'evento in selezione multipla: quattro contenuti spuntati, barra in basso con Seleziona tutto e 4 selezionati.">
+          <div class="device-screen">
+            <span class="island" aria-hidden="true"></span>
+            <div class="scr-pad" style="display:flex;flex-direction:column;height:100%">
+              <p class="scr-back">‹ I miei eventi</p>
+              <div class="scr-head"><h4>Gita a Firenze</h4><span>Fine</span></div>
+              <div class="day-chips">
+                <span class="dchip">3 giornate<b>Tutti</b></span>
+                <span class="dchip" data-on>sab<b>5 mag</b></span>
+                <span class="dchip">dom<b>6 mag</b></span>
+              </div>
+              <div class="mini-grid">
+                <span class="mg"></span><span class="mg" data-v></span><span class="mg"></span>
+                <span class="mg" data-v></span><span class="mg"></span><span class="mg"></span>
+                <span class="mg"></span><span class="mg" data-v></span><span class="mg"></span>
+              </div>
+              <div class="scr-cta" style="background:var(--surface-2);color:var(--text);border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:8px 10px;font-size:9px">
+                <span style="color:var(--accent);font-weight:600">Seleziona tutto</span>
+                <span>4 selezionati</span>
+                <span style="color:var(--accent)">⬆︎ 🗑</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wstep-copy">
+          <p class="wstep-n">PASSAGGIO 03</p>
+          <h3>Guarda, scegli, consegna il grezzo</h3>
+          <p>La griglia si legge per giornate. In selezione multipla "Seleziona tutto" prende quello che stai guardando — se hai aperto una sola giornata, prende quella — e con un tocco si torna indietro. Quello che serve lo condividi subito, il resto resta nell'evento in attesa del montaggio.</p>
+          <div class="pillrow"><span class="pill" data-hot>seleziona tutto</span><span class="pill">deseleziona</span><span class="pill">condividi</span><span class="pill">elimina</span></div>
+        </div>
+      </div>
+
+      <div class="wstep">
+        <div class="device" role="img" aria-label="Schermata Crea reels: brano Estate 2026 scelto a 96 BPM, durata un minuto e trenta, avviso che le riprese scelte bastano.">
+          <div class="device-screen">
+            <span class="island" aria-hidden="true"></span>
+            <div class="scr-pad" style="display:flex;flex-direction:column;height:100%">
+              <div class="scr-head"><h4>Crea reels</h4><span>Gita a Firenze</span></div>
+              <div class="scr-list">
+                <div class="lrow lrow--pick"><strong>♫ Estate 2026.mp3</strong><span>3:24 · parte da 0:48 (il ritornello)</span></div>
+                <div class="lrow">
+                  <strong>Durata del montaggio</strong>
+                  <span>01:30 · da 1:00 a 10:00</span>
+                  <div class="mslider" aria-hidden="true"><i></i><b></b></div>
+                </div>
+                <div class="lrow"><strong>Video dell'evento</strong><span>18 clip · 6:12 di girato</span></div>
+                <div class="warnrow">Le riprese scelte bastano per 1:30. Oltre i 6:12 comparirebbe l'avviso.</div>
+              </div>
+              <div class="scr-cta">Prepara il montaggio</div>
+            </div>
+          </div>
+        </div>
+        <div class="wstep-copy">
+          <p class="wstep-n">PASSAGGIO 04</p>
+          <h3>Scegli il brano e quanto deve durare</h3>
+          <p>Un MP3, M4A o WAV preso da File o iCloud Drive, e il punto del brano da cui partire — di solito il ritornello. Poi la durata, da un minuto a dieci a passi di quindici secondi. L'app somma le riprese e ti dice subito se il girato basta, invece di riempire il vuoto ripetendo le stesse inquadrature.</p>
+          <div class="pillrow"><span class="pill">MP3 · M4A · WAV</span><span class="pill" data-hot>1:00 → 10:00</span><span class="pill">avviso se non basta</span></div>
+        </div>
+      </div>
+
+      <div class="wstep">
+        <div class="device" role="img" aria-label="Preparazione del montaggio: brano ascoltato, clip analizzate, sequenza in corso di scelta.">
+          <div class="device-screen scr-edit">
+            <span class="island" aria-hidden="true"></span>
+            <div class="edit-head">
+              <em style="font-style:normal;color:#A9A3D8">Annulla</em>
+              <span>PREPARO</span>
+              <em style="font-style:normal;color:#4A4478">Crea reels</em>
+            </div>
+            <div class="prep">
+              <p class="prep-item" data-done><b>✓</b>Ascolto il brano: tempo, "uno" di battuta, sezioni, drop</p>
+              <p class="prep-item" data-done><b>✓</b>Guardo dentro le 18 clip: fuoco, luce, stabilità, volti</p>
+              <p class="prep-item" data-now><b>3</b>Scelgo la sequenza e dove cadono gli stacchi</p>
+              <p class="prep-item"><b>4</b>Preparo l'anteprima</p>
+            </div>
+            <p class="edit-sync" style="margin-bottom:14px">◆ 96 BPM · uno di battuta ogni 2,50 s · 3 sezioni</p>
+          </div>
+        </div>
+        <div class="wstep-copy">
+          <p class="wstep-n">PASSAGGIO 05</p>
+          <h3>L'app monta da sola</h3>
+          <p>Studia il brano, guarda dentro ogni clip e costruisce la scaletta: ordine cronologico delle riprese, durate che seguono l'energia della musica, stacchi agganciati al fotogramma sui momenti del brano. Alla fine ti mostra il reels già montato — non un abbozzo da sistemare.</p>
+          <div class="pillrow"><span class="pill">analisi del brano</span><span class="pill">analisi delle clip</span><span class="pill" data-hot>scaletta a tempo</span></div>
+        </div>
+      </div>
+
+      <div class="wstep">
+        <div class="device" role="img" aria-label="Sala di montaggio, pannello Inquadrature: striscia delle riprese con una selezionata e i comandi per accorciarla, allungarla o toglierla.">
+          <div class="device-screen scr-edit">
+            <span class="island" aria-hidden="true"></span>
+            <div class="edit-head">
+              <em style="font-style:normal;color:#A9A3D8">Chiudi</em>
+              <span>↺ ↻</span>
+              <em style="font-style:normal;color:#A78BFF;font-weight:600">Crea reels</em>
+            </div>
+            <div class="edit-view">
+              <span class="edit-bar" aria-hidden="true"><i></i></span>
+              <p class="edit-time">00:42 / 01:30</p>
+            </div>
+            <p class="edit-sync">◆ 44/44 stacchi a tempo · scarto 8 ms · 96 BPM</p>
+            <div class="edit-shots" aria-hidden="true">
+              <span class="es"></span><span class="es"></span><span class="es" data-on></span>
+              <span class="es"></span><span class="es"></span><span class="es"></span>
+            </div>
+            <div class="edit-tabs">
+              <span class="etab" data-on>Inquadrature</span>
+              <span class="etab">Scritte</span>
+              <span class="etab">Voce</span>
+            </div>
+            <div class="edit-acts">
+              <span class="eact">Più corta</span>
+              <span class="eact">Più lunga</span>
+              <span class="eact" data-warn>Togli</span>
+            </div>
+          </div>
+        </div>
+        <div class="wstep-copy">
+          <p class="wstep-n">PASSAGGIO 06</p>
+          <h3>Sistema le inquadrature</h3>
+          <p>Quella venuta mossa la togli, quella bella la allunghi di una battuta. Ogni modifica rimonta tutto da capo: la musica si ridistende e gli stacchi tornano dove il ritmo li vuole, invece di scivolare fuori tempo. Tutto reversibile, il file non esiste ancora.</p>
+          <div class="pillrow"><span class="pill">togli</span><span class="pill">accorcia</span><span class="pill">allunga</span><span class="pill" data-hot>annulla e ripristina</span></div>
+        </div>
+      </div>
+
+      <div class="wstep">
+        <div class="device" role="img" aria-label="Pannello Scritte: la scritta Giorno 1 partenza selezionata sul video, con carattere, formato e colore da scegliere.">
+          <div class="device-screen scr-edit">
+            <span class="island" aria-hidden="true"></span>
+            <div class="edit-head">
+              <em style="font-style:normal;color:#A9A3D8">Chiudi</em>
+              <span>↺ ↻</span>
+              <em style="font-style:normal;color:#A78BFF;font-weight:600">Crea reels</em>
+            </div>
+            <div class="edit-view">
+              <p class="edit-title" style="bottom:auto;top:32%;outline:1px dashed #A78BFF;outline-offset:4px">Giorno 1 · partenza</p>
+              <span class="edit-bar" aria-hidden="true"><i></i></span>
+              <p class="edit-time">00:12 / 01:30</p>
+            </div>
+            <div class="edit-tabs">
+              <span class="etab">Inquadrature</span>
+              <span class="etab" data-on>Scritte</span>
+              <span class="etab">Voce</span>
+            </div>
+            <div class="epanel">
+              <div class="echips">
+                <span class="echip" data-on>Neutro</span><span class="echip">Moderno</span><span class="echip">Classico</span><span class="echip">Corsivo</span>
+              </div>
+              <div class="echips">
+                <span class="echip">Semplice</span><span class="echip" data-on>Ombra</span><span class="echip">Riquadro</span><span class="echip">Contorno</span>
+              </div>
+              <div class="erow"><span>Dimensione</span><span class="emeter"><i></i></span><span>1,2×</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="wstep-copy">
+          <p class="wstep-n">PASSAGGIO 07</p>
+          <h3>Aggiungi le scritte</h3>
+          <p>Titoli e didascalie si trascinano dove vuoi sul video e si allargano con due dita. Carattere, formato, colore del testo e dello sfondo, allineamento e come entrano in scena. Quello che vedi nell'anteprima è esattamente quello che finisce nel filmato.</p>
+          <div class="pillrow"><span class="pill">trascina</span><span class="pill">allarga con due dita</span><span class="pill" data-hot>anteprima uguale all'esportato</span></div>
+        </div>
+      </div>
+
+      <div class="wstep">
+        <div class="device" role="img" aria-label="Pannello Voce in registrazione: livello del microfono, pulsante rosso e cursore del volume del video al venticinque per cento.">
+          <div class="device-screen scr-edit">
+            <span class="island" aria-hidden="true"></span>
+            <div class="edit-head">
+              <em style="font-style:normal;color:#A9A3D8">Chiudi</em>
+              <span>● REC</span>
+              <em style="font-style:normal;color:#4A4478">Crea reels</em>
+            </div>
+            <div class="edit-view">
+              <span class="edit-bar" aria-hidden="true"><i></i></span>
+              <p class="edit-time">00:31 / 01:30</p>
+            </div>
+            <div class="edit-tabs">
+              <span class="etab">Inquadrature</span>
+              <span class="etab">Scritte</span>
+              <span class="etab" data-on>Voce</span>
+            </div>
+            <div class="esubs">
+              <span class="esub" data-on>Registrazione</span>
+              <span class="esub">Sottotitoli</span>
+            </div>
+            <div class="epanel">
+              <div class="erow"><span>🎙</span><span class="emeter"><i></i></span></div>
+              <span class="erec" aria-hidden="true"></span>
+              <div class="erow"><span>🔈</span><span class="emeter" data-mon><i></i></span><span>25%</span></div>
+              <p style="font-size:8px;color:#8FE6EC;text-align:center;margin:0">Video al 25% mentre registri</p>
+            </div>
+          </div>
+        </div>
+        <div class="wstep-copy">
+          <p class="wstep-n">PASSAGGIO 08</p>
+          <h3>Registra la voce fuori campo</h3>
+          <p>Porti la testina dove vuoi cominciare, premi il pulsante rosso e dopo tre, due, uno il video parte insieme al microfono. Se devi riprendere fiato o rileggere la riga dopo, la pausa ferma voce e video insieme e li fa ripartire dal punto giusto. Un cursore decide quanto senti il montaggio nell'orecchio mentre parli, e si muove a registrazione avviata.</p>
+          <div class="pillrow"><span class="pill">3 · 2 · 1</span><span class="pill" data-hot>pausa e riprendi</span><span class="pill">volume del video dal vivo</span><span class="pill">musica che si ritira</span></div>
+        </div>
+      </div>
+
+      <div class="wstep">
+        <div class="device" role="img" aria-label="Pannello Sottotitoli: la battuta e qui la piazza era già piena sul video, e l'elenco delle battute con i loro tempi.">
+          <div class="device-screen scr-edit">
+            <span class="island" aria-hidden="true"></span>
+            <div class="edit-head">
+              <em style="font-style:normal;color:#A9A3D8">Chiudi</em>
+              <span>↺ ↻</span>
+              <em style="font-style:normal;color:#A78BFF;font-weight:600">Crea reels</em>
+            </div>
+            <div class="edit-view">
+              <p class="edit-cap">e qui la piazza era già piena</p>
+              <span class="edit-bar" aria-hidden="true"><i></i></span>
+              <p class="edit-time">00:38 / 01:30</p>
+            </div>
+            <div class="edit-tabs">
+              <span class="etab">Inquadrature</span>
+              <span class="etab">Scritte</span>
+              <span class="etab" data-on>Voce</span>
+            </div>
+            <div class="esubs">
+              <span class="esub">Registrazione</span>
+              <span class="esub" data-on>Sottotitoli</span>
+            </div>
+            <div class="epanel">
+              <div class="echips">
+                <span class="echip" data-on>Italiano</span><span class="echip">Ombra</span><span class="echip">38 lettere</span>
+              </div>
+              <p class="ecue"><em>0:31</em>siamo partiti presto</p>
+              <p class="ecue" data-on><em>0:36</em>e qui la piazza era già piena</p>
+              <p class="ecue"><em>0:41</em>il mercato apriva alle nove</p>
+            </div>
+          </div>
+        </div>
+        <div class="wstep-copy">
+          <p class="wstep-n">PASSAGGIO 09</p>
+          <h3>Fai scrivere i sottotitoli</h3>
+          <p>La registrazione viene ascoltata sul telefono e diventa battute brevi, spezzate dove respiri e dove finisce la frase, ognuna con l'istante esatto in cui quelle parole sono state dette. Il testo si corregge a mano, se ne aggiungono di nuove, e a fine frase la battuta se ne va in dissolvenza invece di sparire di colpo. Carattere, formato, colore, misura e posizione valgono per tutte insieme.</p>
+          <div class="pillrow"><span class="pill" data-hot>sul dispositivo</span><span class="pill">tempi delle parole</span><span class="pill">dissolvenza in uscita</span><span class="pill">battute a mano</span></div>
+        </div>
+      </div>
+
+      <div class="wstep">
+        <div class="device" role="img" aria-label="Esportazione in corso al sessantotto per cento, con l'avviso di tenere l'app aperta.">
+          <div class="device-screen scr-edit">
+            <span class="island" aria-hidden="true"></span>
+            <div class="edit-head">
+              <em style="font-style:normal;color:#4A4478">Chiudi</em>
+              <span>↺ ↻</span>
+              <em style="font-style:normal;color:#4A4478">Crea reels</em>
+            </div>
+            <div class="edit-view">
+              <span class="edit-bar" aria-hidden="true"><i></i></span>
+              <p class="edit-time">01:30</p>
+            </div>
+            <div class="edit-tabs">
+              <span class="etab">Inquadrature</span>
+              <span class="etab">Scritte</span>
+              <span class="etab">Voce</span>
+            </div>
+            <div class="edit-acts">
+              <span class="eact">Più corta</span>
+              <span class="eact">Più lunga</span>
+              <span class="eact">Togli</span>
+            </div>
+            <div class="expo">
+              <div class="expo-box">
+                <span class="expo-bar" aria-hidden="true"><i></i></span>
+                <b>Creo il reels… 68%</b>
+                <span>Tieni l'app aperta finché non ha finito. Lo schermo resta acceso.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wstep-copy">
+          <p class="wstep-n">PASSAGGIO 10</p>
+          <h3>Crea il reels</h3>
+          <p>È l'unico passaggio che scrive un file. Inquadrature, transizioni, musica, audio originale, voce, scritte e sottotitoli vengono incisi in un verticale 1080 × 1920. Un montaggio lungo prende qualche minuto, con la barra che avanza e lo schermo che resta acceso.</p>
+          <div class="pillrow"><span class="pill">1080 × 1920 · 30 fps</span><span class="pill">tutto inciso nel file</span></div>
+        </div>
+      </div>
+
+      <div class="wstep">
+        <div class="device" role="img" aria-label="Evento dopo il montaggio: filtro Video finale attivo, con due reels salvati nell'evento.">
+          <div class="device-screen">
+            <span class="island" aria-hidden="true"></span>
+            <div class="scr-pad" style="display:flex;flex-direction:column;height:100%">
+              <p class="scr-back">‹ I miei eventi</p>
+              <div class="scr-head"><h4>Gita a Firenze</h4><span>314</span></div>
+              <div class="day-chips">
+                <span class="dchip">3 giornate<b>Tutti</b></span>
+                <span class="dchip">sab<b>5 mag</b></span>
+                <span class="dchip" data-on>montaggio<b>Video finale</b></span>
+              </div>
+              <div class="mini-grid" style="grid-template-columns:1fr 1fr">
+                <span class="reelcard"><span>01:30 · con voce</span></span>
+                <span class="reelcard" style="background:linear-gradient(168deg,#4A3A94,#171233)"><span>00:45 · social</span></span>
+              </div>
+              <div class="scr-cta">Scatta foto o video</div>
+            </div>
+          </div>
+        </div>
+        <div class="wstep-copy">
+          <p class="wstep-n">PASSAGGIO 11</p>
+          <h3>Il reels resta nell'evento</h3>
+          <p>Finisce nel filtro "Video finale", accanto al girato ma non mescolato con lui. Da lì lo condividi dove serve, e il progetto del montaggio resta salvato: riaprendolo ritrovi inquadrature, scritte, voce e sottotitoli come li avevi lasciati, pronti per farne una seconda versione più corta.</p>
+          <div class="pillrow"><span class="pill">Video finale</span><span class="pill">condividi</span><span class="pill" data-hot>progetto riaperto dov'era</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <p class="walk-note">Le schermate qui sopra sono ricostruzioni fedeli dell'app, disegnate per la pagina. Il percorso, i comandi e i testi sono quelli veri: la fotocamera funziona solo su un iPhone reale, non nel simulatore.</p>
+  </div>
+</section>
+
+<section class="band band--tint">
+  <div class="wrap">
+    <div class="band-head">
+      <p class="eyebrow">Consegna</p>
+      <h2>Un archivio che si apre con un doppio clic.</h2>
+      <p>"Invia al Mac (ZIP)" prepara l'evento intero già diviso per giornata, con i nomi costruiti su nome evento, data e ora. Arriva via AirDrop e si apre così com'è.</p>
+    </div>
+
+    <div class="delivery">
+      <div class="tree">
+        <b>Gita a Firenze.zip</b><br>
+        └── <b>Gita a Firenze/</b><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;├── <u>2026-05-05/</u><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── Gita a Firenze_2026-05-05_09-30-22_001.jpg<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── Gita a Firenze_2026-05-05_09-31-05_002.mov<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;└── <u>2026-05-06/</u><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── …
+      </div>
+      <div>
+        <ul class="ticks ticks--good">
+          <li>Ordine cronologico reale, non l'ordine in cui i file sono stati copiati.</li>
+          <li>Nomi leggibili su qualunque computer, anche fra dieci anni.</li>
+          <li>Originali, non copie ricompresse.</li>
+          <li>Funziona anche su più eventi insieme, quando chiudi una stagione.</li>
+        </ul>
+      </div>
+    </div>
+
+    <dl class="specs">
+      <div class="spec-row"><dt>Dispositivo</dt><dd>Solo iPhone, iOS 17 o successivo</dd></div>
+      <div class="spec-row"><dt>Foto</dt><dd>JPEG o HEIF, qualità Massima o Standard, proporzioni 4:3 o 16:9</dd></div>
+      <div class="spec-row"><dt>Video</dt><dd>I preset offerti dal dispositivo, fino a 4K quando il telefono lo permette</dd></div>
+      <div class="spec-row"><dt>Reels</dt><dd>Verticale 1080 × 1920 a 30 fotogrammi, da 1 a 10 minuti a passi di 15 secondi, montato con i video dell'evento in ordine di ripresa</dd></div>
+      <div class="spec-row"><dt>Montaggio</dt><dd>Stacchi sui momenti della canzone — drop, cambi di sezione, "uno" di battuta, accenti — agganciati al fotogramma: anteprima ed esportazione tagliano nello stesso punto</dd></div>
+      <div class="spec-row"><dt>Sottotitoli</dt><dd>Ricavati dalla voce registrata con il riconoscimento del parlato del telefono, con l'istante di ogni parola; battute aggiungibili e regolabili a mano, dissolvenza in uscita, carattere, formato, colore, misura e posizione a scelta, incisi nel filmato esportato</dd></div>
+      <div class="spec-row"><dt>Voce fuori campo</dt><dd>Registrazione con pausa e ripresa in sincrono, monitoraggio del video regolabile mentre registri, livelli automatici misurati sull'audio vero, pulizia del rumore che lascia intatto oltre il 90% della voce</dd></div>
+      <div class="spec-row"><dt>Messa al sicuro</dt><dd>Avviso sugli eventi mai consegnati fuori dall'app, che si spegne da solo dopo l'esportazione</dd></div>
+      <div class="spec-row"><dt>Archivio</dt><dd>Una cartella dedicata per ogni evento, nell'archivio locale dell'app</dd></div>
+      <div class="spec-row"><dt>Esportazione</dt><dd>Condivisione di sistema, esporta tutto, ZIP diviso per giornate</dd></div>
+      <div class="spec-row"><dt>Musica del reels</dt><dd>Un file MP3, M4A o WAV preso da File o iCloud Drive; i brani protetti di Apple Music non sono utilizzabili</dd></div>
+      <div class="spec-row"><dt>Rete</dt><dd>Nessun account e nessun servizio esterno richiesto</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="band band--alt">
+  <div class="wrap">
+    <div class="band-head">
+      <p class="eyebrow">Domande rapide</p>
+      <h2>Prima di installarla.</h2>
+    </div>
+    <div class="qa">
+      <div>
+        <h3>Le foto finiscono comunque nell'app Foto?</h3>
+        <p>No, ed è il motivo per cui l'app esiste. Quello che scatti con EventCam viene salvato solo nell'archivio dell'evento. Se un contenuto ti serve anche nel rullino, lo esporti tu quando lo decidi.</p>
+      </div>
+      <div>
+        <h3>E se disinstallo l'app?</h3>
+        <p>Sparisce anche l'archivio locale, come per qualunque app. Per gli eventi importanti usa "Esporta tutto" o lo ZIP e tieni una copia su Mac, disco esterno o iCloud Drive.</p>
+      </div>
+      <div>
+        <h3>Va bene solo per i fotografi?</h3>
+        <p>No. Serve a chiunque produca tante foto legate a un contesto preciso: eventi, viaggi, lavori in corso, sopralluoghi, gite scolastiche, feste di famiglia.</p>
+      </div>
+      <div>
+        <h3>Devo saper montare per fare il reels?</h3>
+        <p>No, e non devi nemmeno scegliere le clip: l'app studia il brano, guarda i video dell'evento e monta da sola, in ordine di ripresa — le foto per ora non entrano nel reels. Ti servono solo brano e durata, da un minuto a dieci: si va dal pezzo breve per i social al filmato completo della giornata, se le riprese bastano. Poi, se vuoi, togli un'inquadratura, aggiungi una scritta e registri due frasi di voce — e i sottotitoli di quello che hai detto li scrive l'app.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="beta">
+  <div class="wrap">
+    <div class="close">
+      <p class="eyebrow">Al prossimo evento</p>
+      <h2>Apri l'evento. Scatta. Il reels si monta da solo.</h2>
+      <p>Smetti di ripescare le foto dal rullino a fine giornata e di montare il video a mano. Con EventCam l'archivio è già in ordine mentre lavori, il reels esce a tempo di musica — e il telefono personale resta personale.</p>
+      <div class="cta-row">
+        <a class="btn btn--primary" href="#beta">Entra nella beta</a>
+        <a class="btn btn--onDeep" href="#passaggi">Rivedi i passaggi</a>
+      </div>
+      <p class="hero-foot">iPhone · iOS 17+ · la fotocamera richiede un dispositivo reale</p>
+    </div>
+
+    <footer>
+      <span>EventCam — foto e video separati per evento</span>
+      <span class="mono">Niente scatti nel rullino personale</span>
+    </footer>
+  </div>
+</section>
+
+
+
+
+</body>
+</html>
