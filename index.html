@@ -244,10 +244,28 @@ a{color:inherit}
 }
 .btn:focus-visible{outline:2px solid var(--deep-accent);outline-offset:3px}
 .btn--primary{background:linear-gradient(140deg,#7C4DF0,#4832EE);color:#FFFFFF;box-shadow:0 10px 26px -14px rgba(90,60,240,.95)}
-/* Il tasto del negozio porta il segno della mela: si riconosce prima di
-   leggerlo, come su tutte le pagine di un'app. */
-.btn--store{gap:10px}
-.btn--store svg{display:block;flex:none;margin-top:-1px}
+/* Il distintivo ufficiale di Apple, non un pulsante disegnato da noi: è
+   quello che Apple pretende, e chi guarda lo riconosce senza leggerlo.
+   Non si ridisegna, non si ricolora, non si allunga — sono le sue proporzioni
+   (119,66 × 40), almeno 40 punti di altezza, e attorno gli si lascia aria
+   pari a un quarto della sua altezza. */
+.store{display:inline-flex;padding:10px;margin:-10px}
+.store img{display:block;height:48px;width:auto}
+.store:focus-visible{outline:2px solid var(--deep-accent);outline-offset:2px;border-radius:10px}
+
+/* ---------------- piede ---------------- */
+.piede{
+  border-top:1px solid var(--line-soft);
+  margin-top:52px;padding:40px 0 58px;
+  display:flex;flex-direction:column;gap:12px;
+}
+.piede__voci{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:14px}
+.piede__voci a{color:var(--text-dim);text-decoration:none}
+.piede__voci a:hover{color:var(--text);text-decoration:underline}
+.piede__requisiti{font-size:13.5px;color:var(--text-faint);max-width:70ch}
+.piede__requisiti strong{color:var(--text-dim);font-weight:600}
+.piede__diritti{font-size:14px;color:var(--text-dim)}
+.piede__copyright{font-size:13px;color:var(--text-faint)}
 .btn--primary:hover{transform:translateY(-1px)}
 .btn--onDeep{border-color:rgba(167,139,255,.42);color:var(--deep-text)}
 .btn--onDeep:hover{background:rgba(167,139,255,.12)}
@@ -769,9 +787,8 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
         </div>
 
         <div class="cta-row">
-          <a class="btn btn--primary btn--store" href="#beta">
-            <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9-.7 0-1.8-.9-3-.8-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .8 1.1 1.6 2.3 2.8 2.3 1.1 0 1.6-.7 2.9-.7 1.3 0 1.7.7 2.9.7 1.2 0 2-1.1 2.7-2.2.9-1.2 1.2-2.5 1.2-2.5s-2.4-.9-2.4-3.7zM14.2 5.9c.6-.8 1-1.8.9-2.9-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.8-.9 2.8 1 .1 2-.5 2.7-1.3z"/></svg>
-            Acquista su App Store
+          <a class="store" href="#beta" rel="noopener">
+            <img src="loghi/app-store-it-bianco.svg" width="144" height="48" alt="Scarica su App Store — EventCam">
           </a>
           <a class="btn btn--onDeep" href="#passaggi">Tutti i passaggi</a>
         </div>
@@ -1723,9 +1740,18 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
       <p class="hero-foot">iPhone · iOS 17+ · la fotocamera richiede un dispositivo reale</p>
     </div>
 
-    <footer>
-      <span>EventCam — foto e video separati per evento</span>
-      <span class="mono">Niente scatti nel rullino personale</span>
+    <footer class="piede">
+      <nav class="piede__voci" aria-label="Supporto">
+        <a href="#requisiti">Requisiti di sistema</a>
+      </nav>
+
+      <p class="piede__requisiti" id="requisiti">
+        <strong>Requisiti di sistema:</strong> iPhone con iOS 17 o successivo. La fotocamera richiede un dispositivo reale.
+      </p>
+
+      <p class="piede__diritti">EventCam — la fotocamera degli eventi.</p>
+
+      <p class="piede__copyright">© 2026 Lascia il Tuo Segno LLC. Tutti i diritti riservati.</p>
     </footer>
   </div>
 </section>
