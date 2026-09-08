@@ -35,6 +35,16 @@ html{-webkit-text-size-adjust:100%}
 body{margin:0;padding:0}
 img{max-width:100%}
 [hidden]{display:none!important}
+
+@media (max-width:620px){
+  /* Con lo zoom il riquadro resta grande com'era e il telefono finisce
+     spostato a sinistra: si scala davvero, dal centro, e si recupera lo
+     spazio rimasto sotto. */
+  .hero-shot .device{zoom:1;transform:scale(.8);transform-origin:top center;margin-bottom:-115px}
+}
+@media (max-width:400px){
+  .hero-shot .device{transform:scale(.68);margin-bottom:-184px}
+}
 </style>
 </head>
 <body>
@@ -717,7 +727,7 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
     <section class="hero">
       <div class="hero-copy">
         <p class="eyebrow">Fotocamera per eventi · reels automatico</p>
-        <h1><span class="lead">Registra i tuoi video senza perderli nel rullino</span><span class="line">e crea reels o video</span><b class="shine">PAZZESCHI</b><span class="tail">in modo automatico grazie all'AI</span></h1>
+        <h1><span class="lead">Registra i tuoi video senza perderli nel rullino</span><span class="line">Crea reels o video</span><b class="shine">PAZZESCHI</b><span class="tail">in modo automatico grazie all'AI</span></h1>
         <p class="hero-lede">Ogni evento ha la sua cartella. Gli scatti non entrano nel rullino. E il reels lo monta l'app, da sola.</p>
 
         <div class="cards">
