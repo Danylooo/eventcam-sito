@@ -161,42 +161,50 @@ a{color:inherit}
 .hero{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:54px;padding:34px 0 76px;align-items:start}
 .hero .eyebrow{color:var(--deep-accent)}
 .hero-copy{display:flex;flex-direction:column;gap:22px}
-/* Il titolo si prende tutta la larghezza, sopra le due colonne: è l'unico
-   modo per farlo davvero grande senza spezzarlo in sette righe strette. */
-.hero-title{grid-column:1 / -1;display:flex;flex-direction:column;gap:14px;margin-bottom:4px}
-.hero h1{font-size:clamp(42px,8vw,104px);color:var(--deep-text);letter-spacing:-.035em;line-height:1.0}
-/* La prima riga fa da attacco: piccola e quieta, misurata per conto suo e non
-   in proporzione al titolo, così resta leggibile anche sul telefono. Tutto il
-   peso va alla promessa che viene dopo. */
+.hero h1{font-size:clamp(30px,3.9vw,46px);color:var(--deep-text);letter-spacing:-.026em;line-height:1.08}
+/* La riga di lancio e la coda: la parola grande sta in mezzo, e attorno il
+   testo si fa più piccolo. Senza questa scala il titolo era un muro di
+   quattro righe tutte dello stesso peso. */
+.hero h1 .line{display:block}
+.hero h1 .tail{
+  display:block;
+  font-size:.64em;
+  letter-spacing:-.018em;
+  color:var(--deep-text);
+  opacity:.94;
+  margin-top:.2em;
+}
+/* L'attacco è un'occhiello: piccolo, quieto, con la sua misura e non una
+   frazione del titolo, così resta leggibile anche sul telefono. */
 .hero h1 .lead{
   display:block;
   font-family:"IBM Plex Sans","Helvetica Neue",Arial,sans-serif;
-  font-size:clamp(15px,1.5vw,21px);
+  font-size:clamp(15px,1.35vw,19px);
   font-weight:600;
-  line-height:1.4;
+  line-height:1.45;
   letter-spacing:0;
   color:var(--deep-dim);
-  margin-bottom:16px;
+  margin-bottom:20px;
 }
-.hero h1 .shine{display:block}
-/* La parte che deve colpire: il testo fa da finestra a un gradiente che
-   scorre piano, con un alone dietro per staccarlo dal fondo scuro. Il colore
-   pieno resta scritto prima, come rete per chi non regge il ritaglio. */
+/* Il gradiente su una sola parola, non su tutta la frase: spalmato su
+   sessanta lettere si impasta e il titolo perde il centro. Su "PAZZESCHI" —
+   più grande del resto, con l'alone dietro — è lì che cade l'occhio. */
 .hero h1 .shine{
+  display:block;
+  font-size:1.44em;
+  letter-spacing:-.028em;
+  line-height:1;
+  margin:.06em 0 0;
+  /* Un po' d'aria a destra: il ritaglio del gradiente segue il riquadro del
+     testo, e senza margine l'ultima lettera si vedeva tagliata. */
+  padding-right:.1em;
   color:var(--deep-accent);
-  background-image:linear-gradient(96deg,#B9A2FF 0%,#7C4DF0 26%,#4FD6E0 58%,#B9A2FF 100%);
-  background-size:230% 100%;
+  background-image:linear-gradient(100deg,#EDE7FF 0%,#B79CFF 24%,#8A5CFF 52%,#6C3FF0 78%,#EDE7FF 100%);
+  background-size:220% 100%;
   -webkit-background-clip:text;background-clip:text;
   -webkit-text-fill-color:transparent;
-  animation:sheen 8s ease-in-out infinite;
-  filter:drop-shadow(0 0 26px rgba(124,77,240,.45));
-  padding-right:.06em;
-}
-.hero h1 .huge{
-  font-size:1.1em;
-  letter-spacing:-.012em;
-  display:inline-block;
-  transform:translateY(.012em);
+  animation:sheen 9s ease-in-out infinite;
+  filter:drop-shadow(0 2px 22px rgba(124,77,240,.55));
 }
 @keyframes sheen{
   0%,100%{background-position:0% 50%}
@@ -666,12 +674,9 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
     </header>
 
     <section class="hero">
-      <div class="hero-title">
-        <p class="eyebrow">Fotocamera per eventi · reels automatico</p>
-        <h1><span class="lead">Registra i tuoi video senza perderli nel rullino</span><span class="shine">e crea reels o video <b class="huge">PAZZESCHI</b> in modo automatico grazie all'AI</span></h1>
-      </div>
-
       <div class="hero-copy">
+        <p class="eyebrow">Fotocamera per eventi · reels automatico</p>
+        <h1><span class="lead">Registra i tuoi video senza perderli nel rullino</span><span class="line">e crea reels o video</span><b class="shine">PAZZESCHI</b><span class="tail">in modo automatico grazie all'AI</span></h1>
         <p class="hero-lede">Ogni evento ha la sua cartella. Gli scatti non entrano nel rullino. E il reels lo monta l'app, da sola.</p>
         <p class="hero-lede">Apri l'evento e scatta con EventCam: ogni foto e ogni video finiscono <b>solo</b> nella cartella di quell'evento, mai nell'app Foto. A fine giornata hai già le clip: scegli la tua musica, lasciale in ordine cronologico e <b>il reels si monta da solo</b> — semplice, veloce, automatico.</p>
         <ul class="claims">
