@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EventCam — la fotocamera degli eventi, con il reels che si monta da solo</title>
-<meta name="description" content="EventCam tiene foto e video di ogni evento in una cartella tutta sua, fuori dal rullino, e monta il reels da solo a tempo di musica: voce fuori campo, sottotitoli scritti dall'app, esportazione ordinata per giornate. Solo iPhone.">
+<meta name="description" content="EventCam tiene foto e video di ogni evento in una cartella tutta sua, fuori dal rullino, e monta il reels da solo a tempo di musica: voce fuori campo, sottotitoli scritti dall'app, esportazione ordinata per giornate. Su iPhone e su Android.">
 <link rel="canonical" href="https://eventcam.media/">
 <meta name="theme-color" content="#5238F2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#090814" media="(prefers-color-scheme: dark)">
@@ -158,7 +158,7 @@ a{color:inherit}
 .mark{width:26px;height:26px;flex:none;border-radius:7px;display:block}
 .topbar-meta{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--deep-dim)}
 
-.hero{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:54px;padding:34px 0 76px;align-items:start}
+.hero{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:44px;padding:26px 0 52px;align-items:start}
 .hero .eyebrow{color:var(--deep-accent)}
 .hero-copy{display:flex;flex-direction:column;gap:22px}
 .hero h1{font-size:clamp(30px,3.9vw,46px);color:var(--deep-text);letter-spacing:-.026em;line-height:1.08}
@@ -252,11 +252,18 @@ a{color:inherit}
 .store{display:inline-flex;padding:10px;margin:-10px}
 .store img{display:block;height:48px;width:auto}
 .store:focus-visible{outline:2px solid var(--deep-accent);outline-offset:2px;border-radius:10px}
+/* Il distintivo di Google si porta dentro l'aria che pretende — 29 pixel
+   sopra e sotto su 250 — mentre quello di Apple arriva al bordo. Alzandolo a
+   63 le due scritte vengono alte uguali: è il disegno dentro che conta, non
+   il file. */
+.store--play img{height:63px}
 
 /* ---------------- piede ---------------- */
 .piede{
-  border-top:1px solid var(--line-soft);
-  margin-top:52px;padding:40px 0 58px;
+  /* La fascia che lo contiene ha già bordo e respiro suoi: qui si azzerano
+     quelli della regola generica `footer`, che altrimenti raddoppiano la
+     riga e lasciano un vuoto sopra il piede. */
+  margin-top:0;padding:0;border-top:0;
   display:flex;flex-direction:column;gap:12px;
 }
 .piede__voci{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:14px}
@@ -317,16 +324,16 @@ a{color:inherit}
 .step .ico{margin-bottom:2px}
 .feature{padding-top:20px}
 /* ---------------- bande ---------------- */
-.band{border-top:1px solid var(--line-soft);padding:84px 0;background:var(--bg)}
+.band{border-top:1px solid var(--line-soft);padding:56px 0;background:var(--bg)}
 .band--alt{background:var(--band-alt);border-top-color:var(--line)}
 .band--tint{background:var(--band-tint);border-top-color:var(--line)}
 .band--alt .panel,.band--tint .panel,.band--alt .tree,.band--tint .tree{background:var(--surface-2)}
-.band-head{display:flex;flex-direction:column;gap:14px;max-width:730px}
+.band-head{display:flex;flex-direction:column;gap:10px;max-width:730px}
 .band-head h2{font-size:clamp(29px,4vw,44px)}
 .band-head p{color:var(--text-dim);font-size:18px;max-width:62ch}
 
 /* ---------------- prima/dopo rullino ---------------- */
-.compare{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:38px}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
 .panel{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:26px 24px;display:flex;flex-direction:column;gap:16px}
 .panel--accent{border-color:var(--accent-edge);box-shadow:var(--lift)}
 .panel h3{font-size:20px}
@@ -342,8 +349,10 @@ a{color:inherit}
 .strip-note{font-size:13px;color:var(--text-faint)}
 
 /* ---------------- passi ---------------- */
-.steps{display:grid;grid-template-columns:repeat(4,1fr);margin-top:44px;border-top:1px solid var(--line)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);margin-top:30px;border-top:1px solid var(--line)}
 @media (max-width:1080px){.steps{grid-template-columns:1fr 1fr}.step:nth-child(2n){border-right:none}}
+@media (max-width:1080px){.features{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.studio-grid{grid-template-columns:1fr}}
 .step{padding:24px 26px 6px;border-right:1px solid var(--line-soft);display:flex;flex-direction:column;gap:9px}
 .step:last-child{border-right:none}
 .step-n{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;color:var(--accent)}
@@ -351,14 +360,14 @@ a{color:inherit}
 .step p{color:var(--text-dim);font-size:15.5px}
 
 /* ---------------- organizzazione: elenco eventi ---------------- */
-.org{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:48px;align-items:center;margin-top:40px}
+.org{display:grid;grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr);gap:36px;align-items:center;margin-top:28px}
 .org-list{display:flex;flex-direction:column;gap:22px}
 .org-item h3{font-size:19px;margin-bottom:6px}
 .org-item p{color:var(--text-dim);font-size:15.5px}
 
 /* ---------------- funzioni ---------------- */
-.features{display:grid;grid-template-columns:1fr 1fr;gap:0 44px;margin-top:38px}
-.feature{padding:22px 0;border-top:1px solid var(--line-soft);display:flex;flex-direction:column;gap:7px}
+.features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 34px;margin-top:26px}
+.feature{padding:17px 0;border-top:1px solid var(--line-soft);display:flex;flex-direction:column;gap:6px}
 .feature h3{font-size:18px;letter-spacing:-.012em}
 .feature p{color:var(--text-dim);font-size:15px}
 .feature .spec{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--text-faint)}
@@ -367,7 +376,7 @@ a{color:inherit}
 .studio{
   background:linear-gradient(168deg,#1E1552 0%,#140F35 60%,#100C2B 100%);
   color:var(--deep-text);border:1px solid var(--deep-line);border-radius:18px;
-  padding:44px clamp(22px,4vw,46px);
+  padding:32px clamp(20px,3.4vw,38px);
 }
 .studio h2{font-size:clamp(29px,4vw,44px);color:var(--deep-text)}
 .studio .eyebrow{color:var(--deep-accent)}
@@ -393,7 +402,7 @@ a{color:inherit}
 @keyframes sweep{from{left:0}to{left:100%}}
 @media (prefers-reduced-motion:reduce){.playhead{animation:none;left:38%}}
 .studio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--deep-line);border:1px solid var(--deep-line);border-radius:12px;overflow:hidden}
-.studio-cell{background:#100C2B;padding:22px 20px;display:flex;flex-direction:column;gap:9px}
+.studio-cell{background:#100C2B;padding:16px 16px;display:flex;flex-direction:column;gap:7px}
 .studio-cell h3{font-size:17px;color:var(--deep-text)}
 .studio-cell p{color:var(--deep-dim);font-size:14.5px}
 .pillrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
@@ -401,8 +410,8 @@ a{color:inherit}
 .pill[data-hot]{color:var(--deep-accent);border-color:rgba(167,139,255,.45)}
 .beat[data-drop]{height:20px;width:2px;background:var(--deep-accent-2);opacity:1}
 .beat[data-drop] i{position:absolute;top:22px;left:-14px;width:30px;text-align:center;font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:9px;color:var(--deep-accent-2)}
-.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--deep-line);border:1px solid var(--deep-line);border-radius:12px;overflow:hidden;margin:0 0 28px}
-.proof div{background:#100C2B;padding:20px;display:flex;flex-direction:column;gap:5px}
+.proof{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--deep-line);border:1px solid var(--deep-line);border-radius:12px;overflow:hidden;margin:0 0 20px}
+.proof div{background:#100C2B;padding:15px 16px;display:flex;flex-direction:column;gap:4px}
 .proof b{font-family:"IBM Plex Mono",monospace;font-size:30px;font-weight:500;color:var(--deep-accent-2);line-height:1;letter-spacing:-.02em}
 .proof span{font-size:13.5px;color:var(--deep-dim)}
 .proof em{font-style:normal;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--deep-dim)}
@@ -580,9 +589,39 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
 .eact[data-warn]{border-color:rgba(242,116,142,.45);color:#F2A0B2}
 
 /* ---------------- percorso passo per passo ---------------- */
-.walk{display:grid;grid-template-columns:1fr 1fr;gap:4px 40px;margin-top:34px}
-.wstep{display:grid;grid-template-columns:auto minmax(0,1fr);gap:20px;align-items:start;padding:26px 0 4px;border-top:1px solid var(--line-soft)}
-.wstep .device{zoom:.56;margin-top:2px}
+/* I passaggi scorrono di lato invece di impilarsi: undici schermate una sotto
+   l'altra facevano da sole un terzo della pagina, e chi legge le incontrava
+   una per volta senza mai vedere il percorso intero. In fila si capisce al
+   primo sguardo che è una sequenza, e la scheda tagliata sul bordo destro
+   dice da sé che si continua. */
+.walk{
+  display:flex;gap:14px;margin-top:12px;
+  overflow-x:auto;overscroll-behavior-x:contain;
+  scroll-snap-type:x proximity;
+  padding-bottom:14px;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
+}
+/* Una fila che scorre si capisce solo se qualcosa lo dice: la freccia si
+   muove appena, e la scheda tagliata sul bordo destro fa il resto. */
+.walk-hint{
+  display:flex;align-items:center;gap:8px;margin-top:18px;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--accent);
+}
+.walk-hint__freccia{display:inline-block;font-size:15px;animation:spinge 1.8s ease-in-out infinite}
+@keyframes spinge{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+@media (prefers-reduced-motion:reduce){.walk-hint__freccia{animation:none}}
+.walk:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:18px}
+.walk::-webkit-scrollbar{height:8px}
+.walk::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px}
+.walk::-webkit-scrollbar-track{background:transparent}
+.wstep{
+  flex:0 0 262px;scroll-snap-align:start;
+  display:flex;flex-direction:column;gap:12px;
+  padding:16px;border:1px solid var(--line-soft);border-radius:18px;
+  background:var(--surface-2);
+}
+.wstep .device{zoom:.46;align-self:center}
 .wstep-copy{display:flex;flex-direction:column;gap:7px}
 .wstep-n{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--accent)}
 .wstep h3{font-size:18.5px}
@@ -590,11 +629,10 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
 .wstep .pillrow{margin-top:5px}
 .wstep .pill{border-color:var(--line);color:var(--text-faint)}
 .wstep .pill[data-hot]{color:var(--accent);border-color:var(--accent-edge)}
-.walk-note{margin-top:26px;padding-top:20px;border-top:1px solid var(--line);color:var(--text-faint);font-size:14px}
-@media (max-width:1080px){.walk{grid-template-columns:1fr}}
+.walk-note{margin-top:18px;padding-top:14px;border-top:1px solid var(--line);color:var(--text-faint);font-size:14px}
 @media (max-width:540px){
-  .wstep{grid-template-columns:1fr;justify-items:start;gap:14px}
-  .wstep .device{zoom:.62}
+  .wstep{flex-basis:232px}
+  .wstep .device{zoom:.42}
 }
 
 /* foglio del nome evento */
@@ -671,7 +709,7 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
 .fm--no b{color:#F2748E}
 .fm strong{font-size:12.5px;font-weight:600;color:var(--deep-text)}
 .fm span{font-size:11px;color:var(--deep-dim)}
-.studio-showcase{display:grid;grid-template-columns:auto minmax(0,1fr);gap:30px;align-items:center;margin:32px 0 28px}
+.studio-showcase{display:grid;grid-template-columns:auto minmax(0,1fr);gap:26px;align-items:center;margin:24px 0 20px}
 .studio-showcase .device{zoom:.94}
 
 @media (max-width:920px){
@@ -681,7 +719,7 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
   /* La testata nasce a griglia con gli elementi appoggiati in alto; diventando
      una colonna, quello stesso "appoggia" impediva ai blocchi di allargarsi, e
      il telefono restava incollato a sinistra invece di stare al centro. */
-  .hero{display:flex;flex-direction:column;align-items:stretch;gap:26px;padding-bottom:56px}
+  .hero{display:flex;flex-direction:column;align-items:stretch;gap:26px;padding-bottom:40px}
   .hero-copy{display:contents}
   .hero .eyebrow{order:1}
   .hero h1{order:2}
@@ -710,9 +748,9 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
   .org{gap:34px}
   .steps{grid-template-columns:1fr}
   .step{border-right:none;border-bottom:1px solid var(--line-soft);padding-bottom:20px}
-  .studio-grid{grid-template-columns:1fr}
+  .studio-grid{grid-template-columns:1fr 1fr}
   .spec-row{grid-template-columns:1fr;gap:2px}
-  .band{padding:62px 0}
+  .band{padding:44px 0}
 }
 @media (max-width:920px){
   .studio-showcase{grid-template-columns:1fr;justify-items:center;gap:26px}
@@ -759,7 +797,7 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
         </svg>
         EventCam
       </div>
-      <div class="topbar-meta">iPhone · iOS 17+</div>
+      <div class="topbar-meta">iPhone · iOS 17+ &nbsp;·&nbsp; Android 8+</div>
     </header>
 
     <section class="hero">
@@ -787,8 +825,11 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
         </div>
 
         <div class="cta-row">
-          <a class="store" href="#beta" rel="noopener">
+          <a class="store" href="https://apps.apple.com/app/eventcam/id6812399766" rel="noopener">
             <img src="loghi/app-store-it-bianco.svg" width="144" height="48" alt="Scarica su App Store — EventCam">
+          </a>
+          <a class="store store--play" href="https://play.google.com/store/apps/details?id=media.eventcam" rel="noopener">
+            <img src="loghi/google-play-it.png" width="162" height="63" alt="Disponibile su Google Play — EventCam">
           </a>
           <a class="btn btn--onDeep" href="#passaggi">Tutti i passaggi</a>
         </div>
@@ -817,6 +858,8 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
                 <span class="zoom">0,5×</span>
                 <span class="zoom" data-on>1×</span>
                 <span class="zoom">2×</span>
+                <span class="zoom">4×</span>
+                <span class="zoom">8×</span>
               </div>
               <div class="cam-modes"><b>FOTO</b><span>VIDEO</span></div>
               <div class="cam-actions">
@@ -1042,20 +1085,32 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
       <div class="feature">
         <span class="ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 7.5h5M13 7.5h7M4 16.5h7M15 16.5h5"/><circle cx="11" cy="7.5" r="2.1"/><circle cx="13" cy="16.5" r="2.1"/></svg></span>
         <h3>Qualità che decidi tu</h3>
-        <p>Qualità massima o standard, formato JPEG o HEIF, proporzioni 4:3 o 16:9. Per i video scegli fra i preset che l'iPhone collegato offre davvero, indicati come 4K · 60 o 1080p · 30.</p>
-        <p class="spec">JPEG · HEIF · 4:3 e 16:9 · fino a 4K</p>
+        <p>Qualità massima o standard, formato JPEG o HEIF, proporzioni 4:3 o 16:9. Per i video scegli fra i preset che l'iPhone collegato offre davvero, indicati come 4K · 60 o 1080p · 30 — fino a 4K a 120 fotogrammi dove il telefono ce li ha. Le alte velocità vivono solo sulla fotocamera principale: l'app ci passa da sola e torna indietro quando scegli un'altra qualità.</p>
+        <p class="spec">JPEG · HEIF · 4:3 e 16:9 · fino a 4K a 120 fps</p>
       </div>
       <div class="feature">
         <span class="ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M16.2 16.2 21 21"/><circle cx="11" cy="11" r="2.6"/></svg></span>
-        <h3>Zoom con gli obiettivi del telefono</h3>
-        <p>Ultragrandangolo, grandangolo e teleobiettivo con i valori che già conosci, più lo zoom a due dita. L'ultimo valore usato resta pronto alla riapertura.</p>
-        <p class="spec">0,5× · 1× · teleobiettivo · pinch</p>
+        <h3>Gli stessi ingrandimenti della fotocamera di sistema</h3>
+        <p>Non solo i tre obiettivi: anche i ritagli a piena risoluzione del sensore, quelli che nell'app Fotocamera sono il 2× e l'8×. L'1× inquadra esattamente come il suo 1×, e da un valore all'altro l'immagine ci scivola invece di saltare. Compaiono quelli che il tuo iPhone offre davvero con la qualità scelta, più lo zoom a due dita. L'ultimo valore usato resta pronto alla riapertura.</p>
+        <p class="spec">0,5× · 1× · 2× · 4× · 8× · pinch</p>
+      </div>
+      <div class="feature">
+        <span class="ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2.2"/><path d="M3.5 8.5h17M3.5 15.5h17"/></svg></span>
+        <h3>Quello che inquadri è quello che salvi</h3>
+        <p>L'anteprima ha le proporzioni del file — 4:3 o 16:9 — invece di riempire il display tagliando i lati. Niente sorprese al momento di guardare la foto: nel mirino c'è già tutto quello che finisce nella cartella dell'evento.</p>
+        <p class="spec">anteprima 4:3 o 16:9 · nessun ritaglio nascosto</p>
       </div>
       <div class="feature">
         <span class="ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="m8.4 12.2 2.5 2.5 4.7-5"/></svg></span>
         <h3>Selezione multipla</h3>
         <p>Tocchi quello che serve e lo condividi con il foglio di sistema, o lo elimini in blocco. "Seleziona tutto" prende quello che stai guardando — se hai aperto una sola giornata, prende quella — e con un tocco si torna indietro. Eliminando sparisce anche l'anteprima: nessun residuo sul telefono.</p>
         <p class="spec">seleziona tutto · deseleziona · condividi · esporta · elimina</p>
+      </div>
+      <div class="feature">
+        <span class="ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6.5" cy="17.5" r="2.6"/><circle cx="17.5" cy="17.5" r="2.6"/><path d="M8.4 15.6 19 4M15.6 15.6 5 4"/></svg></span>
+        <h3>Taglia una ripresa senza uscire dall'evento</h3>
+        <p>Apri il video, stringi le due maniglie sulla striscia dei fotogrammi e scegli se tenere quel pezzo o buttarlo. Il taglio può prendere il posto dell'originale o affiancarglisi come clip nuova: in tutti e due i casi resta dentro l'evento.</p>
+        <p class="spec">tieni o elimina · sostituisci o salva a parte</p>
       </div>
       <div class="feature">
         <span class="ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="11" rx="2"/><path d="M2 19h20"/></svg></span>
@@ -1267,11 +1322,13 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
   <div class="wrap">
     <div class="band-head">
       <p class="eyebrow">Il percorso completo</p>
-      <h2>Dall'evento vuoto al reels finito: ogni passaggio, uno alla volta.</h2>
+      <h2>Dall'evento vuoto al reels finito: scorri i passaggi uno a uno.</h2>
       <p>Dieci schermate, nell'ordine in cui le incontri davvero: si crea l'evento, si riprende, si sceglie il brano, l'app monta, e nella sala di montaggio si sistemano inquadrature, scritte, voce e sottotitoli. Solo l'ultimo passaggio scrive il file.</p>
     </div>
 
-    <div class="walk">
+    <p class="walk-hint"><span class="walk-hint__freccia" aria-hidden="true">→</span> Scorri di lato per vedere tutti i passaggi</p>
+
+    <div class="walk" tabindex="0" role="region" aria-label="I passaggi, in fila: scorri orizzontalmente">
 
       <div class="wstep">
         <div class="device" role="img" aria-label="Schermata I miei eventi con il foglio Nuovo evento aperto e il nome Gita a Firenze scritto nel campo.">
@@ -1314,14 +1371,14 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
               <div class="cam-top">
                 <span class="cam-btn">✕</span>
                 <span class="cam-btn">⚡︎A</span>
-                <span class="cam-btn">4K·30</span>
+                <span class="cam-btn">4K·60</span>
                 <span class="cam-btn">▦</span>
                 <span class="cam-btn">≡</span>
               </div>
               <span class="cam-focus" aria-hidden="true"></span>
             </div>
             <div class="cam-bottom">
-              <div class="cam-zooms"><span class="zoom">0,5×</span><span class="zoom" data-on>1×</span><span class="zoom">2×</span></div>
+              <div class="cam-zooms"><span class="zoom">0,5×</span><span class="zoom" data-on>1×</span><span class="zoom">2×</span><span class="zoom">4×</span><span class="zoom">8×</span></div>
               <div class="cam-modes"><span>FOTO</span><b>VIDEO</b></div>
               <div class="cam-actions">
                 <span class="cam-thumb">24</span>
@@ -1684,13 +1741,15 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
     </div>
 
     <dl class="specs">
-      <div class="spec-row"><dt>Dispositivo</dt><dd>Solo iPhone, iOS 17 o successivo</dd></div>
+      <div class="spec-row"><dt>Dispositivo</dt><dd>iPhone con iOS 17 o successivo; telefono Android con Android 8 o successivo</dd></div>
       <div class="spec-row"><dt>Foto</dt><dd>JPEG o HEIF, qualità Massima o Standard, proporzioni 4:3 o 16:9</dd></div>
-      <div class="spec-row"><dt>Video</dt><dd>I preset offerti dal dispositivo, fino a 4K quando il telefono lo permette</dd></div>
+      <div class="spec-row"><dt>Video</dt><dd>1080p e 4K a 30, 60 e 120 fotogrammi, secondo quello che il dispositivo offre davvero; alle alte velocità la ripresa passa da sola alla fotocamera principale, che è l'unica ad averle</dd></div>
+      <div class="spec-row"><dt>Zoom</dt><dd>Gli ingrandimenti dichiarati dal telefono — su un iPhone Pro recente 0,5×, 1×, 2×, 4× e 8× — con gli stessi numeri e la stessa inquadratura dell'app Fotocamera, passaggio graduale e zoom a due dita</dd></div>
       <div class="spec-row"><dt>Reels</dt><dd>Verticale 1080 × 1920 a 30 fotogrammi, da 1 a 10 minuti a passi di 15 secondi, montato con i video dell'evento in ordine di ripresa</dd></div>
       <div class="spec-row"><dt>Montaggio</dt><dd>Stacchi sui momenti della canzone — drop, cambi di sezione, "uno" di battuta, accenti — agganciati al fotogramma: anteprima ed esportazione tagliano nello stesso punto</dd></div>
       <div class="spec-row"><dt>Sottotitoli</dt><dd>Ricavati dalla voce registrata con il riconoscimento del parlato del telefono, con l'istante di ogni parola; battute aggiungibili e regolabili a mano, dissolvenza in uscita, carattere, formato, colore, misura e posizione a scelta, incisi nel filmato esportato</dd></div>
       <div class="spec-row"><dt>Voce fuori campo</dt><dd>Registrazione con pausa e ripresa in sincrono, monitoraggio del video regolabile mentre registri, livelli automatici misurati sull'audio vero, pulizia del rumore che lascia intatto oltre il 90% della voce</dd></div>
+      <div class="spec-row"><dt>Taglio delle riprese</dt><dd>Taglio di una singola ripresa dentro l'evento: si tiene o si elimina la parte scelta, sostituendo l'originale o salvando una clip nuova accanto</dd></div>
       <div class="spec-row"><dt>Messa al sicuro</dt><dd>Avviso sugli eventi mai consegnati fuori dall'app, che si spegne da solo dopo l'esportazione</dd></div>
       <div class="spec-row"><dt>Archivio</dt><dd>Una cartella dedicata per ogni evento, nell'archivio locale dell'app</dd></div>
       <div class="spec-row"><dt>Esportazione</dt><dd>Condivisione di sistema, esporta tutto, ZIP diviso per giornate</dd></div>
@@ -1727,26 +1786,15 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
   </div>
 </section>
 
-<section class="band" id="beta">
+<section class="band">
   <div class="wrap">
-    <div class="close">
-      <p class="eyebrow">Al prossimo evento</p>
-      <h2>Apri l'evento. Scatta. Il reels si monta da solo.</h2>
-      <p>Smetti di ripescare le foto dal rullino a fine giornata e di montare il video a mano. Con EventCam l'archivio è già in ordine mentre lavori, il reels esce a tempo di musica — e il telefono personale resta personale.</p>
-      <div class="cta-row">
-        <a class="btn btn--primary" href="#beta">Entra nella beta</a>
-        <a class="btn btn--onDeep" href="#passaggi">Rivedi i passaggi</a>
-      </div>
-      <p class="hero-foot">iPhone · iOS 17+ · la fotocamera richiede un dispositivo reale</p>
-    </div>
-
     <footer class="piede">
       <nav class="piede__voci" aria-label="Supporto">
         <a href="#requisiti">Requisiti di sistema</a>
       </nav>
 
       <p class="piede__requisiti" id="requisiti">
-        <strong>Requisiti di sistema:</strong> iPhone con iOS 17 o successivo. La fotocamera richiede un dispositivo reale.
+        <strong>Requisiti di sistema:</strong> iPhone con iOS 17 o successivo, oppure un telefono Android con Android 8 o successivo. La fotocamera richiede un dispositivo reale.
       </p>
 
       <p class="piede__diritti">EventCam — la fotocamera degli eventi.</p>
