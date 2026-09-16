@@ -322,7 +322,6 @@ a{color:inherit}
 }
 .ico svg{display:block}
 .step .ico{margin-bottom:2px}
-.feature{padding-top:20px}
 /* ---------------- bande ---------------- */
 .band{border-top:1px solid var(--line-soft);padding:56px 0;background:var(--bg)}
 .band--alt{background:var(--band-alt);border-top-color:var(--line)}
@@ -351,8 +350,7 @@ a{color:inherit}
 /* ---------------- passi ---------------- */
 .steps{display:grid;grid-template-columns:repeat(4,1fr);margin-top:30px;border-top:1px solid var(--line)}
 @media (max-width:1080px){.steps{grid-template-columns:1fr 1fr}.step:nth-child(2n){border-right:none}}
-@media (max-width:1080px){.features{grid-template-columns:1fr 1fr}}
-@media (max-width:620px){.studio-grid{grid-template-columns:1fr}}
+@media (max-width:1080px){.features{columns:2}}
 .step{padding:24px 26px 6px;border-right:1px solid var(--line-soft);display:flex;flex-direction:column;gap:9px}
 .step:last-child{border-right:none}
 .step-n{font-family:"IBM Plex Mono",monospace;font-size:11.5px;letter-spacing:.14em;color:var(--accent)}
@@ -366,11 +364,37 @@ a{color:inherit}
 .org-item p{color:var(--text-dim);font-size:15.5px}
 
 /* ---------------- funzioni ---------------- */
-.features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 34px;margin-top:26px}
-.feature{padding:17px 0;border-top:1px solid var(--line-soft);display:flex;flex-direction:column;gap:6px}
-.feature h3{font-size:18px;letter-spacing:-.012em}
-.feature p{color:var(--text-dim);font-size:15px}
-.feature .spec{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--text-faint)}
+/* Le nove voci sono lunghe in modo molto diverso — da 128 a 380 caratteri.
+   In griglia ogni riga si alzava fino alla voce più lunga e sotto le altre
+   due restava il vuoto: tre righe tirate su dalla più prolissa. A colonne le
+   schede si impilano per altezza vera, e quel vuoto sparisce. */
+.features{columns:3;column-gap:14px;margin-top:22px}
+.feature{
+  break-inside:avoid;margin:0 0 14px;
+  padding:15px 16px 14px;
+  border:1px solid var(--line-soft);border-radius:16px;
+  background:var(--surface);
+  /* icona e titolo sulla stessa riga: una riga in meno per scheda, per nove
+     schede. Il testo sotto, per tutta la larghezza. */
+  display:grid;grid-template-columns:auto minmax(0,1fr);
+  column-gap:10px;row-gap:7px;align-items:center;
+}
+.feature .ico{width:30px;height:30px;border-radius:9px;margin:0}
+.feature .ico svg{width:16px;height:16px}
+.feature h3{font-size:16.5px;letter-spacing:-.012em;line-height:1.25}
+.feature p{grid-column:1 / -1;color:var(--text-dim);font-size:14.5px;line-height:1.5}
+.feature .spec{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--text-faint);
+  padding-top:9px;border-top:1px solid var(--line-soft);
+}
+/* In chiaro la scheda è bianca sulla fascia lilla e si stacca da sola. In
+   scuro quello stesso bianco diventa #121125 contro una fascia #14122B: due
+   neri quasi uguali, e le nove schede sparivano lasciando solo i bordi. Lì
+   serve il grado sopra, come fanno già i pannelli sulle fasce tinte. */
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]) .feature{background:var(--surface-2)}
+}
+:root[data-theme="dark"] .feature{background:var(--surface-2)}
 
 /* ---------------- montaggio (pannello scuro) ---------------- */
 .studio{
@@ -401,8 +425,29 @@ a{color:inherit}
 .playhead{position:absolute;top:-66px;bottom:0;width:1.5px;left:0;background:var(--deep-accent-2);box-shadow:0 0 9px rgba(79,214,224,.75);animation:sweep 9s linear infinite}
 @keyframes sweep{from{left:0}to{left:100%}}
 @media (prefers-reduced-motion:reduce){.playhead{animation:none;left:38%}}
-.studio-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--deep-line);border:1px solid var(--deep-line);border-radius:12px;overflow:hidden}
-.studio-cell{background:#100C2B;padding:16px 16px;display:flex;flex-direction:column;gap:7px}
+/* Diciassette schede: in griglia erano sei righe di pannello scuro, e chi
+   legge le incontrava una per volta senza mai vedere quanto c'è. In fila si
+   scorrono, e la scheda tagliata sul bordo dice che continua. */
+.studio-strip{
+  display:flex;gap:12px;margin-top:10px;
+  overflow-x:auto;overscroll-behavior-x:contain;
+  scroll-snap-type:x proximity;padding-bottom:12px;
+  scrollbar-width:thin;scrollbar-color:var(--deep-line) transparent;
+}
+.studio-strip::-webkit-scrollbar{height:8px}
+.studio-strip::-webkit-scrollbar-thumb{background:var(--deep-line);border-radius:4px}
+.studio-strip::-webkit-scrollbar-track{background:transparent}
+.studio-strip:focus-visible{outline:2px solid var(--deep-accent);outline-offset:4px;border-radius:14px}
+.studio-cell{
+  flex:0 0 248px;scroll-snap-align:start;
+  background:rgba(9,7,26,.55);border:1px solid var(--deep-line);border-radius:12px;
+  padding:15px 15px 14px;display:flex;flex-direction:column;gap:7px;
+}
+.studio-hint{color:var(--deep-accent);margin-top:18px}
+/* Le schede in fila sono tutte alte uguali, e i testi no: senza questo il
+   vuoto si accumulava in fondo a ognuna. Spingendo giù le targhette il vuoto
+   finisce in mezzo, dove non si vede, e le targhette si allineano fra loro. */
+.studio-strip .pillrow{margin-top:auto;padding-top:9px}
 .studio-cell h3{font-size:17px;color:var(--deep-text)}
 .studio-cell p{color:var(--deep-dim);font-size:14.5px}
 .pillrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
@@ -745,10 +790,10 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
   .card:first-child{grid-column:1 / -1;flex-direction:row;align-items:baseline;gap:10px;flex-wrap:wrap}
   .card:first-child span:last-child{width:100%;margin-top:0}
   .compare,.features,.qa,.delivery,.org{grid-template-columns:1fr}
+  .features{columns:1}
   .org{gap:34px}
   .steps{grid-template-columns:1fr}
   .step{border-right:none;border-bottom:1px solid var(--line-soft);padding-bottom:20px}
-  .studio-grid{grid-template-columns:1fr 1fr}
   .spec-row{grid-template-columns:1fr;gap:2px}
   .band{padding:44px 0}
 }
@@ -1224,7 +1269,9 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
         </div>
       </div>
 
-      <div class="studio-grid" style="margin-bottom:1px">
+      <p class="walk-hint studio-hint"><span class="walk-hint__freccia" aria-hidden="true">→</span> Scorri di lato: qui c'è tutto quello che fa l'app</p>
+
+      <div class="studio-strip" tabindex="0" role="region" aria-label="Come nasce il montaggio, in fila: scorri orizzontalmente">
         <div class="studio-cell">
           <h3>Sente com'è fatta la canzone</h3>
           <p>Non solo i battiti al minuto. Riconosce l'"uno" della battuta guardando la cassa e non il rullante, gli accenti forti, i cambi di sezione e i drop — e sa se il brano è calmo, ritmato o travolgente.</p>
@@ -1255,9 +1302,6 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
           <p>Nel pannello Analisi trovi la forma d'onda del brano con sopra i drop, i tagli scelti e lo scarto in millesimi di ogni stacco. Se qualcosa non torna, si vede da lì invece di doverlo indovinare.</p>
           <div class="pillrow"><span class="pill">forma d'onda</span><span class="pill">scarto in ms</span><span class="pill">file di analisi</span></div>
         </div>
-      </div>
-
-      <div class="studio-grid">
         <div class="studio-cell">
           <h3>Sala di montaggio</h3>
           <p>Prima di salvare togli un'inquadratura o la accorci. Il montaggio viene ricostruito, non tagliato: la musica si ridistende e gli stacchi restano dove il ritmo li vuole.</p>
