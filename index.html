@@ -156,7 +156,6 @@ a{color:inherit}
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 0}
 .brand{display:flex;align-items:center;gap:11px;font-family:"Bricolage Grotesque",sans-serif;font-weight:800;font-size:18px;letter-spacing:-.015em}
 .mark{width:26px;height:26px;flex:none;border-radius:7px;display:block}
-.topbar-meta{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--deep-dim)}
 
 .hero{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr);gap:44px;padding:26px 0 52px;align-items:start}
 .hero .eyebrow{color:var(--deep-accent)}
@@ -252,6 +251,40 @@ a{color:inherit}
 .store{display:inline-flex;padding:10px;margin:-10px}
 .store img{display:block;height:48px;width:auto}
 .store:focus-visible{outline:2px solid var(--deep-accent);outline-offset:2px;border-radius:10px}
+
+/* La barra che si attacca in basso appena i distintivi della testata escono
+   di scena. Da lì in poi la pagina è lunga undici schermate: senza, per
+   scaricare bisogna tornare su. */
+.barra-store{
+  position:fixed;left:0;right:0;bottom:0;z-index:40;
+  padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px));
+  background:rgba(13,11,32,.86);
+  backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-top:1px solid rgba(167,139,255,.22);
+  transform:translateY(105%);visibility:hidden;
+  transition:transform .28s ease,visibility .28s;
+}
+.barra-store[data-visibile]{transform:none;visibility:visible}
+@media (prefers-reduced-motion:reduce){.barra-store{transition:none}}
+.barra-store__dentro{
+  max-width:1140px;margin:0 auto;padding:0 26px;
+  display:flex;align-items:center;gap:14px;
+}
+.barra-store__testo{
+  margin-right:auto;
+  font-family:"IBM Plex Mono",monospace;font-size:12px;letter-spacing:.06em;
+  text-transform:uppercase;color:#CFC9F5;
+}
+.barra-store .store{padding:6px;margin:-6px}
+.barra-store .store img{height:36px}
+.barra-store .store--play img{height:47px}
+/* Quando la barra c'è, la pagina si allunga di quel tanto: altrimenti
+   coprirebbe l'ultima riga del piede. */
+body.con-barra{padding-bottom:74px}
+@media (max-width:600px){
+  .barra-store__testo{display:none}
+  .barra-store__dentro{justify-content:center;gap:10px}
+}
 /* Il distintivo di Google si porta dentro l'aria che pretende — 29 pixel
    sopra e sotto su 250 — mentre quello di Apple arriva al bordo. Alzandolo a
    63 le due scritte vengono alte uguali: è il disegno dentro che conta, non
@@ -274,8 +307,6 @@ a{color:inherit}
 .piede__diritti{font-size:14px;color:var(--text-dim)}
 .piede__copyright{font-size:13px;color:var(--text-faint)}
 .btn--primary:hover{transform:translateY(-1px)}
-.btn--onDeep{border-color:rgba(167,139,255,.42);color:var(--deep-text)}
-.btn--onDeep:hover{background:rgba(167,139,255,.12)}
 .hero-foot{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--deep-dim);letter-spacing:.02em}
 
 /* ---------------- schema: dove finisce lo scatto ---------------- */
@@ -842,7 +873,6 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
         </svg>
         EventCam
       </div>
-      <div class="topbar-meta">iPhone · iOS 17+ &nbsp;·&nbsp; Android 8+</div>
     </header>
 
     <section class="hero">
@@ -876,7 +906,6 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
           <a class="store store--play" href="https://play.google.com/store/apps/details?id=media.eventcam" rel="noopener">
             <img src="loghi/google-play-it.png" width="162" height="63" alt="Disponibile su Google Play — EventCam">
           </a>
-          <a class="btn btn--onDeep" href="#passaggi">Tutti i passaggi</a>
         </div>
         <p class="hero-foot">Nessun account · nessun cloud obbligatorio · i file restano sul telefono</p>
       </div>
@@ -1848,8 +1877,37 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
   </div>
 </section>
 
+<div class="barra-store" id="barra-store">
+  <div class="barra-store__dentro">
+    <span class="barra-store__testo">Scarica EventCam</span>
+    <a class="store" href="https://apps.apple.com/app/eventcam/id6812399766" rel="noopener">
+      <img src="loghi/app-store-it-bianco.svg" width="144" height="48" alt="Scarica su App Store — EventCam">
+    </a>
+    <a class="store store--play" href="https://play.google.com/store/apps/details?id=media.eventcam" rel="noopener">
+      <img src="loghi/google-play-it.png" width="162" height="63" alt="Disponibile su Google Play — EventCam">
+    </a>
+  </div>
+</div>
 
+<script>
+// L'unico script della pagina, e fa una cosa sola: accende la barra in basso
+// quando i distintivi della testata escono dallo schermo, la spegne quando
+// rientrano. Finché è spenta è `inert`, così non la incontrano né la tastiera
+// né chi legge con lo schermo — è un doppione di due link che stanno già su.
+(function () {
+  var barra = document.getElementById('barra-store');
+  var testata = document.querySelector('.hero .cta-row');
+  if (!barra || !testata || !('IntersectionObserver' in window)) return;
 
+  barra.inert = true;
+  new IntersectionObserver(function (voci) {
+    var siVedeLaTestata = voci[0].isIntersecting;
+    barra.toggleAttribute('data-visibile', !siVedeLaTestata);
+    document.body.classList.toggle('con-barra', !siVedeLaTestata);
+    barra.inert = siVedeLaTestata;
+  }).observe(testata);
+})();
+</script>
 
 </body>
 </html>
