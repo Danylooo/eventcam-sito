@@ -665,7 +665,7 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
 .eact[data-warn]{border-color:rgba(242,116,142,.45);color:#F2A0B2}
 
 /* ---------------- percorso passo per passo ---------------- */
-/* I passaggi scorrono di lato invece di impilarsi: undici schermate una sotto
+/* I passaggi scorrono di lato invece di impilarsi: dieci schermate una sotto
    l'altra facevano da sole un terzo della pagina, e chi legge le incontrava
    una per volta senza mai vedere il percorso intero. In fila si capisce al
    primo sguardo che è una sequenza, e la scheda tagliata sul bordo destro
@@ -698,6 +698,14 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
   background:var(--surface-2);
 }
 .wstep .device{zoom:.46;align-self:center}
+/* Qui dentro non c'è una ricostruzione disegnata ma la fotografia vera dello
+   schermo: l'immagine riempie la scocca e l'isola le va sopra, dove sul telefono
+   sta davvero. Lo scatto dell'iPhone 17 Pro Max è 1320×2868, un filo più stretto
+   del mockup, così la scocca delle schermate vere è alta 557px invece di 576: il
+   rapporto torna e non si taglia niente. */
+.device--shot{height:557px}
+.device--shot .device-screen{display:block;background:#000}
+.shot{width:100%;height:100%;object-fit:cover;display:block}
 .wstep-copy{display:flex;flex-direction:column;gap:7px}
 .wstep-n{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.14em;color:var(--accent)}
 .wstep h3{font-size:18.5px}
@@ -710,63 +718,6 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
   .wstep{flex-basis:232px}
   .wstep .device{zoom:.42}
 }
-
-/* foglio del nome evento */
-.sheet{position:absolute;left:0;right:0;bottom:0;background:var(--surface);border-top:1px solid var(--line);border-radius:16px 16px 0 0;padding:10px 12px 16px;display:flex;flex-direction:column;gap:9px;box-shadow:0 -12px 30px rgba(20,10,50,.3);z-index:7}
-.sheet-grab{width:34px;height:4px;border-radius:2px;background:var(--line);align-self:center}
-.sheet h5{margin:0;font-family:"Bricolage Grotesque",sans-serif;font-size:13px;font-weight:800;letter-spacing:-.02em}
-.field{border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:10px;background:var(--surface-2);display:flex;justify-content:space-between;align-items:center}
-.field i{font-style:normal;width:1.5px;height:11px;background:var(--accent);display:block}
-.sheet-btn{border-radius:9px;padding:9px;text-align:center;font-size:11px;font-weight:600;background:linear-gradient(140deg,#7C4DF0,#4832EE);color:#fff}
-
-/* schermata "crea reels": brano e durata */
-.scr-list{display:flex;flex-direction:column;gap:8px;flex:1;min-height:0;overflow:hidden}
-.lrow{border:1px solid var(--line-soft);border-radius:10px;background:var(--surface-2);padding:9px 10px;display:flex;flex-direction:column;gap:3px}
-.lrow strong{font-size:10px;font-weight:700}
-.lrow span{font-family:"IBM Plex Mono",monospace;font-size:8px;color:var(--text-faint)}
-.lrow--pick{border-color:var(--accent-edge);background:var(--accent-wash)}
-.mslider{position:relative;height:4px;border-radius:3px;background:var(--line);margin:9px 6px 4px}
-.mslider i{position:absolute;left:0;top:0;bottom:0;width:34%;background:var(--accent);border-radius:3px}
-.mslider b{position:absolute;left:34%;top:50%;width:13px;height:13px;margin:-6.5px 0 0 -6.5px;border-radius:50%;background:#fff;border:1px solid var(--line);box-shadow:0 1px 3px rgba(20,10,50,.3)}
-.warnrow{display:flex;gap:6px;align-items:flex-start;border:1px solid rgba(214,138,32,.45);background:rgba(214,138,32,.12);border-radius:9px;padding:7px 9px;font-size:8.5px;line-height:1.4;color:var(--text-dim)}
-
-/* preparazione del montaggio */
-.prep{flex:1;display:flex;flex-direction:column;gap:11px;justify-content:center;padding:0 16px}
-.prep-item{display:flex;gap:9px;align-items:center;font-size:9.5px;color:#9F9AC8;line-height:1.3}
-.prep-item b{width:15px;height:15px;border-radius:50%;display:grid;place-items:center;font-size:8px;font-weight:600;background:rgba(167,139,255,.18);color:#A78BFF;flex:none}
-.prep-item[data-done] b{background:#A78BFF;color:#14102E}
-.prep-item[data-now]{color:#F4F3FB;font-weight:600}
-.prep-item[data-now] b{border:1px solid #A78BFF}
-
-/* pannelli della sala di montaggio, nei passaggi */
-.esubs{display:flex;gap:4px;margin:7px 12px 0}
-.esub{flex:1;text-align:center;font-size:8px;padding:4px 0;border-radius:6px;background:rgba(255,255,255,.06);color:#C9C6E4}
-.esub[data-on]{background:rgba(167,139,255,.3);color:#F4F3FB;font-weight:600}
-.epanel{margin:7px 12px 12px;display:flex;flex-direction:column;gap:6px}
-.echips{display:flex;flex-wrap:wrap;gap:4px}
-.echip{font-size:8px;padding:3px 7px;border-radius:99px;border:1px solid rgba(167,139,255,.3);color:#C9C6E4}
-.echip[data-on]{background:#A78BFF;color:#14102E;border-color:#A78BFF;font-weight:600}
-.erow{display:flex;align-items:center;gap:7px;font-size:8.5px;color:#C9C6E4}
-.emeter{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.14);position:relative;overflow:hidden}
-.emeter i{position:absolute;left:0;top:0;bottom:0;width:62%;background:#A78BFF;border-radius:3px}
-.emeter[data-mon] i{width:25%;background:#4FD6E0}
-.erec{width:32px;height:32px;border-radius:50%;background:#E5484D;align-self:center;box-shadow:0 0 0 3px rgba(229,72,77,.3)}
-.ecue{display:flex;gap:7px;align-items:center;font-size:8px;color:#C9C6E4;border-radius:6px;padding:4px 6px;background:rgba(255,255,255,.05)}
-.ecue[data-on]{background:rgba(167,139,255,.18);color:#F4F3FB}
-.ecue em{font-style:normal;font-family:"IBM Plex Mono",monospace;color:#A78BFF;flex:none}
-
-/* esportazione */
-.expo{position:absolute;inset:0;background:rgba(8,6,20,.74);display:grid;place-items:center;z-index:7}
-.expo-box{background:rgba(22,16,54,.96);border:1px solid var(--deep-line);border-radius:12px;padding:15px 16px;display:flex;flex-direction:column;gap:8px;align-items:center;width:76%}
-.expo-bar{width:100%;height:4px;border-radius:3px;background:rgba(255,255,255,.16);position:relative}
-.expo-bar i{position:absolute;left:0;top:0;bottom:0;width:68%;background:#A78BFF;border-radius:3px}
-.expo-box b{font-size:10px;font-weight:600;color:#F4F3FB}
-.expo-box span{font-size:8px;color:#A9A3D8;text-align:center;line-height:1.4}
-
-/* anteprima verticale del reels finito */
-.reelcard{position:relative;border-radius:6px;overflow:hidden;aspect-ratio:9/16;background:linear-gradient(168deg,#6247B4,#191340);display:flex;align-items:flex-end;padding:5px}
-.reelcard span{font-size:7px;color:rgba(255,255,255,.9);font-family:"IBM Plex Mono",monospace}
-.reelcard::before{content:"";position:absolute;top:5px;right:5px;width:0;height:0;border-left:6px solid rgba(255,255,255,.9);border-top:4px solid transparent;border-bottom:4px solid transparent}
 
 /* disposizioni con i mockup */
 .device-pair{display:flex;gap:16px;align-items:flex-start}
@@ -1396,7 +1347,7 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
     <div class="band-head">
       <p class="eyebrow">Il percorso completo</p>
       <h2>Dall'evento vuoto al reels finito: scorri i passaggi uno a uno.</h2>
-      <p>Dieci schermate, nell'ordine in cui le incontri davvero: si crea l'evento, si riprende, si sceglie il brano, l'app monta, e nella sala di montaggio si sistemano inquadrature, scritte, voce e sottotitoli. Solo l'ultimo passaggio scrive il file.</p>
+      <p>Dieci schermate dell'app, nell'ordine in cui le incontri davvero: si crea l'evento, si riprende, si scelgono le riprese, il brano e la durata, e nella sala di montaggio si sistemano inquadrature, scritte e voce. Solo l'ultimo passaggio scrive il file.</p>
     </div>
 
     <p class="walk-hint"><span class="walk-hint__freccia" aria-hidden="true">→</span> Scorri di lato per vedere tutti i passaggi</p>
@@ -1404,384 +1355,158 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
     <div class="walk" tabindex="0" role="region" aria-label="I passaggi, in fila: scorri orizzontalmente">
 
       <div class="wstep">
-        <div class="device" role="img" aria-label="Schermata I miei eventi con il foglio Nuovo evento aperto e il nome Gita a Firenze scritto nel campo.">
+        <div class="device device--shot">
           <div class="device-screen">
             <span class="island" aria-hidden="true"></span>
-            <div class="scr-pad" style="display:flex;flex-direction:column;height:100%">
-              <div class="scr-toolbar"><span>⌘ Invia tutto al Mac</span><span>＋</span></div>
-              <div class="scr-head"><h4>I miei eventi</h4><span>5</span></div>
-              <div class="card-grid">
-                <div class="ecard"><div class="ecard-cover" data-a></div><div class="ecard-meta"><strong>Concerto Palazzetto</strong><span>184 contenuti</span></div></div>
-                <div class="ecard"><div class="ecard-cover" data-b></div><div class="ecard-meta"><strong>Cantiere via Roma</strong><span>431 contenuti</span></div></div>
-                <div class="ecard"><div class="ecard-cover" data-c></div><div class="ecard-meta"><strong>Compleanno di Sara</strong><span>96 contenuti</span></div></div>
-                <div class="ecard"><div class="ecard-cover" data-a></div><div class="ecard-meta"><strong>Sagra di settembre</strong><span>207 contenuti</span></div></div>
-              </div>
-            </div>
-            <div class="sheet">
-              <span class="sheet-grab" aria-hidden="true"></span>
-              <h5>Nuovo evento</h5>
-              <div class="field">Gita a Firenze<i></i></div>
-              <div class="sheet-btn">Crea evento</div>
-            </div>
+            <img class="shot" src="schermate/01-eventi.jpg" width="1320" height="2868" loading="lazy" decoding="async" alt="Schermata I miei eventi: due eventi, Giornata Alicante con 20 contenuti e Tony Robbins 2026 con 59, e il più in alto a destra per crearne uno nuovo.">
           </div>
         </div>
         <div class="wstep-copy">
           <p class="wstep-n">PASSAGGIO 01</p>
           <h3>Crea l'evento</h3>
-          <p>Basta il nome. Da questo momento esiste una cartella tutta sua, e ogni cosa che scatterai da dentro finirà lì. Il nome si può cambiare quando vuoi: i contenuti restano legati all'evento, non al testo.</p>
+          <p>Il più in alto a destra, e basta il nome. Da quel momento esiste una cartella tutta sua, e ogni cosa che scatterai da dentro finirà lì. Il nome si può cambiare quando vuoi: i contenuti restano legati all'evento, non al testo.</p>
           <div class="pillrow"><span class="pill">crea</span><span class="pill">rinomina</span><span class="pill">elimina</span></div>
         </div>
       </div>
 
       <div class="wstep">
-        <div class="device" role="img" aria-label="Fotocamera di EventCam in modalità video, con la targhetta dell'evento Gita a Firenze e 24 contenuti già salvati.">
-          <div class="device-screen scr-cam">
+        <div class="device device--shot">
+          <div class="device-screen">
             <span class="island" aria-hidden="true"></span>
-            <div class="cam-view">
-              <span class="cam-hline" style="top:33.3%"></span>
-              <span class="cam-hline" style="top:66.6%"></span>
-              <div class="cam-event"><svg width="9" height="9" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5A2.5 2.5 0 0 1 5.5 4h3.2l1.6 2H18.5A2.5 2.5 0 0 1 21 8.5v9A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5z" fill="#A78BFF"/></svg>Gita a Firenze</div>
-              <div class="cam-top">
-                <span class="cam-btn">✕</span>
-                <span class="cam-btn">⚡︎A</span>
-                <span class="cam-btn">4K·60</span>
-                <span class="cam-btn">▦</span>
-                <span class="cam-btn">≡</span>
-              </div>
-              <span class="cam-focus" aria-hidden="true"></span>
-            </div>
-            <div class="cam-bottom">
-              <div class="cam-zooms"><span class="zoom">0,5×</span><span class="zoom" data-on>1×</span><span class="zoom">2×</span><span class="zoom">4×</span><span class="zoom">8×</span></div>
-              <div class="cam-modes"><span>FOTO</span><b>VIDEO</b></div>
-              <div class="cam-actions">
-                <span class="cam-thumb">24</span>
-                <span class="shutter" aria-hidden="true"></span>
-                <span class="cam-flip" aria-hidden="true">⟳</span>
-              </div>
-            </div>
+            <img class="shot" src="schermate/02-giornate.jpg" width="1320" height="2868" loading="lazy" decoding="async" alt="L'evento Tony Robbins 2026 diviso per giornate, con l'avviso arancione che l'evento non è mai uscito dal telefono e il pulsante Scatta foto o video in basso.">
           </div>
         </div>
         <div class="wstep-copy">
           <p class="wstep-n">PASSAGGIO 02</p>
-          <h3>Riprendi dentro l'evento</h3>
-          <p>Foto e video dalla stessa schermata, con la targhetta dell'evento sempre in vista. Niente entra nel rullino. Le clip che girerai adesso sono esattamente il materiale che il reels userà: riprese di qualche secondo, con il telefono fermo, valgono più di un unico piano lunghissimo.</p>
-          <div class="pillrow"><span class="pill" data-hot>zero copie nel rullino</span><span class="pill">foto e video</span><span class="pill">impostazioni ricordate</span></div>
+          <h3>Riprendi, e ritrova per giornate</h3>
+          <p>Il pulsante in basso apre la fotocamera dentro l'evento: foto e video finiscono lì, non nel rullino. Quello che riprendi si ordina da sé per giornata, con il conto dei video e l'ora della prima e dell'ultima ripresa. La striscia arancione ti ricorda che l'evento non è ancora uscito dal telefono.</p>
+          <div class="pillrow"><span class="pill" data-hot>zero copie nel rullino</span><span class="pill">giornate</span><span class="pill">avviso se non l'hai salvato</span></div>
         </div>
       </div>
 
       <div class="wstep">
-        <div class="device" role="img" aria-label="Griglia dell'evento in selezione multipla: quattro contenuti spuntati, barra in basso con Seleziona tutto e 4 selezionati.">
+        <div class="device device--shot">
           <div class="device-screen">
             <span class="island" aria-hidden="true"></span>
-            <div class="scr-pad" style="display:flex;flex-direction:column;height:100%">
-              <p class="scr-back">‹ I miei eventi</p>
-              <div class="scr-head"><h4>Gita a Firenze</h4><span>Fine</span></div>
-              <div class="day-chips">
-                <span class="dchip">3 giornate<b>Tutti</b></span>
-                <span class="dchip" data-on>sab<b>5 mag</b></span>
-                <span class="dchip">dom<b>6 mag</b></span>
-              </div>
-              <div class="mini-grid">
-                <span class="mg"></span><span class="mg" data-v></span><span class="mg"></span>
-                <span class="mg" data-v></span><span class="mg"></span><span class="mg"></span>
-                <span class="mg"></span><span class="mg" data-v></span><span class="mg"></span>
-              </div>
-              <div class="scr-cta" style="background:var(--surface-2);color:var(--text);border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;padding:8px 10px;font-size:9px">
-                <span style="color:var(--accent);font-weight:600">Seleziona tutto</span>
-                <span>4 selezionati</span>
-                <span style="color:var(--accent)">⬆︎ 🗑</span>
-              </div>
-            </div>
+            <img class="shot" src="schermate/03-menu.jpg" width="1320" height="2868" loading="lazy" decoding="async" alt="Menu dell'evento aperto: Rinomina evento, Seleziona contenuti, Esporta tutto, Invia al Mac (ZIP), Crea reels con musica, Importa dal rullino.">
           </div>
         </div>
         <div class="wstep-copy">
           <p class="wstep-n">PASSAGGIO 03</p>
-          <h3>Guarda, scegli, consegna il grezzo</h3>
-          <p>La griglia si legge per giornate. In selezione multipla "Seleziona tutto" prende quello che stai guardando — se hai aperto una sola giornata, prende quella — e con un tocco si torna indietro. Quello che serve lo condividi subito, il resto resta nell'evento in attesa del montaggio.</p>
-          <div class="pillrow"><span class="pill" data-hot>seleziona tutto</span><span class="pill">deseleziona</span><span class="pill">condividi</span><span class="pill">elimina</span></div>
+          <h3>Da qui parte tutto il resto</h3>
+          <p>Un tocco sui tre puntini e l'evento si apre in sei voci: rinomina, selezione dei contenuti, esportazione, l'archivio ZIP per il Mac, l'importazione dal rullino e "Crea reels con musica", che è la porta del montaggio.</p>
+          <div class="pillrow"><span class="pill">seleziona</span><span class="pill">esporta</span><span class="pill" data-hot>ZIP per il Mac</span><span class="pill">importa</span></div>
         </div>
       </div>
 
       <div class="wstep">
-        <div class="device" role="img" aria-label="Schermata Crea reels: brano Estate 2026 scelto a 96 BPM, durata un minuto e trenta, avviso che le riprese scelte bastano.">
+        <div class="device device--shot">
           <div class="device-screen">
             <span class="island" aria-hidden="true"></span>
-            <div class="scr-pad" style="display:flex;flex-direction:column;height:100%">
-              <div class="scr-head"><h4>Crea reels</h4><span>Gita a Firenze</span></div>
-              <div class="scr-list">
-                <div class="lrow lrow--pick"><strong>♫ Estate 2026.mp3</strong><span>3:24 · parte da 0:48 (il ritornello)</span></div>
-                <div class="lrow">
-                  <strong>Durata del montaggio</strong>
-                  <span>01:30 · da 1:00 a 10:00</span>
-                  <div class="mslider" aria-hidden="true"><i></i><b></b></div>
-                </div>
-                <div class="lrow"><strong>Video dell'evento</strong><span>18 clip · 6:12 di girato</span></div>
-                <div class="warnrow">Le riprese scelte bastano per 1:30. Oltre i 6:12 comparirebbe l'avviso.</div>
-              </div>
-              <div class="scr-cta">Prepara il montaggio</div>
-            </div>
+            <img class="shot" src="schermate/04-riprese.jpg" width="1320" height="2868" loading="lazy" decoding="async" alt="Crea reels, passo 1 di 3: Quali riprese entrano nel racconto, con la griglia delle riprese spuntate e in alto la scheda del montaggio lasciato a metà.">
           </div>
         </div>
         <div class="wstep-copy">
           <p class="wstep-n">PASSAGGIO 04</p>
-          <h3>Scegli il brano e quanto deve durare</h3>
-          <p>Un MP3, M4A o WAV preso da File o iCloud Drive, e il punto del brano da cui partire — di solito il ritornello. Poi la durata, da un minuto a dieci a passi di quindici secondi. L'app somma le riprese e ti dice subito se il girato basta, invece di riempire il vuoto ripetendo le stesse inquadrature.</p>
-          <div class="pillrow"><span class="pill">MP3 · M4A · WAV</span><span class="pill" data-hot>1:00 → 10:00</span><span class="pill">avviso se non basta</span></div>
+          <h3>Scegli le riprese</h3>
+          <p>Primo di tre passi: decidi quali video dell'evento entrano nel racconto, spuntandoli o togliendoli dalla griglia. E se avevi lasciato un montaggio a metà, in cima trovi la scheda per riprenderlo da dov'era — con le registrazioni e le scritte che ci avevi già messo.</p>
+          <div class="pillrow"><span class="pill">passo 1 di 3</span><span class="pill" data-hot>riprendi dov'eri</span><span class="pill">ricomincia da capo</span></div>
         </div>
       </div>
 
       <div class="wstep">
-        <div class="device" role="img" aria-label="Preparazione del montaggio: brano ascoltato, clip analizzate, sequenza in corso di scelta.">
-          <div class="device-screen scr-edit">
+        <div class="device device--shot">
+          <div class="device-screen">
             <span class="island" aria-hidden="true"></span>
-            <div class="edit-head">
-              <em style="font-style:normal;color:#A9A3D8">Annulla</em>
-              <span>PREPARO</span>
-              <em style="font-style:normal;color:#4A4478">Crea reels</em>
-            </div>
-            <div class="prep">
-              <p class="prep-item" data-done><b>✓</b>Ascolto il brano: tempo, "uno" di battuta, sezioni, drop</p>
-              <p class="prep-item" data-done><b>✓</b>Guardo dentro le 18 clip: fuoco, luce, stabilità, volti</p>
-              <p class="prep-item" data-now><b>3</b>Scelgo la sequenza e dove cadono gli stacchi</p>
-              <p class="prep-item"><b>4</b>Preparo l'anteprima</p>
-            </div>
-            <p class="edit-sync" style="margin-bottom:14px">◆ 96 BPM · uno di battuta ogni 2,50 s · 3 sezioni</p>
+            <img class="shot" src="schermate/05-brano.jpg" width="1320" height="2868" loading="lazy" decoding="async" alt="Crea reels, passo 2 di 3: Su che brano lo montiamo, con il pulsante Scegli un brano e in basso Avanti senza musica.">
           </div>
         </div>
         <div class="wstep-copy">
           <p class="wstep-n">PASSAGGIO 05</p>
-          <h3>L'app monta da sola</h3>
-          <p>Studia il brano, guarda dentro ogni clip e costruisce la scaletta: ordine cronologico delle riprese, durate che seguono l'energia della musica, stacchi agganciati al fotogramma sui momenti del brano. Alla fine ti mostra il reels già montato — non un abbozzo da sistemare.</p>
-          <div class="pillrow"><span class="pill">analisi del brano</span><span class="pill">analisi delle clip</span><span class="pill" data-hot>scaletta a tempo</span></div>
+          <h3>Scegli il brano</h3>
+          <p>Un file audio preso da File o da iCloud Drive: MP3, M4A o WAV. I brani protetti di Apple Music non si possono usare. Se preferisci, si va avanti anche senza musica: resta l'audio originale delle riprese.</p>
+          <div class="pillrow"><span class="pill">MP3 · M4A · WAV</span><span class="pill" data-hot>anche senza musica</span></div>
         </div>
       </div>
 
       <div class="wstep">
-        <div class="device" role="img" aria-label="Sala di montaggio, pannello Inquadrature: striscia delle riprese con una selezionata e i comandi per accorciarla, allungarla o toglierla.">
-          <div class="device-screen scr-edit">
+        <div class="device device--shot">
+          <div class="device-screen">
             <span class="island" aria-hidden="true"></span>
-            <div class="edit-head">
-              <em style="font-style:normal;color:#A9A3D8">Chiudi</em>
-              <span>↺ ↻</span>
-              <em style="font-style:normal;color:#A78BFF;font-weight:600">Crea reels</em>
-            </div>
-            <div class="edit-view">
-              <span class="edit-bar" aria-hidden="true"><i></i></span>
-              <p class="edit-time">00:42 / 01:30</p>
-            </div>
-            <p class="edit-sync">◆ 44/44 stacchi a tempo · scarto 8 ms · 96 BPM</p>
-            <div class="edit-shots" aria-hidden="true">
-              <span class="es"></span><span class="es"></span><span class="es" data-on></span>
-              <span class="es"></span><span class="es"></span><span class="es"></span>
-            </div>
-            <div class="edit-tabs">
-              <span class="etab" data-on>Inquadrature</span>
-              <span class="etab">Scritte</span>
-              <span class="etab">Voce</span>
-            </div>
-            <div class="edit-acts">
-              <span class="eact">Più corta</span>
-              <span class="eact">Più lunga</span>
-              <span class="eact" data-warn>Togli</span>
-            </div>
+            <img class="shot" src="schermate/06-durata.jpg" width="1320" height="2868" loading="lazy" decoding="async" alt="Crea reels, passo 3 di 3: Quanto deve durare, con il cursore da 1:00 a 10:00, durata scelta 1:30, riprese scelte 14:48 e il pulsante Prepara il montaggio.">
           </div>
         </div>
         <div class="wstep-copy">
           <p class="wstep-n">PASSAGGIO 06</p>
-          <h3>Sistema le inquadrature</h3>
-          <p>Quella venuta mossa la togli, quella bella la allunghi di una battuta. Ogni modifica rimonta tutto da capo: la musica si ridistende e gli stacchi tornano dove il ritmo li vuole, invece di scivolare fuori tempo. Tutto reversibile, il file non esiste ancora.</p>
-          <div class="pillrow"><span class="pill">togli</span><span class="pill">accorcia</span><span class="pill">allunga</span><span class="pill" data-hot>annulla e ripristina</span></div>
+          <h3>Decidi quanto deve durare</h3>
+          <p>Da un minuto a dieci: il pezzo breve per i social o il filmato completo della giornata. Sotto al cursore c'è quanto girato hai scelto, così vedi subito se basta. La durata finale si assesta sulla battuta più vicina, perché il montaggio finisce in musica.</p>
+          <div class="pillrow"><span class="pill" data-hot>1:00 → 10:00</span><span class="pill">finisce in musica</span><span class="pill">quanto girato hai</span></div>
         </div>
       </div>
 
       <div class="wstep">
-        <div class="device" role="img" aria-label="Pannello Scritte: la scritta Giorno 1 partenza selezionata sul video, con carattere, formato e colore da scegliere.">
-          <div class="device-screen scr-edit">
+        <div class="device device--shot">
+          <div class="device-screen">
             <span class="island" aria-hidden="true"></span>
-            <div class="edit-head">
-              <em style="font-style:normal;color:#A9A3D8">Chiudi</em>
-              <span>↺ ↻</span>
-              <em style="font-style:normal;color:#A78BFF;font-weight:600">Crea reels</em>
-            </div>
-            <div class="edit-view">
-              <p class="edit-title" style="bottom:auto;top:32%;outline:1px dashed #A78BFF;outline-offset:4px">Giorno 1 · partenza</p>
-              <span class="edit-bar" aria-hidden="true"><i></i></span>
-              <p class="edit-time">00:12 / 01:30</p>
-            </div>
-            <div class="edit-tabs">
-              <span class="etab">Inquadrature</span>
-              <span class="etab" data-on>Scritte</span>
-              <span class="etab">Voce</span>
-            </div>
-            <div class="epanel">
-              <div class="echips">
-                <span class="echip" data-on>Neutro</span><span class="echip">Moderno</span><span class="echip">Classico</span><span class="echip">Corsivo</span>
-              </div>
-              <div class="echips">
-                <span class="echip">Semplice</span><span class="echip" data-on>Ombra</span><span class="echip">Riquadro</span><span class="echip">Contorno</span>
-              </div>
-              <div class="erow"><span>Dimensione</span><span class="emeter"><i></i></span><span>1,2×</span></div>
-            </div>
+            <img class="shot" src="schermate/07-inquadrature.jpg" width="1320" height="2868" loading="lazy" decoding="async" alt="Sala di montaggio, pannello Inquadrature: la striscia delle 57 inquadrature, i comandi Più corta, Più lunga, Sdoppia e Togli, e l'interruttore Audio di questa clip.">
           </div>
         </div>
         <div class="wstep-copy">
           <p class="wstep-n">PASSAGGIO 07</p>
+          <h3>Sistema le inquadrature</h3>
+          <p>Il reels è già montato: qui lo guardi e lo correggi. Quella venuta mossa la togli, quella bella la allunghi, una la sdoppi. Di ogni inquadratura puoi accendere l'audio originale e dosarne il volume — la musica si ritira da sé sotto quella clip. Ogni modifica rimonta tutto: gli stacchi tornano dove il ritmo li vuole.</p>
+          <div class="pillrow"><span class="pill">più corta</span><span class="pill">più lunga</span><span class="pill">sdoppia</span><span class="pill" data-hot>audio della clip</span></div>
+        </div>
+      </div>
+
+      <div class="wstep">
+        <div class="device device--shot">
+          <div class="device-screen">
+            <span class="island" aria-hidden="true"></span>
+            <img class="shot" src="schermate/08-scritte.jpg" width="1320" height="2868" loading="lazy" decoding="async" alt="Sala di montaggio, pannello Scritte: la linea del tempo delle scritte e il pulsante Aggiungi una scritta qui.">
+          </div>
+        </div>
+        <div class="wstep-copy">
+          <p class="wstep-n">PASSAGGIO 08</p>
           <h3>Aggiungi le scritte</h3>
-          <p>Titoli e didascalie si trascinano dove vuoi sul video e si allargano con due dita. Carattere, formato, colore del testo e dello sfondo, allineamento e come entrano in scena. Quello che vedi nell'anteprima è esattamente quello che finisce nel filmato.</p>
+          <p>Porti la testina dove ti serve e aggiungi la scritta lì. Poi la trascini sul video per metterla dove vuoi e la allarghi con due dita. Carattere, formato, colore, allineamento: quello che vedi nell'anteprima è esattamente quello che finisce nel filmato.</p>
           <div class="pillrow"><span class="pill">trascina</span><span class="pill">allarga con due dita</span><span class="pill" data-hot>anteprima uguale all'esportato</span></div>
         </div>
       </div>
 
       <div class="wstep">
-        <div class="device" role="img" aria-label="Pannello Voce in registrazione: livello del microfono, pulsante rosso e cursore del volume del video al venticinque per cento.">
-          <div class="device-screen scr-edit">
+        <div class="device device--shot">
+          <div class="device-screen">
             <span class="island" aria-hidden="true"></span>
-            <div class="edit-head">
-              <em style="font-style:normal;color:#A9A3D8">Chiudi</em>
-              <span>● REC</span>
-              <em style="font-style:normal;color:#4A4478">Crea reels</em>
-            </div>
-            <div class="edit-view">
-              <span class="edit-bar" aria-hidden="true"><i></i></span>
-              <p class="edit-time">00:31 / 01:30</p>
-            </div>
-            <div class="edit-tabs">
-              <span class="etab">Inquadrature</span>
-              <span class="etab">Scritte</span>
-              <span class="etab" data-on>Voce</span>
-            </div>
-            <div class="esubs">
-              <span class="esub" data-on>Registrazione</span>
-              <span class="esub">Sottotitoli</span>
-            </div>
-            <div class="epanel">
-              <div class="erow"><span>🎙</span><span class="emeter"><i></i></span></div>
-              <span class="erec" aria-hidden="true"></span>
-              <div class="erow"><span>🔈</span><span class="emeter" data-mon><i></i></span><span>25%</span></div>
-              <p style="font-size:8px;color:#8FE6EC;text-align:center;margin:0">Video al 25% mentre registri</p>
-            </div>
-          </div>
-        </div>
-        <div class="wstep-copy">
-          <p class="wstep-n">PASSAGGIO 08</p>
-          <h3>Registra la voce fuori campo</h3>
-          <p>Porti la testina dove vuoi cominciare, premi il pulsante rosso e dopo tre, due, uno il video parte insieme al microfono. Se devi riprendere fiato o rileggere la riga dopo, la pausa ferma voce e video insieme e li fa ripartire dal punto giusto. Un cursore decide quanto senti il montaggio nell'orecchio mentre parli, e si muove a registrazione avviata.</p>
-          <div class="pillrow"><span class="pill">3 · 2 · 1</span><span class="pill" data-hot>pausa e riprendi</span><span class="pill">volume del video dal vivo</span><span class="pill">musica che si ritira</span></div>
-        </div>
-      </div>
-
-      <div class="wstep">
-        <div class="device" role="img" aria-label="Pannello Sottotitoli: la battuta e qui la piazza era già piena sul video, e l'elenco delle battute con i loro tempi.">
-          <div class="device-screen scr-edit">
-            <span class="island" aria-hidden="true"></span>
-            <div class="edit-head">
-              <em style="font-style:normal;color:#A9A3D8">Chiudi</em>
-              <span>↺ ↻</span>
-              <em style="font-style:normal;color:#A78BFF;font-weight:600">Crea reels</em>
-            </div>
-            <div class="edit-view">
-              <p class="edit-cap">e qui la piazza era già piena</p>
-              <span class="edit-bar" aria-hidden="true"><i></i></span>
-              <p class="edit-time">00:38 / 01:30</p>
-            </div>
-            <div class="edit-tabs">
-              <span class="etab">Inquadrature</span>
-              <span class="etab">Scritte</span>
-              <span class="etab" data-on>Voce</span>
-            </div>
-            <div class="esubs">
-              <span class="esub">Registrazione</span>
-              <span class="esub" data-on>Sottotitoli</span>
-            </div>
-            <div class="epanel">
-              <div class="echips">
-                <span class="echip" data-on>Italiano</span><span class="echip">Ombra</span><span class="echip">38 lettere</span>
-              </div>
-              <p class="ecue"><em>0:31</em>siamo partiti presto</p>
-              <p class="ecue" data-on><em>0:36</em>e qui la piazza era già piena</p>
-              <p class="ecue"><em>0:41</em>il mercato apriva alle nove</p>
-            </div>
+            <img class="shot" src="schermate/09-voce.jpg" width="1320" height="2868" loading="lazy" decoding="async" alt="Sala di montaggio, pannello Voce in Registrazione: il pulsante rosso, l'istruzione di portare la testina dove si vuole cominciare e il cursore del volume del video mentre registri.">
           </div>
         </div>
         <div class="wstep-copy">
           <p class="wstep-n">PASSAGGIO 09</p>
-          <h3>Fai scrivere i sottotitoli</h3>
-          <p>La registrazione viene ascoltata sul telefono e diventa battute brevi, spezzate dove respiri e dove finisce la frase, ognuna con l'istante esatto in cui quelle parole sono state dette. Il testo si corregge a mano, se ne aggiungono di nuove, e a fine frase la battuta se ne va in dissolvenza invece di sparire di colpo. Carattere, formato, colore, misura e posizione valgono per tutte insieme.</p>
-          <div class="pillrow"><span class="pill" data-hot>sul dispositivo</span><span class="pill">tempi delle parole</span><span class="pill">dissolvenza in uscita</span><span class="pill">battute a mano</span></div>
+          <h3>Registra la voce fuori campo</h3>
+          <p>Porti la testina dove vuoi cominciare, premi il pulsante rosso e dopo tre, due, uno il video parte insieme al microfono. Un cursore decide quanto senti il montaggio mentre parli. Accanto, la linguetta Sottotitoli fa scrivere al telefono quello che hai detto, battuta per battuta, con i tempi delle parole.</p>
+          <div class="pillrow"><span class="pill">3 · 2 · 1</span><span class="pill">pausa e riprendi</span><span class="pill" data-hot>sottotitoli sul dispositivo</span></div>
         </div>
       </div>
 
       <div class="wstep">
-        <div class="device" role="img" aria-label="Esportazione in corso al sessantotto per cento, con l'avviso di tenere l'app aperta.">
-          <div class="device-screen scr-edit">
+        <div class="device device--shot">
+          <div class="device-screen">
             <span class="island" aria-hidden="true"></span>
-            <div class="edit-head">
-              <em style="font-style:normal;color:#4A4478">Chiudi</em>
-              <span>↺ ↻</span>
-              <em style="font-style:normal;color:#4A4478">Crea reels</em>
-            </div>
-            <div class="edit-view">
-              <span class="edit-bar" aria-hidden="true"><i></i></span>
-              <p class="edit-time">01:30</p>
-            </div>
-            <div class="edit-tabs">
-              <span class="etab">Inquadrature</span>
-              <span class="etab">Scritte</span>
-              <span class="etab">Voce</span>
-            </div>
-            <div class="edit-acts">
-              <span class="eact">Più corta</span>
-              <span class="eact">Più lunga</span>
-              <span class="eact">Togli</span>
-            </div>
-            <div class="expo">
-              <div class="expo-box">
-                <span class="expo-bar" aria-hidden="true"><i></i></span>
-                <b>Creo il reels… 68%</b>
-                <span>Tieni l'app aperta finché non ha finito. Lo schermo resta acceso.</span>
-              </div>
-            </div>
+            <img class="shot" src="schermate/10-video-finale.jpg" width="1320" height="2868" loading="lazy" decoding="async" alt="L'evento con il filtro montaggio Video finale attivo: il reels salvato, separato dal girato.">
           </div>
         </div>
         <div class="wstep-copy">
           <p class="wstep-n">PASSAGGIO 10</p>
-          <h3>Crea il reels</h3>
-          <p>È l'unico passaggio che scrive un file. Inquadrature, transizioni, musica, audio originale, voce, scritte e sottotitoli vengono incisi in un verticale 1080 × 1920. Un montaggio lungo prende qualche minuto, con la barra che avanza e lo schermo che resta acceso.</p>
-          <div class="pillrow"><span class="pill">1080 × 1920 · 30 fps</span><span class="pill">tutto inciso nel file</span></div>
-        </div>
-      </div>
-
-      <div class="wstep">
-        <div class="device" role="img" aria-label="Evento dopo il montaggio: filtro Video finale attivo, con due reels salvati nell'evento.">
-          <div class="device-screen">
-            <span class="island" aria-hidden="true"></span>
-            <div class="scr-pad" style="display:flex;flex-direction:column;height:100%">
-              <p class="scr-back">‹ I miei eventi</p>
-              <div class="scr-head"><h4>Gita a Firenze</h4><span>314</span></div>
-              <div class="day-chips">
-                <span class="dchip">3 giornate<b>Tutti</b></span>
-                <span class="dchip">sab<b>5 mag</b></span>
-                <span class="dchip" data-on>montaggio<b>Video finale</b></span>
-              </div>
-              <div class="mini-grid" style="grid-template-columns:1fr 1fr">
-                <span class="reelcard"><span>01:30 · con voce</span></span>
-                <span class="reelcard" style="background:linear-gradient(168deg,#4A3A94,#171233)"><span>00:45 · social</span></span>
-              </div>
-              <div class="scr-cta">Scatta foto o video</div>
-            </div>
-          </div>
-        </div>
-        <div class="wstep-copy">
-          <p class="wstep-n">PASSAGGIO 11</p>
-          <h3>Il reels resta nell'evento</h3>
-          <p>Finisce nel filtro "Video finale", accanto al girato ma non mescolato con lui. Da lì lo condividi dove serve, e il progetto del montaggio resta salvato: riaprendolo ritrovi inquadrature, scritte, voce e sottotitoli come li avevi lasciati, pronti per farne una seconda versione più corta.</p>
-          <div class="pillrow"><span class="pill">Video finale</span><span class="pill">condividi</span><span class="pill" data-hot>progetto riaperto dov'era</span></div>
+          <h3>Crea il reels, e resta nell'evento</h3>
+          <p>"Crea reels" è l'unico passaggio che scrive un file: inquadrature, transizioni, musica, audio originale, voce e scritte vengono incisi in un verticale 1080 × 1920. Finisce nel filtro "Video finale", accanto al girato ma non mescolato con lui, e il progetto resta salvato per farne una seconda versione.</p>
+          <div class="pillrow"><span class="pill">1080 × 1920 · 30 fps</span><span class="pill">Video finale</span><span class="pill" data-hot>progetto riaperto dov'era</span></div>
         </div>
       </div>
 
     </div>
 
-    <p class="walk-note">Le schermate qui sopra sono ricostruzioni fedeli dell'app, disegnate per la pagina. Il percorso, i comandi e i testi sono quelli veri: la fotocamera funziona solo su un iPhone reale, non nel simulatore.</p>
+    <p class="walk-note">Le schermate qui sopra sono fotografie dello schermo di un iPhone, prese da EventCam 1.2.9 con eventi e riprese veri. La fotocamera funziona solo su un iPhone reale, non nel simulatore.</p>
   </div>
 </section>
 
