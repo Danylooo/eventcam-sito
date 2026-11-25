@@ -481,6 +481,8 @@ body.con-barra{padding-bottom:74px}
 .studio-strip .pillrow{margin-top:auto;padding-top:9px}
 .studio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:12px;margin-top:22px}
 .studio-grid .pillrow{margin-top:auto;padding-top:9px}
+/* Sette schede su tre colonne: l'ultima prende la riga intera. */
+.studio-grid .studio-cell:last-child:nth-child(3n+1){grid-column:1/-1}
 .studio-cell h3{font-size:17px;color:var(--deep-text)}
 .studio-cell p{color:var(--deep-dim);font-size:14.5px}
 .pillrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
@@ -1312,6 +1314,11 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
           <div class="pillrow"><span class="pill">tutto il video</span><span class="pill" data-hot>una clip alla volta</span><span class="pill">automatica se c'è rumore</span></div>
         </div>
         <div class="studio-cell">
+          <h3>La musica al volume che vuoi</h3>
+          <p>L'app la abbassa da sola dove qualcuno parla, e tu decidi il resto: un cursore per tutto il montaggio e uno sotto ogni singola clip, accanto al volume della ripresa. A zero la togli proprio in quel punto. Si sente mentre lo muovi, nel vlog e nel reels.</p>
+          <div class="pillrow"><span class="pill">tutto il montaggio</span><span class="pill" data-hot>sotto ogni clip</span><span class="pill">da 0 a 200%</span></div>
+        </div>
+        <div class="studio-cell">
           <h3>Niente bande ai lati</h3>
           <p>Le riprese fatte in piedi si ritagliano attorno al soggetto per riempire il 16:9, invece di finire fra due strisce nere.</p>
           <div class="pillrow"><span class="pill">1920 × 1080</span><span class="pill" data-hot>segue il soggetto</span></div>
@@ -1536,7 +1543,7 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
       <div class="spec-row"><dt>Messa al sicuro</dt><dd>Avviso sugli eventi mai consegnati fuori dall'app, che si spegne da solo dopo l'esportazione</dd></div>
       <div class="spec-row"><dt>Archivio</dt><dd>Una cartella dedicata per ogni evento, nell'archivio locale dell'app</dd></div>
       <div class="spec-row"><dt>Esportazione</dt><dd>Condivisione di sistema, esporta tutto, ZIP diviso per giornate</dd></div>
-      <div class="spec-row"><dt>Musica del reels</dt><dd>Un file MP3, M4A o WAV preso da File o iCloud Drive; i brani protetti di Apple Music non sono utilizzabili</dd></div>
+      <div class="spec-row"><dt>Musica del montaggio</dt><dd>Un file MP3, M4A o WAV preso da File o iCloud Drive, con il volume regolabile in tutto il montaggio e sotto ogni clip, da 0 a 200%; i brani protetti di Apple Music non sono utilizzabili</dd></div>
       <div class="spec-row"><dt>Rete</dt><dd>Nessun account e nessun server nostro: la rete serve solo all'abbonamento e a scaricare, una volta, le lingue per sottotitoli e traduzioni</dd></div>
     </dl>
   </div>
