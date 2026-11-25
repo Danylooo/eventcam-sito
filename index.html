@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>EventCam — la fotocamera degli eventi, con il reels che si monta da solo</title>
-<meta name="description" content="EventCam tiene foto e video di ogni evento in una cartella tutta sua, fuori dal rullino, e monta il reels da solo a tempo di musica: voce fuori campo, sottotitoli scritti dall'app, esportazione ordinata per giornate. Su iPhone e su Android.">
+<meta name="description" content="EventCam tiene foto e video di ogni evento in una cartella tutta sua, fuori dal rullino, e monta da solo reels a tempo di musica e vlog di viaggio 16:9: sottotitoli scritti dall'app, voce pulita dal sottofondo, esportazione ordinata per giornate. Su iPhone e su Android.">
 <link rel="canonical" href="https://eventcam.media/">
 <meta name="theme-color" content="#5238F2" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#090814" media="(prefers-color-scheme: dark)">
@@ -479,6 +479,8 @@ body.con-barra{padding-bottom:74px}
    vuoto si accumulava in fondo a ognuna. Spingendo giù le targhette il vuoto
    finisce in mezzo, dove non si vede, e le targhette si allineano fra loro. */
 .studio-strip .pillrow{margin-top:auto;padding-top:9px}
+.studio-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:12px;margin-top:22px}
+.studio-grid .pillrow{margin-top:auto;padding-top:9px}
 .studio-cell h3{font-size:17px;color:var(--deep-text)}
 .studio-cell p{color:var(--deep-dim);font-size:14.5px}
 .pillrow{display:flex;flex-wrap:wrap;gap:6px;margin-top:2px}
@@ -793,7 +795,7 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
 
     <section class="hero">
       <div class="hero-copy">
-        <p class="eyebrow">Fotocamera per eventi · reels automatico</p>
+        <p class="eyebrow">Fotocamera per eventi · reels e vlog automatici</p>
         <h1><span class="lead">Registra i tuoi video senza perderli nel rullino</span><span class="line">Crea reels o video</span><b class="shine">PAZZESCHI</b><span class="tail">in modo automatico grazie all'AI</span></h1>
         <p class="hero-lede">Ogni evento ha la sua cartella. Gli scatti non entrano nel rullino. I reels e i video vengono montati con l'app in automatico grazie all'AI.</p>
 
@@ -983,6 +985,10 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
           <p>Un cantiere seguito per mesi e una festa di una sera funzionano allo stesso modo: riapri l'evento e continui ad aggiungere, senza che nulla si mischi con il resto.</p>
         </div>
         <div class="org-item">
+          <h3>I video da una parte, le foto dall'altra</h3>
+          <p>In cima all'evento ci sono due schede, con il conto di ciascuna: quando cerchi una ripresa non devi scorrere le foto, e viceversa. Scatti una foto e si apre la sua scheda. Con «Tutto» le rivedi insieme.</p>
+        </div>
+        <div class="org-item">
           <h3>Le giornate si leggono a colpo d'occhio</h3>
           <p>Scorrendo la griglia l'intestazione della giornata resta in alto: sai sempre di che data sono le foto che stai guardando. Toccala e resta solo quel giorno — utile quando il cliente chiede "le foto del sabato" e non tutte.</p>
         </div>
@@ -1059,6 +1065,24 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
         <h3>File raggiungibili dal computer</h3>
         <p>La cartella dell'app compare nella condivisione documenti dell'iPhone: colleghi il telefono e prendi gli originali, senza convertire niente.</p>
         <p class="spec">File Sharing · originali intatti</p>
+      </div>
+      <div class="feature">
+        <span class="ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8a8 8 0 0 1 14-2l2 2M20 4v4h-4M20 16a8 8 0 0 1-14 2l-2-2M4 20v-4h4"/></svg></span>
+        <h3>Giri la fotocamera mentre filmi</h3>
+        <p>Dalla posteriore all'anteriore e ritorno senza fermare la ripresa: alla fine il video è uno solo. Anche lo zoom, con i pulsanti o con le dita, funziona mentre registri.</p>
+        <p class="spec">cambio in ripresa · un video solo</p>
+      </div>
+      <div class="feature">
+        <span class="ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2.5"/><rect x="13" y="12" width="6" height="5" rx="1"/></svg></span>
+        <h3>Due fotocamere insieme</h3>
+        <p>Riprendi la scena e chi la racconta nello stesso momento: in due file separati, con un riquadro, o con lo schermo diviso. Dove il telefono lo permette.</p>
+        <p class="spec">due file · riquadro · diviso</p>
+      </div>
+      <div class="feature">
+        <span class="ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 9v6M14 9v6"/></svg></span>
+        <h3>Pausa, oltre allo stop</h3>
+        <p>Fermi la ripresa e la riprendi quando ricomincia il momento: resta un video solo. Lo schermo non si abbassa e il telefono non va in standby mentre la fotocamera è aperta.</p>
+        <p class="spec">pausa e riprendi · schermo sempre acceso</p>
       </div>
       <div class="feature">
         <span class="ico" aria-hidden="true"><svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h3.1l1.6 2H18.5A2.5 2.5 0 0 1 21 9.5v8A2.5 2.5 0 0 1 18.5 20h-13A2.5 2.5 0 0 1 3 17.5z"/></svg></span>
@@ -1259,6 +1283,49 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
   </div>
 </section>
 
+<section class="band" id="vlog" style="border-top:none;padding-top:0">
+  <div class="wrap">
+    <div class="studio">
+      <p class="eyebrow">Vlog di viaggio · nuovo nella 1.5</p>
+      <h2>E se il viaggio lo racconti parlando, diventa un vlog per YouTube.</h2>
+      <p class="studio-lede">Un comando a parte, in orizzontale 16:9. Scegli le riprese e l'app le ascolta: tiene i discorsi, scarta le ripetizioni e i riempitivi, alterna chi parla alle riprese di contorno e <b style="color:var(--deep-text);font-weight:600">racconta il viaggio nell'ordine in cui l'hai vissuto</b>, con i cartelli delle giornate e la musica che si abbassa quando qualcuno parla.</p>
+
+      <div class="studio-grid">
+        <div class="studio-cell">
+          <h3>Sottotitoli insieme alle parole</h3>
+          <p>Le voci delle riprese si trascrivono sul telefono e ogni battuta si aggancia all'onda della voce, non solo a quello che dice il riconoscimento: compare quando comincia la parola e se ne va quando finisce. Il testo resta correggibile.</p>
+          <div class="pillrow"><span class="pill" data-hot>agganciati alla voce</span><span class="pill">sul dispositivo</span><span class="pill">correggibili</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Chi parla un'altra lingua si legge in italiano</h3>
+          <p>Se in una ripresa qualcuno parla spagnolo, o un'altra lingua, l'app se ne accorge, la riascolta nella lingua giusta e scrive i sottotitoli in italiano. La traduzione avviene sul telefono, dove il telefono la supporta.</p>
+          <div class="pillrow"><span class="pill" data-hot>lingua riconosciuta da sola</span><span class="pill">traduzione sul telefono</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>I discorsi finiscono</h3>
+          <p>Una pausa per pensare non è la fine di una frase. Lo stacco aspetta che chi parla abbia concluso: meglio un'inquadratura più lunga che una parola a metà.</p>
+          <div class="pillrow"><span class="pill">frasi intere</span><span class="pill" data-hot>niente parole tagliate</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>La voce pulita, il sottofondo quando serve</h3>
+          <p>Quando il rumore copre chi parla, la voce viene separata dal sottofondo da sola. Si accende e si spegne per tutto il video o per una sola clip: il mercato, la festa o il mare si possono lasciare come sono.</p>
+          <div class="pillrow"><span class="pill">tutto il video</span><span class="pill" data-hot>una clip alla volta</span><span class="pill">automatica se c'è rumore</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Niente bande ai lati</h3>
+          <p>Le riprese fatte in piedi si ritagliano attorno al soggetto per riempire il 16:9, invece di finire fra due strisce nere.</p>
+          <div class="pillrow"><span class="pill">1920 × 1080</span><span class="pill" data-hot>segue il soggetto</span></div>
+        </div>
+        <div class="studio-cell">
+          <h3>Pronto da pubblicare</h3>
+          <p>Insieme al video ci sono i capitoli da incollare nella descrizione di YouTube e il file .srt dei sottotitoli. Il progetto resta salvato, per rimetterci mano.</p>
+          <div class="pillrow"><span class="pill">capitoli</span><span class="pill" data-hot>file .srt</span><span class="pill">progetto riapribile</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="band band--alt" id="passaggi">
   <div class="wrap">
     <div class="band-head">
@@ -1326,7 +1393,7 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
         <div class="wstep-copy">
           <p class="wstep-n">PASSAGGIO 04</p>
           <h3>Scegli le riprese</h3>
-          <p>Primo di tre passi: decidi quali video dell'evento entrano nel racconto, spuntandoli o togliendoli dalla griglia. E se avevi lasciato un montaggio a metà, in cima trovi la scheda per riprenderlo da dov'era — con le registrazioni e le scritte che ci avevi già messo.</p>
+          <p>Primo di tre passi: decidi quali video dell'evento entrano nel racconto, spuntandoli o togliendoli dalla griglia. Tieni premuta un'anteprima e la vedi in grande, con l'audio, prima di decidere. E se avevi lasciato un montaggio a metà, in cima trovi la scheda per riprenderlo da dov'era — con le registrazioni e le scritte che ci avevi già messo.</p>
           <div class="pillrow"><span class="pill">passo 1 di 3</span><span class="pill" data-hot>riprendi dov'eri</span><span class="pill">ricomincia da capo</span></div>
         </div>
       </div>
@@ -1461,6 +1528,7 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
       <div class="spec-row"><dt>Video</dt><dd>1080p e 4K a 30, 60 e 120 fotogrammi, secondo quello che il dispositivo offre davvero; alle alte velocità la ripresa passa da sola alla fotocamera principale, che è l'unica ad averle</dd></div>
       <div class="spec-row"><dt>Zoom</dt><dd>Gli ingrandimenti dichiarati dal telefono — su un iPhone Pro recente 0,5×, 1×, 2×, 4× e 8× — con gli stessi numeri e la stessa inquadratura dell'app Fotocamera, passaggio graduale e zoom a due dita</dd></div>
       <div class="spec-row"><dt>Reels</dt><dd>Verticale 1080 × 1920 a 30 fotogrammi, da 1 a 10 minuti a passi di 15 secondi, montato con i video dell'evento in ordine di ripresa</dd></div>
+      <div class="spec-row"><dt>Vlog</dt><dd>Orizzontale 1920 × 1080 dalle riprese parlate, in ordine di ripresa, con sottotitoli sulle voci delle clip, separazione della voce dal sottofondo per tutto il video o clip per clip, capitoli e file .srt; i sottotitoli automatici e la traduzione dipendono dalle lingue che il telefono sa ascoltare e tradurre</dd></div>
       <div class="spec-row"><dt>Montaggio</dt><dd>Stacchi sui momenti della canzone — drop, cambi di sezione, "uno" di battuta, accenti — agganciati al fotogramma: anteprima ed esportazione tagliano nello stesso punto</dd></div>
       <div class="spec-row"><dt>Sottotitoli</dt><dd>Ricavati dalla voce registrata con il riconoscimento del parlato del telefono, con l'istante di ogni parola; battute aggiungibili e regolabili a mano, dissolvenza in uscita, carattere, formato, colore, misura e posizione a scelta, incisi nel filmato esportato</dd></div>
       <div class="spec-row"><dt>Voce fuori campo</dt><dd>Registrazione con pausa e ripresa in sincrono, monitoraggio del video regolabile mentre registri, livelli automatici misurati sull'audio vero, pulizia del rumore che lascia intatto oltre il 90% della voce</dd></div>
@@ -1469,7 +1537,7 @@ footer{padding:40px 0 58px;margin-top:52px;border-top:1px solid var(--line-soft)
       <div class="spec-row"><dt>Archivio</dt><dd>Una cartella dedicata per ogni evento, nell'archivio locale dell'app</dd></div>
       <div class="spec-row"><dt>Esportazione</dt><dd>Condivisione di sistema, esporta tutto, ZIP diviso per giornate</dd></div>
       <div class="spec-row"><dt>Musica del reels</dt><dd>Un file MP3, M4A o WAV preso da File o iCloud Drive; i brani protetti di Apple Music non sono utilizzabili</dd></div>
-      <div class="spec-row"><dt>Rete</dt><dd>Nessun account e nessun servizio esterno richiesto</dd></div>
+      <div class="spec-row"><dt>Rete</dt><dd>Nessun account e nessun server nostro: la rete serve solo all'abbonamento e a scaricare, una volta, le lingue per sottotitoli e traduzioni</dd></div>
     </dl>
   </div>
 </section>
